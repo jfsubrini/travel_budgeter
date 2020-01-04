@@ -1,3 +1,9 @@
 from django.shortcuts import render
 
-# Create your views here.
+
+def monitoring(request):
+    """
+    View to the monitoring page.
+    """
+    context = {}
+    return render(request, "monitoring.html", context)
