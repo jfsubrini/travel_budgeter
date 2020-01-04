@@ -11,6 +11,7 @@ mccabe==0.6.1
 mkl-fft==1.0.15
 mkl-service==2.3.0
 numpy==1.17.4
+psycopg2==2.8.4
 pylint==2.4.4
 pytz==2019.3
 six==1.13.0
