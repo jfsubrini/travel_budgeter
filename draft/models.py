@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# pylint: disable=
+# pylint: disable=missing-class-docstring,too-few-public-methods
 """All the models for the draft app of the travel_budgeter project."""
 
 from django.db import models
