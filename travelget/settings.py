@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "draft.apps.DraftConfig",
     "expenses.apps.ExpensesConfig",
     "monitoring.apps.MonitoringConfig",
+    "wallet.apps.WalletConfig",
     "xconverter.apps.XconverterConfig",
     "django.contrib.admin",
     "django.contrib.auth",

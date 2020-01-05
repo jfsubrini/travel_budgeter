@@ -1,3 +1,7 @@
+# -*- coding: utf-8 -*-
+# pylint: disable=
+"""All the views for the xconverter app of the travel_budgeter project."""
+
 from django.shortcuts import render
 
 
