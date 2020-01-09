@@ -5,7 +5,8 @@
 from django.conf import settings
 from django.db import models
 
-WALLET_TYPE = ["....", "....", "....", "...."]
+MONEY_TYPE = ["....", "....", "....", "...."]  # TODO
+TRANSACTION = ["....", "....", "....", "...."]  # TODO
 
 
 class Wallet(models.Model):
@@ -13,14 +14,14 @@ class Wallet(models.Model):
     To create the Wallet table in the database.
     """
 
-    WALLET_CHOICES = [(i, wallet) for i, wallet in enumerate(WALLET_TYPE, start=1)]
+    MONEY_TYPE_CHOICES = [(i, money) for i, money in enumerate(MONEY_TYPE, start=1)]
 
-    wallet_type = models.PositiveSmallIntegerField(
-        "Type de portefeuille", choices=WALLET_CHOICES
+    name = models.CharField("Nom du portefeuille", max_length=30)
+    money_type = models.PositiveSmallIntegerField(
+        "Type de portefeuille", choices=MONEY_TYPE_CHOICES
     )
-    currency = models.CharField("Devise", max_length=3)
-    amount = models.PositiveSmallIntegerField("Montant")
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="drafts")
+    currency = models.CharField("Devise", max_length=3)  # TODO
+    balance = models.PositiveSmallIntegerField("Solde")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -28,4 +29,31 @@ class Wallet(models.Model):
         verbose_name = "Portefeuille"
 
     def __str__(self):
-        return self.wallet_type
+        return self.name
+
+
+class Transaction(models.Model):
+    """
+    To create the Transaction table in the database.
+    """
+
+    TRANSACTION_CHOICES = [(i, trans) for i, trans in enumerate(TRANSACTION, start=1)]
+
+    type_ = models.PositiveSmallIntegerField(
+        "Type de transaction", choices=TRANSACTION_CHOICES
+    )
+    rate = models.FloatField("Taux de change")
+    wallet = models.ForeignKey(
+        Wallet,
+        on_delete=models.CASCADE,
+        related_name="....",  # TODO
+        verbose_name="....",  # TODO
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "Transaction"
+
+    def __str__(self):
+        return self.type_

@@ -5,22 +5,35 @@
 from django.conf import settings
 from django.db import models
 
-from draft.models import TravelUser
+from draft.models import Draft
 from wallet.models import Wallet
 
 
-class Expenses(models.Model):
-    """To create the Expenses table."""
+class Expense(models.Model):
+    """To create the Expense table."""
 
-    label = models.CharField("Intitulé de la dépense", max_length=150)
-    country = models.CharField("Pays", max_length=50)
-    place = models.CharField("Endroit", max_length=100, blank=True, null=True)
+    label = models.CharField("Intitulé de la dépense", max_length=200)
+    country = models.CharField("Pays", max_length=70)
+    place = models.CharField("Endroit", max_length=70, blank=True, null=True)
     currency = models.CharField("Devise", max_length=3)
     amount = models.PositiveSmallIntegerField("Montant")
     date = models.DateField("Date")
     photo = models.ImageField(
         "Photo de la facture", upload_to="expenses/", blank=True, null=True
     )
+    simulation = models.BooleanField("Simulation", default=False)
+    draft = models.ForeignKey(
+        Draft,
+        on_delete=models.CASCADE,
+        related_name="....",  # TODO
+        verbose_name="....",  # TODO
+    )
+    category = models.ForeignKey(
+        Draft,
+        on_delete=models.CASCADE,
+        related_name="....",  # TODO
+        verbose_name="....",  # TODO
+    )    
     wallet = models.ForeignKey(
         Wallet,
         on_delete=models.CASCADE,
@@ -36,23 +49,3 @@ class Expenses(models.Model):
 
     def __str__(self):
         return self.label
-
-
-class Category(models.Model):  # TODO
-    """To create the Category table."""
-
-    name = models.CharField("Nom de la catégorie", max_length=50)
-    expense = models.ForeignKey(
-        Expenses,
-        on_delete=models.CASCADE,
-        related_name="categories",
-        verbose_name="....",  # TODO
-    )
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        verbose_name = "....."  # TODO
-
-    def __str__(self):
-        return self.name
