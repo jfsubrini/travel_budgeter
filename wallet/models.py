@@ -2,6 +2,7 @@
 # pylint: disable=missing-class-docstring,too-few-public-methods
 """All the models for the wallet app of the travel_budgeter project."""
 
+from django.conf import settings
 from django.db import models
 
 WALLET_TYPE = ["....", "....", "....", "...."]
@@ -19,6 +20,7 @@ class Wallet(models.Model):
     )
     currency = models.CharField("Devise", max_length=3)
     amount = models.PositiveSmallIntegerField("Montant")
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="drafts")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

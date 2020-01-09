@@ -2,6 +2,7 @@
 # pylint: disable=missing-class-docstring,too-few-public-methods
 """All the models for the expenses app of the travel_budgeter project."""
 
+from django.conf import settings
 from django.db import models
 
 from draft.models import TravelUser
@@ -13,6 +14,7 @@ class Expenses(models.Model):
 
     label = models.CharField("Intitulé de la dépense", max_length=150)
     country = models.CharField("Pays", max_length=50)
+    place = models.CharField("Endroit", max_length=100, blank=True, null=True)
     currency = models.CharField("Devise", max_length=3)
     amount = models.PositiveSmallIntegerField("Montant")
     date = models.DateField("Date")
@@ -25,12 +27,7 @@ class Expenses(models.Model):
         related_name="....",  # TODO
         verbose_name="....",  # TODO
     )
-    travel_user = models.ForeignKey(
-        TravelUser,
-        on_delete=models.CASCADE,
-        related_name="user_expenses",
-        verbose_name="dépenses de l'utilisateur",  # TODO
-    )
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="drafts")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

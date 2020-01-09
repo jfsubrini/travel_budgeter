@@ -2,27 +2,8 @@
 # pylint: disable=missing-class-docstring,too-few-public-methods
 """All the models for the draft app of the travel_budgeter project."""
 
+from django.conf import settings
 from django.db import models
-
-
-class TravelUser(models.Model):
-    """
-    To create the TravelUser table in the database.
-    Gathering all the personnal data of the travel user.
-    """
-
-    first_name = models.CharField("Prénom", max_length=50)
-    last_name = models.CharField("Nom", max_length=50)
-    email = models.EmailField("Adresse email", max_length=100, unique=True)
-    password = models.CharField("Mot de passe", max_length=100)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        verbose_name = "utilisateur"
-
-    def __str__(self):
-        return f"{self.first_name} {self.last_name}"
 
 
 class Draft(models.Model):
@@ -47,12 +28,7 @@ class Draft(models.Model):
     activities = models.PositiveSmallIntegerField("Activités")
     souvenirs = models.PositiveSmallIntegerField("Souvenirs")
     various = models.PositiveSmallIntegerField("Divers")
-    travel_user = models.ForeignKey(
-        TravelUser,
-        on_delete=models.CASCADE,
-        related_name="drafts",
-        verbose_name=".....",  # TODO
-    )
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="drafts")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
