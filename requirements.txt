@@ -5,12 +5,15 @@ black==19.3b0
 certifi==2019.11.28
 Click==7.0
 Django==2.2.5
+et-xmlfile==1.0.1
 isort==4.3.21
+jdcal==1.4.1
 lazy-object-proxy==1.4.3
 mccabe==0.6.1
 mkl-fft==1.0.15
 mkl-service==2.3.0
 numpy==1.17.4
+openpyxl==3.0.2
 psycopg2==2.8.4
 pylint==2.4.4
 pytz==2019.3

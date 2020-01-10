@@ -9,9 +9,15 @@ from django.db import models
 class Category(models.Model):
     """To create the Category table."""
 
-    pre_departure = models.PositiveSmallIntegerField("Dépenses avant le départ", blank=True, null=True)
-    international_transport = models.PositiveSmallIntegerField("Transports internationaux", blank=True, null=True)
-    local_transport = models.PositiveSmallIntegerField("Transports nationaux", blank=True, null=True)
+    pre_departure = models.PositiveSmallIntegerField(
+        "Dépenses avant le départ", blank=True, null=True
+    )
+    international_transport = models.PositiveSmallIntegerField(
+        "Transports internationaux", blank=True, null=True
+    )
+    local_transport = models.PositiveSmallIntegerField(
+        "Transports nationaux", blank=True, null=True
+    )
     lodging = models.PositiveSmallIntegerField("Hébergements", blank=True, null=True)
     fooding = models.PositiveSmallIntegerField("Nourriture", blank=True, null=True)
     visiting = models.PositiveSmallIntegerField("Visites", blank=True, null=True)
@@ -37,11 +43,11 @@ class Draft(models.Model):
     currency = models.CharField("Devise", max_length=3)
     departure_date = models.DateField("Date de départ", blank=True, null=True)
     travel_duration = models.PositiveSmallIntegerField("Durée du voyage (en jours)")
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="drafts")
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="drafts"
+    )
     category = models.OneToOneField(
-        Category,
-        on_delete=models.CASCADE,
-        verbose_name="catégorie",
+        Category, on_delete=models.CASCADE, verbose_name="catégorie"
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

@@ -33,14 +33,16 @@ class Expense(models.Model):
         on_delete=models.CASCADE,
         related_name="....",  # TODO
         verbose_name="....",  # TODO
-    )    
+    )
     wallet = models.ForeignKey(
         Wallet,
         on_delete=models.CASCADE,
         related_name="....",  # TODO
         verbose_name="....",  # TODO
     )
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="drafts")
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="drafts"
+    )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

@@ -1,0 +1,1182 @@
+{
+    "Afghanistan": {
+        "PAYS": "Afghanistan",
+        "DEVISE": "Afghani",
+        "ISO": "AFN"
+    },
+    "Afrique du Sud": {
+        "PAYS": "Afrique du Sud",
+        "DEVISE": "Rand",
+        "ISO": "ZAR"
+    },
+    "Albanie": {
+        "PAYS": "Albanie",
+        "DEVISE": "Lek",
+        "ISO": "ALL"
+    },
+    "Alg\u00e9rie": {
+        "PAYS": "Alg\u00e9rie",
+        "DEVISE": "Dinar alg\u00e9rien",
+        "ISO": "DZD"
+    },
+    "Allemagne": {
+        "PAYS": "Allemagne",
+        "DEVISE": "Euro",
+        "ISO": "EUR"
+    },
+    "Andorre": {
+        "PAYS": "Andorre",
+        "DEVISE": "Euro",
+        "ISO": "EUR"
+    },
+    "Angola": {
+        "PAYS": "Angola",
+        "DEVISE": "Kwanza",
+        "ISO": "AOA"
+    },
+    "Anguilla": {
+        "PAYS": "Anguilla",
+        "DEVISE": "Dollar des Cara\u00efbes orientales",
+        "ISO": "XCD"
+    },
+    "Antigua-et-Barbuda": {
+        "PAYS": "Antigua-et-Barbuda",
+        "DEVISE": "Dollar des Cara\u00efbes orientales",
+        "ISO": "XCD"
+    },
+    "Antilles N\u00e9erlandaises": {
+        "PAYS": "Antilles N\u00e9erlandaises",
+        "DEVISE": "Florin des Antilles",
+        "ISO": "ANG"
+    },
+    "Arabie Saoudite": {
+        "PAYS": "Arabie Saoudite",
+        "DEVISE": "Riyal saoudien",
+        "ISO": "SAR"
+    },
+    "Argentine": {
+        "PAYS": "Argentine",
+        "DEVISE": "Peso argentin",
+        "ISO": "ARS"
+    },
+    "Arm\u00e9nie": {
+        "PAYS": "Arm\u00e9nie",
+        "DEVISE": "Dram arm\u00e9nien",
+        "ISO": "AMD"
+    },
+    "Aruba": {
+        "PAYS": "Aruba",
+        "DEVISE": "Florin d'Aruba",
+        "ISO": "AWG"
+    },
+    "Australie": {
+        "PAYS": "Australie",
+        "DEVISE": "Dollar australien",
+        "ISO": "AUD"
+    },
+    "Autriche": {
+        "PAYS": "Autriche",
+        "DEVISE": "Euro",
+        "ISO": "EUR"
+    },
+    "Azerba\u00efdjan": {
+        "PAYS": "Azerba\u00efdjan",
+        "DEVISE": "Manat",
+        "ISO": "AZN"
+    },
+    "Bahamas": {
+        "PAYS": "Bahamas",
+        "DEVISE": "Dollar des Bahamas",
+        "ISO": "BSD"
+    },
+    "Bahre\u00efn": {
+        "PAYS": "Bahre\u00efn",
+        "DEVISE": "Dinar de Bahre\u00efn",
+        "ISO": "BHD"
+    },
+    "Bangladesh": {
+        "PAYS": "Bangladesh",
+        "DEVISE": "Taka",
+        "ISO": "BDT"
+    },
+    "Barbade": {
+        "PAYS": "Barbade",
+        "DEVISE": "Dollar de Barbade",
+        "ISO": "BBD"
+    },
+    "B\u00e9larus": {
+        "PAYS": "B\u00e9larus",
+        "DEVISE": "Rouble b\u00e9lorusse",
+        "ISO": "BYR"
+    },
+    "Belgique": {
+        "PAYS": "Belgique",
+        "DEVISE": "Euro",
+        "ISO": "EUR"
+    },
+    "Belize": {
+        "PAYS": "Belize",
+        "DEVISE": "Dollar de Belize",
+        "ISO": "BZD"
+    },
+    "B\u00e9nin": {
+        "PAYS": "B\u00e9nin",
+        "DEVISE": "Franc CFA - BCEAO \u2020",
+        "ISO": "XOF"
+    },
+    "Bermudes": {
+        "PAYS": "Bermudes",
+        "DEVISE": "Dollar des Bermudes",
+        "ISO": "BMD"
+    },
+    "Bhoutan": {
+        "PAYS": "Bhoutan",
+        "DEVISE": "Ngultrum",
+        "ISO": "BTN"
+    },
+    "Bolivie": {
+        "PAYS": "Bolivie",
+        "DEVISE": "Boliviano",
+        "ISO": "BOB"
+    },
+    "Bosnie-Herz\u00e9govine": {
+        "PAYS": "Bosnie-Herz\u00e9govine",
+        "DEVISE": "Mark convertible",
+        "ISO": "BAM"
+    },
+    "Botswana": {
+        "PAYS": "Botswana",
+        "DEVISE": "Pula",
+        "ISO": "BWP"
+    },
+    "Bouvet, \u00cele": {
+        "PAYS": "Bouvet, \u00cele",
+        "DEVISE": "Couronne norv\u00e9gienne",
+        "ISO": "NOK"
+    },
+    "Br\u00e9sil": {
+        "PAYS": "Br\u00e9sil",
+        "DEVISE": "Real",
+        "ISO": "BRL"
+    },
+    "Brunei Darussalam": {
+        "PAYS": "Brunei Darussalam",
+        "DEVISE": "Dollar de Brunei",
+        "ISO": "BND"
+    },
+    "Bulgarie": {
+        "PAYS": "Bulgarie",
+        "DEVISE": "Bulgarian Lev",
+        "ISO": "BGN"
+    },
+    "Burkina Faso": {
+        "PAYS": "Burkina Faso",
+        "DEVISE": "Franc CFA - BCEAO \u2020",
+        "ISO": "XOF"
+    },
+    "Burundi": {
+        "PAYS": "Burundi",
+        "DEVISE": "Franc du Burundi",
+        "ISO": "BIF"
+    },
+    "Ca\u00efmans, \u00celes": {
+        "PAYS": "Ca\u00efmans, \u00celes",
+        "DEVISE": "Dollar des Iles Ca\u00efmans",
+        "ISO": "KYD"
+    },
+    "Cambodge": {
+        "PAYS": "Cambodge",
+        "DEVISE": "Riel",
+        "ISO": "KHR"
+    },
+    "Cameroun": {
+        "PAYS": "Cameroun",
+        "DEVISE": "Franc CFA - BEAC \u2021",
+        "ISO": "XAF"
+    },
+    "Canada": {
+        "PAYS": "Canada",
+        "DEVISE": "Dollar canadien",
+        "ISO": "CAD"
+    },
+    "Cap-Vert": {
+        "PAYS": "Cap-Vert",
+        "DEVISE": "Escudo du Cap-Vert",
+        "ISO": "CVE"
+    },
+    "Centrafricaine, R\u00e9publique": {
+        "PAYS": "Centrafricaine, R\u00e9publique",
+        "DEVISE": "Franc CFA - BEAC \u2021",
+        "ISO": "XAF"
+    },
+    "Chili": {
+        "PAYS": "Chili",
+        "DEVISE": "Peso chilien",
+        "ISO": "CLP"
+    },
+    "Chine": {
+        "PAYS": "Chine",
+        "DEVISE": "Yuan ou renminbi",
+        "ISO": "CNY"
+    },
+    "Christmas, \u00cele": {
+        "PAYS": "Christmas, \u00cele",
+        "DEVISE": "Dollar australien",
+        "ISO": "AUD"
+    },
+    "Chypre": {
+        "PAYS": "Chypre",
+        "DEVISE": "Euro",
+        "ISO": "EUR"
+    },
+    "Cocos (Keeling), \u00celes": {
+        "PAYS": "Cocos (Keeling), \u00celes",
+        "DEVISE": "Dollar australien",
+        "ISO": "AUD"
+    },
+    "Colombie": {
+        "PAYS": "Colombie",
+        "DEVISE": "Peso colombien",
+        "ISO": "COP"
+    },
+    "Comores": {
+        "PAYS": "Comores",
+        "DEVISE": "Franc des Comores",
+        "ISO": "KMF"
+    },
+    "Congo": {
+        "PAYS": "Congo",
+        "DEVISE": "Franc CFA - BEAC",
+        "ISO": "XAF"
+    },
+    "Congo, La R\u00e9publique d\u00e9mocratique du": {
+        "PAYS": "Congo, La R\u00e9publique d\u00e9mocratique du",
+        "DEVISE": "Franc Congolais",
+        "ISO": "CDF"
+    },
+    "Cook, \u00celes": {
+        "PAYS": "Cook, \u00celes",
+        "DEVISE": "Dollar n\u00e9o-z\u00e9landais",
+        "ISO": "NZD"
+    },
+    "Cor\u00e9e, R\u00e9publique de": {
+        "PAYS": "Cor\u00e9e, R\u00e9publique de",
+        "DEVISE": "Won",
+        "ISO": "KRW"
+    },
+    "Cor\u00e9e, R\u00e9publique Populaire d\u00e9mocratique de": {
+        "PAYS": "Cor\u00e9e, R\u00e9publique Populaire d\u00e9mocratique de",
+        "DEVISE": "Won de la Cor\u00e9e du Nord",
+        "ISO": "KPW"
+    },
+    "Costa Rica": {
+        "PAYS": "Costa Rica",
+        "DEVISE": "Colon de Costa Rica",
+        "ISO": "CRC"
+    },
+    "C\u00f4te D'ivoire": {
+        "PAYS": "C\u00f4te D'ivoire",
+        "DEVISE": "Franc CFA - BCEAO",
+        "ISO": "XOF"
+    },
+    "Croatie": {
+        "PAYS": "Croatie",
+        "DEVISE": "Kuna",
+        "ISO": "HRK"
+    },
+    "Cuba": {
+        "PAYS": "Cuba",
+        "DEVISE": "Peso cubain",
+        "ISO": "CUP"
+    },
+    "Danemark": {
+        "PAYS": "Danemark",
+        "DEVISE": "Couronne danoise",
+        "ISO": "DKK"
+    },
+    "Djibouti": {
+        "PAYS": "Djibouti",
+        "DEVISE": "Franc de Djibouti",
+        "ISO": "DJF"
+    },
+    "Dominicaine, R\u00e9publique": {
+        "PAYS": "Dominicaine, R\u00e9publique",
+        "DEVISE": "Peso dominicain",
+        "ISO": "DOP"
+    },
+    "Dominique": {
+        "PAYS": "Dominique",
+        "DEVISE": "Dollar des Cara\u00efbes orientales",
+        "ISO": "XCD"
+    },
+    "\u00c9gypte": {
+        "PAYS": "\u00c9gypte",
+        "DEVISE": "Livre \u00e9gyptienne",
+        "ISO": "EGP"
+    },
+    "El Savador": {
+        "PAYS": "El Savador",
+        "DEVISE": "Colon du El Salvador",
+        "ISO": "SVC"
+    },
+    "\u00c9mirats Arabes Unis": {
+        "PAYS": "\u00c9mirats Arabes Unis",
+        "DEVISE": "Dirham des \u00e9mirats arabes unis",
+        "ISO": "AED"
+    },
+    "\u00c9quateur": {
+        "PAYS": "\u00c9quateur",
+        "DEVISE": "Dollar des \u00c9tats-Unis",
+        "ISO": "USD"
+    },
+    "\u00c9rythr\u00e9e": {
+        "PAYS": "\u00c9rythr\u00e9e",
+        "DEVISE": "Nakfa",
+        "ISO": "ERN"
+    },
+    "Espagne": {
+        "PAYS": "Espagne",
+        "DEVISE": "Euro",
+        "ISO": "EUR"
+    },
+    "Estonie": {
+        "PAYS": "Estonie",
+        "DEVISE": "Couronne estonienne",
+        "ISO": "EEK"
+    },
+    "Etats-Unis": {
+        "PAYS": "Etats-Unis",
+        "DEVISE": "Dollar des Etats-Unis",
+        "ISO": "USD"
+    },
+    "\u00c9thiopie": {
+        "PAYS": "\u00c9thiopie",
+        "DEVISE": "Birr \u00e9thiopien",
+        "ISO": "ETB"
+    },
+    "Falkland, \u00celes (Malvinas)": {
+        "PAYS": "Falkland, \u00celes (Malvinas)",
+        "DEVISE": "Livre de Falkland",
+        "ISO": "FKP"
+    },
+    "F\u00e9ro\u00e9, \u00celes": {
+        "PAYS": "F\u00e9ro\u00e9, \u00celes",
+        "DEVISE": "Couronne danoise",
+        "ISO": "DKK"
+    },
+    "Fidji": {
+        "PAYS": "Fidji",
+        "DEVISE": "Dollar de Fidji",
+        "ISO": "FJD"
+    },
+    "Finlande": {
+        "PAYS": "Finlande",
+        "DEVISE": "Euro",
+        "ISO": "EUR"
+    },
+    "France": {
+        "PAYS": "France",
+        "DEVISE": "Euro",
+        "ISO": "EUR"
+    },
+    "Gabon": {
+        "PAYS": "Gabon",
+        "DEVISE": "Franc CFA - BEAC",
+        "ISO": "XAF"
+    },
+    "Gambie": {
+        "PAYS": "Gambie",
+        "DEVISE": "Dalasi",
+        "ISO": "GMD"
+    },
+    "G\u00e9orgie du Sud et \u00celes Sandwich du Sud": {
+        "PAYS": "G\u00e9orgie du Sud et \u00celes Sandwich du Sud",
+        "DEVISE": "Lari",
+        "ISO": "GEL"
+    },
+    "Ghana": {
+        "PAYS": "Ghana",
+        "DEVISE": "Ghana Cedi",
+        "ISO": "GHS"
+    },
+    "Gibraltar": {
+        "PAYS": "Gibraltar",
+        "DEVISE": "Livre de Gibraltar",
+        "ISO": "GIP"
+    },
+    "Gr\u00e8ce": {
+        "PAYS": "Gr\u00e8ce",
+        "DEVISE": "Euro",
+        "ISO": "EUR"
+    },
+    "Grenade": {
+        "PAYS": "Grenade",
+        "DEVISE": "Dollar des Cara\u00efbes orientales",
+        "ISO": "XCD"
+    },
+    "Groenland": {
+        "PAYS": "Groenland",
+        "DEVISE": "Couronne danoise",
+        "ISO": "DKK"
+    },
+    "Guadeloupe": {
+        "PAYS": "Guadeloupe",
+        "DEVISE": "Euro",
+        "ISO": "EUR"
+    },
+    "Guam": {
+        "PAYS": "Guam",
+        "DEVISE": "Dollar des \u00c9tats-Unis",
+        "ISO": "USD"
+    },
+    "Guatemala": {
+        "PAYS": "Guatemala",
+        "DEVISE": "Quetzal",
+        "ISO": "GTQ"
+    },
+    "Guin\u00e9e": {
+        "PAYS": "Guin\u00e9e",
+        "DEVISE": "Franc guin\u00e9en",
+        "ISO": "GNF"
+    },
+    "Guin\u00e9e-Bissau": {
+        "PAYS": "Guin\u00e9e-Bissau",
+        "DEVISE": "Franc CFA - BCEAO",
+        "ISO": "XOF"
+    },
+    "Guin\u00e9e \u00c9quatoriale": {
+        "PAYS": "Guin\u00e9e \u00c9quatoriale",
+        "DEVISE": "Franc CFA - BEAC",
+        "ISO": "XAF"
+    },
+    "Guyane": {
+        "PAYS": "Guyane",
+        "DEVISE": "Dollar de Guyane",
+        "ISO": "GYD"
+    },
+    "Guyane Fran\u00e7aise": {
+        "PAYS": "Guyane Fran\u00e7aise",
+        "DEVISE": "Euro",
+        "ISO": "EUR"
+    },
+    "Ha\u00efti": {
+        "PAYS": "Ha\u00efti",
+        "DEVISE": "Gourde",
+        "ISO": "HTG"
+    },
+    "Heard et \u00celes Mcdonald,\u00cele": {
+        "PAYS": "Heard et \u00celes Mcdonald,\u00cele",
+        "DEVISE": "Dollar australien",
+        "ISO": "AUD"
+    },
+    "Honduras": {
+        "PAYS": "Honduras",
+        "DEVISE": "Lempira",
+        "ISO": "HNL"
+    },
+    "Hong-Kong": {
+        "PAYS": "Hong-Kong",
+        "DEVISE": "Dollar de Hong-Kong",
+        "ISO": "HKD"
+    },
+    "Hongrie": {
+        "PAYS": "Hongrie",
+        "DEVISE": "Forint",
+        "ISO": "HUF"
+    },
+    "\u00celes mineures \u00e9loign\u00e9es des \u00c9tats-Unis": {
+        "PAYS": "\u00celes mineures \u00e9loign\u00e9es des \u00c9tats-Unis",
+        "DEVISE": "Dollar des \u00c9tats-Unis",
+        "ISO": "USD"
+    },
+    "\u00celes Vierges (Britanniques)": {
+        "PAYS": "\u00celes Vierges (Britanniques)",
+        "DEVISE": "Dollar des \u00c9tats-Unis",
+        "ISO": "USD"
+    },
+    "\u00celes Vierges (\u00c9.-U.)": {
+        "PAYS": "\u00celes Vierges (\u00c9.-U.)",
+        "DEVISE": "Dollar des \u00c9tats-Unis",
+        "ISO": "USD"
+    },
+    "Inde": {
+        "PAYS": "Inde",
+        "DEVISE": "Roupie indienne",
+        "ISO": "INR"
+    },
+    "Indon\u00e9sie": {
+        "PAYS": "Indon\u00e9sie",
+        "DEVISE": "Rupiah",
+        "ISO": "IDR"
+    },
+    "Iran (R\u00e9publique Islamique d')": {
+        "PAYS": "Iran (R\u00e9publique Islamique d')",
+        "DEVISE": "Rial iranien",
+        "ISO": "IRR"
+    },
+    "Iraq": {
+        "PAYS": "Iraq",
+        "DEVISE": "Dinar iraquien",
+        "ISO": "IQD"
+    },
+    "Irlande": {
+        "PAYS": "Irlande",
+        "DEVISE": "Euro",
+        "ISO": "EUR"
+    },
+    "Islande": {
+        "PAYS": "Islande",
+        "DEVISE": "Couronne islandaise",
+        "ISO": "ISK"
+    },
+    "Isra\u00ebl": {
+        "PAYS": "Isra\u00ebl",
+        "DEVISE": "Nouveau isra\u00ebli sheqel",
+        "ISO": "ILS"
+    },
+    "Italie": {
+        "PAYS": "Italie",
+        "DEVISE": "Euro",
+        "ISO": "EUR"
+    },
+    "Jama\u00efque": {
+        "PAYS": "Jama\u00efque",
+        "DEVISE": "Dollar jama\u00efcain",
+        "ISO": "JMD"
+    },
+    "Japon": {
+        "PAYS": "Japon",
+        "DEVISE": "Yen",
+        "ISO": "JPY"
+    },
+    "Jordanie": {
+        "PAYS": "Jordanie",
+        "DEVISE": "Dinar jordanien",
+        "ISO": "JOD"
+    },
+    "Kazakhstan": {
+        "PAYS": "Kazakhstan",
+        "DEVISE": "Tenge",
+        "ISO": "KZT"
+    },
+    "Kenya": {
+        "PAYS": "Kenya",
+        "DEVISE": "Shilling du Kenya",
+        "ISO": "KES"
+    },
+    "Kirghizistan": {
+        "PAYS": "Kirghizistan",
+        "DEVISE": "Som",
+        "ISO": "KGS"
+    },
+    "Kiribati": {
+        "PAYS": "Kiribati",
+        "DEVISE": "Dollar australien",
+        "ISO": "AUD"
+    },
+    "Kowe\u00eft": {
+        "PAYS": "Kowe\u00eft",
+        "DEVISE": "Dinar kowe\u00eftien",
+        "ISO": "KWD"
+    },
+    "Lao, R\u00e9publique D\u00e9mocratique populaire": {
+        "PAYS": "Lao, R\u00e9publique D\u00e9mocratique populaire",
+        "DEVISE": "Kip",
+        "ISO": "LAK"
+    },
+    "Lesotho": {
+        "PAYS": "Lesotho",
+        "DEVISE": "Loti",
+        "ISO": "LSL"
+    },
+    "Lettonie": {
+        "PAYS": "Lettonie",
+        "DEVISE": "Lats letton",
+        "ISO": "LVL"
+    },
+    "Liban": {
+        "PAYS": "Liban",
+        "DEVISE": "Livre libanaise",
+        "ISO": "LBP"
+    },
+    "Lib\u00e9ria": {
+        "PAYS": "Lib\u00e9ria",
+        "DEVISE": "Dollar lib\u00e9rien",
+        "ISO": "LRD"
+    },
+    "Libyenne, Jamahiriya Arabe": {
+        "PAYS": "Libyenne, Jamahiriya Arabe",
+        "DEVISE": "Dinar libyen",
+        "ISO": "LYD"
+    },
+    "Liechtenstein": {
+        "PAYS": "Liechtenstein",
+        "DEVISE": "Franc suisse",
+        "ISO": "CHF"
+    },
+    "Lituanie": {
+        "PAYS": "Lituanie",
+        "DEVISE": "Litas lituanien",
+        "ISO": "LTL"
+    },
+    "Luxembourg": {
+        "PAYS": "Luxembourg",
+        "DEVISE": "Euro",
+        "ISO": "EUR"
+    },
+    "Macao": {
+        "PAYS": "Macao",
+        "DEVISE": "Pataca",
+        "ISO": "MOP"
+    },
+    "Mac\u00e9doine, ancienne R\u00e9publique Yougoslave de": {
+        "PAYS": "Mac\u00e9doine, ancienne R\u00e9publique Yougoslave de",
+        "DEVISE": "Denar",
+        "ISO": "MKD"
+    },
+    "Madagascar": {
+        "PAYS": "Madagascar",
+        "DEVISE": "Malagasy Ariary",
+        "ISO": "MGA"
+    },
+    "Malaisie": {
+        "PAYS": "Malaisie",
+        "DEVISE": "Ringgit de Malaisie",
+        "ISO": "MYR"
+    },
+    "Malawi": {
+        "PAYS": "Malawi",
+        "DEVISE": "Kwacha",
+        "ISO": "MWK"
+    },
+    "Maldives": {
+        "PAYS": "Maldives",
+        "DEVISE": "Rufiyaa",
+        "ISO": "MVR"
+    },
+    "Mali": {
+        "PAYS": "Mali",
+        "DEVISE": "Franc CFA - BCEAO",
+        "ISO": "XOF"
+    },
+    "Malte": {
+        "PAYS": "Malte",
+        "DEVISE": "Euro",
+        "ISO": "MTL"
+    },
+    "Mariannes du Nord, \u00celes": {
+        "PAYS": "Mariannes du Nord, \u00celes",
+        "DEVISE": "Dollar des Etats-Unis",
+        "ISO": "USD"
+    },
+    "Maroc": {
+        "PAYS": "Maroc",
+        "DEVISE": "Dirham marocain",
+        "ISO": "MAD"
+    },
+    "Marshall, \u00celes": {
+        "PAYS": "Marshall, \u00celes",
+        "DEVISE": "Dollar des \u00c9tats-Unis",
+        "ISO": "USD"
+    },
+    "Martinique": {
+        "PAYS": "Martinique",
+        "DEVISE": "Euro",
+        "ISO": "EUR"
+    },
+    "Maurice": {
+        "PAYS": "Maurice",
+        "DEVISE": "Roupie de Maurice",
+        "ISO": "MUR"
+    },
+    "Mauritanie": {
+        "PAYS": "Mauritanie",
+        "DEVISE": "Ouguija",
+        "ISO": "MRO"
+    },
+    "Mayotte": {
+        "PAYS": "Mayotte",
+        "DEVISE": "Euro",
+        "ISO": "EUR"
+    },
+    "Mexique": {
+        "PAYS": "Mexique",
+        "DEVISE": "Peso mexicain",
+        "ISO": "MXN"
+    },
+    "Moldova, R\u00e9publique de": {
+        "PAYS": "Moldova, R\u00e9publique de",
+        "DEVISE": "Leu de Moldavie",
+        "ISO": "MDL"
+    },
+    "Monaco": {
+        "PAYS": "Monaco",
+        "DEVISE": "Euro",
+        "ISO": "EUR"
+    },
+    "Mongolie": {
+        "PAYS": "Mongolie",
+        "DEVISE": "Tugrik",
+        "ISO": "MNT"
+    },
+    "Mont\u00e9n\u00e9gro": {
+        "PAYS": "Mont\u00e9n\u00e9gro",
+        "DEVISE": "Euro",
+        "ISO": "EUR"
+    },
+    "Montserrat": {
+        "PAYS": "Montserrat",
+        "DEVISE": "Dollar des Cara\u00efbes orientales",
+        "ISO": "XCD"
+    },
+    "Mozambique": {
+        "PAYS": "Mozambique",
+        "DEVISE": "Metical",
+        "ISO": "MZN"
+    },
+    "Myanmar": {
+        "PAYS": "Myanmar",
+        "DEVISE": "Kyat",
+        "ISO": "MMK"
+    },
+    "Namibie": {
+        "PAYS": "Namibie",
+        "DEVISE": "Dollar namibien",
+        "ISO": "NAD"
+    },
+    "Nauru": {
+        "PAYS": "Nauru",
+        "DEVISE": "Dollar australien",
+        "ISO": "AUD"
+    },
+    "N\u00e9pal": {
+        "PAYS": "N\u00e9pal",
+        "DEVISE": "Roupie du N\u00e9pal",
+        "ISO": "NPR"
+    },
+    "Nicaragua": {
+        "PAYS": "Nicaragua",
+        "DEVISE": "Cordoba Oro",
+        "ISO": "NIO"
+    },
+    "Niger": {
+        "PAYS": "Niger",
+        "DEVISE": "Franc CFA - BCEAO",
+        "ISO": "XOF"
+    },
+    "Nigeria": {
+        "PAYS": "Nigeria",
+        "DEVISE": "Naira",
+        "ISO": "NGN"
+    },
+    "Niu\u00e9": {
+        "PAYS": "Niu\u00e9",
+        "DEVISE": "Dollar n\u00e9o-z\u00e9landais",
+        "ISO": "NZD"
+    },
+    "Norfolk, \u00cele": {
+        "PAYS": "Norfolk, \u00cele",
+        "DEVISE": "Dollar australien",
+        "ISO": "AUD"
+    },
+    "Norv\u00e8ge": {
+        "PAYS": "Norv\u00e8ge",
+        "DEVISE": "Couronne norv\u00e9gienne",
+        "ISO": "NOK"
+    },
+    "Nouvelle-Cal\u00e9donie": {
+        "PAYS": "Nouvelle-Cal\u00e9donie",
+        "DEVISE": "Franc CFP",
+        "ISO": "XPF"
+    },
+    "Nouvelle-Z\u00e9lande": {
+        "PAYS": "Nouvelle-Z\u00e9lande",
+        "DEVISE": "Dollar n\u00e9o-z\u00e9landais",
+        "ISO": "NZD"
+    },
+    "Oc\u00e9an Indien, Territoire Britannique de l'": {
+        "PAYS": "Oc\u00e9an Indien, Territoire Britannique de l'",
+        "DEVISE": "Dollar des \u00c9tats-Unis",
+        "ISO": "USD"
+    },
+    "Oman": {
+        "PAYS": "Oman",
+        "DEVISE": "Rial Omani",
+        "ISO": "OMR"
+    },
+    "Ouganda": {
+        "PAYS": "Ouganda",
+        "DEVISE": "Shilling ougandais",
+        "ISO": "UGX"
+    },
+    "Ouzb\u00e9kistan": {
+        "PAYS": "Ouzb\u00e9kistan",
+        "DEVISE": "Soum d'Ouzb\u00e9kistan",
+        "ISO": "UZS"
+    },
+    "Pakistan": {
+        "PAYS": "Pakistan",
+        "DEVISE": "Roupie du Pakistan",
+        "ISO": "PKR"
+    },
+    "Palaos": {
+        "PAYS": "Palaos",
+        "DEVISE": "Dollar des \u00c9tats-Unis",
+        "ISO": "USD"
+    },
+    "Panama": {
+        "PAYS": "Panama",
+        "DEVISE": "Balboa",
+        "ISO": "PAB"
+    },
+    "Papouasie-Nouvelle-Guin\u00e9e": {
+        "PAYS": "Papouasie-Nouvelle-Guin\u00e9e",
+        "DEVISE": "Kina",
+        "ISO": "PGK"
+    },
+    "Paraguay": {
+        "PAYS": "Paraguay",
+        "DEVISE": "Guarani",
+        "ISO": "PYG"
+    },
+    "Pays-Bas": {
+        "PAYS": "Pays-Bas",
+        "DEVISE": "Euro",
+        "ISO": "EUR"
+    },
+    "P\u00e9rou": {
+        "PAYS": "P\u00e9rou",
+        "DEVISE": "Nouveau Sol",
+        "ISO": "PEN"
+    },
+    "Philippines": {
+        "PAYS": "Philippines",
+        "DEVISE": "Peso philippin",
+        "ISO": "PHP"
+    },
+    "Pitcairn": {
+        "PAYS": "Pitcairn",
+        "DEVISE": "Dollar n\u00e9o-z\u00e9landais",
+        "ISO": "NZD"
+    },
+    "Pologne": {
+        "PAYS": "Pologne",
+        "DEVISE": "Zloty",
+        "ISO": "PLN"
+    },
+    "Polyn\u00e9sie Fran\u00e7aise": {
+        "PAYS": "Polyn\u00e9sie Fran\u00e7aise",
+        "DEVISE": "Franc CFP",
+        "ISO": "XPF"
+    },
+    "Porto Rico": {
+        "PAYS": "Porto Rico",
+        "DEVISE": "Dollar des \u00c9tats-Unis",
+        "ISO": "USD"
+    },
+    "Portugal": {
+        "PAYS": "Portugal",
+        "DEVISE": "Euro",
+        "ISO": "EUR"
+    },
+    "Qatar": {
+        "PAYS": "Qatar",
+        "DEVISE": "Riyal du Qatar",
+        "ISO": "QAR"
+    },
+    "R\u00e9union": {
+        "PAYS": "R\u00e9union",
+        "DEVISE": "Euro",
+        "ISO": "EUR"
+    },
+    "Roumanie": {
+        "PAYS": "Roumanie",
+        "DEVISE": "Leu roumain",
+        "ISO": "RON"
+    },
+    "Royaume-Uni": {
+        "PAYS": "Royaume-Uni",
+        "DEVISE": "Livre sterling",
+        "ISO": "GBP"
+    },
+    "Russie, F\u00e9d\u00e9ration De": {
+        "PAYS": "Russie, F\u00e9d\u00e9ration De",
+        "DEVISE": "Rouble russe",
+        "ISO": "RUB"
+    },
+    "Rwanda": {
+        "PAYS": "Rwanda",
+        "DEVISE": "Franc du Rwanda",
+        "ISO": "RWF"
+    },
+    "Sahara Occidental": {
+        "PAYS": "Sahara Occidental",
+        "DEVISE": "Dirham marocain",
+        "ISO": "MAD"
+    },
+    "Sainte-H\u00e9l\u00e8ne": {
+        "PAYS": "Sainte-H\u00e9l\u00e8ne",
+        "DEVISE": "Livre de Sainte-H\u00e9l\u00e8ne",
+        "ISO": "SHP"
+    },
+    "Saint-Kitts-et-Nevis": {
+        "PAYS": "Saint-Kitts-et-Nevis",
+        "DEVISE": "Dollar des Cara\u00efbes orientales",
+        "ISO": "XCD"
+    },
+    "Sainte-Lucie": {
+        "PAYS": "Sainte-Lucie",
+        "DEVISE": "Dollar des Cara\u00efbes orientales",
+        "ISO": "XCD"
+    },
+    "Saint-Marin": {
+        "PAYS": "Saint-Marin",
+        "DEVISE": "Euro",
+        "ISO": "EUR"
+    },
+    "Saint Pierre et Miquelon": {
+        "PAYS": "Saint Pierre et Miquelon",
+        "DEVISE": "Euro",
+        "ISO": "EUR"
+    },
+    "Saint-Vincent-et-Grenadines": {
+        "PAYS": "Saint-Vincent-et-Grenadines",
+        "DEVISE": "Dollar des Cara\u00efbes orientales",
+        "ISO": "XCD"
+    },
+    "Salomon, \u00celes": {
+        "PAYS": "Salomon, \u00celes",
+        "DEVISE": "Dollar de Salomon",
+        "ISO": "SBD"
+    },
+    "Samoa": {
+        "PAYS": "Samoa",
+        "DEVISE": "Tala",
+        "ISO": "WST"
+    },
+    "Samoa Am\u00e9ricaines": {
+        "PAYS": "Samoa Am\u00e9ricaines",
+        "DEVISE": "Dollar des \u00c9tats-Unis",
+        "ISO": "USD"
+    },
+    "S\u00e3o Tom\u00e9-et-Principe": {
+        "PAYS": "S\u00e3o Tom\u00e9-et-Principe",
+        "DEVISE": "Dobra",
+        "ISO": "STD"
+    },
+    "S\u00e9n\u00e9gal": {
+        "PAYS": "S\u00e9n\u00e9gal",
+        "DEVISE": "Franc CFA - BCEAO \u2020",
+        "ISO": "XOF"
+    },
+    "Serbie": {
+        "PAYS": "Serbie",
+        "DEVISE": "Dinar serbe",
+        "ISO": "RSD"
+    },
+    "Seychelles": {
+        "PAYS": "Seychelles",
+        "DEVISE": "Roupie des Seychelles",
+        "ISO": "SCR"
+    },
+    "Sierra Leone": {
+        "PAYS": "Sierra Leone",
+        "DEVISE": "Leone",
+        "ISO": "SLL"
+    },
+    "Singapour": {
+        "PAYS": "Singapour",
+        "DEVISE": "Dollar de Singapour",
+        "ISO": "SGD"
+    },
+    "Slovaquie": {
+        "PAYS": "Slovaquie",
+        "DEVISE": "Couronne slovaque",
+        "ISO": "SKK"
+    },
+    "Slov\u00e9nie": {
+        "PAYS": "Slov\u00e9nie",
+        "DEVISE": "Euro",
+        "ISO": "EUR"
+    },
+    "Somalie": {
+        "PAYS": "Somalie",
+        "DEVISE": "Shilling de Somalie",
+        "ISO": "SOS"
+    },
+    "Soudan": {
+        "PAYS": "Soudan",
+        "DEVISE": "Livre soudanaise",
+        "ISO": "SDG"
+    },
+    "Sri Lanka": {
+        "PAYS": "Sri Lanka",
+        "DEVISE": "Roupie de Sri Lanka",
+        "ISO": "LKR"
+    },
+    "Su\u00e8de": {
+        "PAYS": "Su\u00e8de",
+        "DEVISE": "Couronne su\u00e9doise",
+        "ISO": "SEK"
+    },
+    "Suisse": {
+        "PAYS": "Suisse",
+        "DEVISE": "Franc Suisse",
+        "ISO": "CHF"
+    },
+    "Suriname": {
+        "PAYS": "Suriname",
+        "DEVISE": "Dollar de Surinam",
+        "ISO": "SRD"
+    },
+    "Svalbard et \u00celes Jan Mayen": {
+        "PAYS": "Svalbard et \u00celes Jan Mayen",
+        "DEVISE": "Couronne norv\u00e9gienne",
+        "ISO": "NOK"
+    },
+    "Swaziland": {
+        "PAYS": "Swaziland",
+        "DEVISE": "Lilangeni",
+        "ISO": "SZL"
+    },
+    "Syrienne, R\u00e9publique Arabe": {
+        "PAYS": "Syrienne, R\u00e9publique Arabe",
+        "DEVISE": "Livre syrienne",
+        "ISO": "SYP"
+    },
+    "Tadjikistan": {
+        "PAYS": "Tadjikistan",
+        "DEVISE": "Somoni",
+        "ISO": "TJS"
+    },
+    "Ta\u00efwan, Province Chinoise De": {
+        "PAYS": "Ta\u00efwan, Province Chinoise De",
+        "DEVISE": "Nouveau dollar de Ta\u00efwan",
+        "ISO": "TWD"
+    },
+    "Tanzanie, R\u00e9publique-Unie de": {
+        "PAYS": "Tanzanie, R\u00e9publique-Unie de",
+        "DEVISE": "Shilling de Tanzanie",
+        "ISO": "TZS"
+    },
+    "Terres Australes Fran\u00e7ais": {
+        "PAYS": "Terres Australes Fran\u00e7ais",
+        "DEVISE": "Euro",
+        "ISO": "EUR"
+    },
+    "Tchad": {
+        "PAYS": "Tchad",
+        "DEVISE": "Franc CFA - BCEAO \u2020",
+        "ISO": "XAF"
+    },
+    "Tch\u00e8que, R\u00e9publique": {
+        "PAYS": "Tch\u00e8que, R\u00e9publique",
+        "DEVISE": "Couronne tch\u00e8que",
+        "ISO": "CZK"
+    },
+    "Tha\u00eflande": {
+        "PAYS": "Tha\u00eflande",
+        "DEVISE": "Baht",
+        "ISO": "THB"
+    },
+    "Timor-Leste": {
+        "PAYS": "Timor-Leste",
+        "DEVISE": "Dollar des \u00c9tats-Unis",
+        "ISO": "USD"
+    },
+    "Togo": {
+        "PAYS": "Togo",
+        "DEVISE": "Franc CFA - BCEAO \u2020",
+        "ISO": "XOF"
+    },
+    "Tok\u00e9laou": {
+        "PAYS": "Tok\u00e9laou",
+        "DEVISE": "Dollar n\u00e9o-z\u00e9landais",
+        "ISO": "NZD"
+    },
+    "Tonga": {
+        "PAYS": "Tonga",
+        "DEVISE": "Pa'anga",
+        "ISO": "TOP"
+    },
+    "Trinit\u00e9-Et-Tobago": {
+        "PAYS": "Trinit\u00e9-Et-Tobago",
+        "DEVISE": "Dollar de la Trinit\u00e9 et de Tobago",
+        "ISO": "TTD"
+    },
+    "Tunisie": {
+        "PAYS": "Tunisie",
+        "DEVISE": "Dinar tunisien",
+        "ISO": "TND"
+    },
+    "Turkm\u00e9nistan": {
+        "PAYS": "Turkm\u00e9nistan",
+        "DEVISE": "Manat",
+        "ISO": "TMM"
+    },
+    "Turks Et Ca\u00efques, \u00celes": {
+        "PAYS": "Turks Et Ca\u00efques, \u00celes",
+        "DEVISE": "Dollar des \u00c9tats-Unis",
+        "ISO": "USD"
+    },
+    "Turquie": {
+        "PAYS": "Turquie",
+        "DEVISE": "Livre turque",
+        "ISO": "TRY"
+    },
+    "Tuvalu": {
+        "PAYS": "Tuvalu",
+        "DEVISE": "Dollar australien",
+        "ISO": "AUD"
+    },
+    "Ukraine": {
+        "PAYS": "Ukraine",
+        "DEVISE": "Hryvnia",
+        "ISO": "UAH"
+    },
+    "Uruguay": {
+        "PAYS": "Uruguay",
+        "DEVISE": "Peso uruguayen",
+        "ISO": "UYU"
+    },
+    "Vanuatu": {
+        "PAYS": "Vanuatu",
+        "DEVISE": "Vatu",
+        "ISO": "VUV"
+    },
+    "Vatican, \u00c9tat de la Cit\u00e9 Du(Saint-Si\u00e8ge)": {
+        "PAYS": "Vatican, \u00c9tat de la Cit\u00e9 Du(Saint-Si\u00e8ge)",
+        "DEVISE": "Euro",
+        "ISO": "EUR"
+    },
+    "Venezuela": {
+        "PAYS": "Venezuela",
+        "DEVISE": "Bolivar Fuerte",
+        "ISO": "VEF"
+    },
+    "Viet Nam": {
+        "PAYS": "Viet Nam",
+        "DEVISE": "Dong",
+        "ISO": "VND"
+    },
+    "Wallis et Futuna": {
+        "PAYS": "Wallis et Futuna",
+        "DEVISE": "Franc CFP",
+        "ISO": "XPF"
+    },
+    "Y\u00e9men": {
+        "PAYS": "Y\u00e9men",
+        "DEVISE": "Riyal du Y\u00e9men",
+        "ISO": "YER"
+    },
+    "Zambie": {
+        "PAYS": "Zambie",
+        "DEVISE": "Kwacha zambien",
+        "ISO": "ZMK"
+    },
+    "Zimbabwe": {
+        "PAYS": "Zimbabwe",
+        "DEVISE": "Dollar du Zimbabwe",
+        "ISO": "ZWD"
+    }
+}
