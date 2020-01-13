@@ -9,13 +9,18 @@ from draft.models import Draft
 from wallet.models import Wallet
 
 
+CURRENCY = ["EUR", "USD", "GBP", "CAD", "CHF", "AUD"]
+
+
 class Expense(models.Model):
     """To create the Expense table."""
+
+    CURRENCY_CHOICES = [(i, curr) for i, curr in enumerate(CURRENCY, start=1)]
 
     label = models.CharField("Intitulé de la dépense", max_length=200)
     country = models.CharField("Pays", max_length=70)
     place = models.CharField("Endroit", max_length=70, blank=True, null=True)
-    currency = models.CharField("Devise", max_length=3)
+    currency = models.CharField("Devise", max_length=3, choices=CURRENCY_CHOICES)
     amount = models.PositiveSmallIntegerField("Montant")
     date = models.DateField("Date")
     photo = models.ImageField(

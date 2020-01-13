@@ -6,16 +6,16 @@ from django.db import models
 
 
 class Currency(models.Model):
-    """To create the Currency table."""
+    """To create the Currency table, with the country, the name of the currency and its ISO code."""
 
-    country = models.CharField("Pays", max_length=70)
     name = models.CharField("Devise", max_length=70)
+    country = models.CharField("Pays", max_length=70)
     iso = models.CharField("ISO", max_length=3)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        verbose_name = "Dépenses"
+        verbose_name = "Monnaie"
 
     def __str__(self):
-        return self.country
+        return self.name
