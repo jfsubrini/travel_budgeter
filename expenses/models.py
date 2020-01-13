@@ -1,26 +1,36 @@
 # -*- coding: utf-8 -*-
-# pylint: disable=missing-class-docstring,too-few-public-methods
+# pylint: disable=missing-class-docstring,too-few-public-methods,unnecessary-comprehension
 """All the models for the expenses app of the travel_budgeter project."""
 
-from django.conf import settings
 from django.db import models
 
 from draft.models import Draft
 from wallet.models import Wallet
+from xconverter.models import Currency
 
 
-CURRENCY = ["EUR", "USD", "GBP", "CAD", "CHF", "AUD"]
+CATEGORY = [
+    "Dépenses avant le départ",
+    "Transport international",
+    "Transport local",
+    "Hébergement",
+    "Nourriture",
+    "Visites",
+    "Activités",
+    "Souvenirs",
+    "Divers",
+]
 
 
 class Expense(models.Model):
     """To create the Expense table."""
 
-    CURRENCY_CHOICES = [(i, curr) for i, curr in enumerate(CURRENCY, start=1)]
+    CATEGORY_CHOICES = [(i, cat) for i, cat in enumerate(CATEGORY, start=1)]
 
     label = models.CharField("Intitulé de la dépense", max_length=200)
     country = models.CharField("Pays", max_length=70)
     place = models.CharField("Endroit", max_length=70, blank=True, null=True)
-    currency = models.CharField("Devise", max_length=3, choices=CURRENCY_CHOICES)
+    category = models.PositiveSmallIntegerField("catégorie", choices=CATEGORY_CHOICES)
     amount = models.PositiveSmallIntegerField("Montant")
     date = models.DateField("Date")
     photo = models.ImageField(
@@ -28,25 +38,13 @@ class Expense(models.Model):
     )
     simulation = models.BooleanField("Simulation", default=False)
     draft = models.ForeignKey(
-        Draft,
-        on_delete=models.CASCADE,
-        related_name="....",  # TODO
-        verbose_name="....",  # TODO
+        Draft, on_delete=models.CASCADE, verbose_name="budget prévisionnel"
     )
-    category = models.ForeignKey(
-        Draft,
-        on_delete=models.CASCADE,
-        related_name="....",  # TODO
-        verbose_name="....",  # TODO
+    currency = models.ForeignKey(
+        Currency, on_delete=models.CASCADE, verbose_name="monnaie"
     )
     wallet = models.ForeignKey(
-        Wallet,
-        on_delete=models.CASCADE,
-        related_name="....",  # TODO
-        verbose_name="....",  # TODO
-    )
-    user = models.ForeignKey(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="drafts"
+        Wallet, on_delete=models.CASCADE, verbose_name="portefeuille"
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
