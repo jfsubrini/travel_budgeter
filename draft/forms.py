@@ -3,19 +3,7 @@
 """Creation of the Draft form, to define the travel budget goal of the user."""
 
 
-from django.forms import (
-    CheckboxSelectMultiple,
-    DateInput,
-    EmailInput,
-    ModelForm,
-    NullBooleanSelect,
-    PasswordInput,
-    RadioSelect,
-    Select,
-    TextInput,
-    MultipleChoiceField,
-    Form,
-)
+from django.forms import DateInput, ModelForm
 from .models import Category, Draft
 
 
