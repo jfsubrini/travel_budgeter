@@ -15,7 +15,7 @@ SHEET = WB["Currencies"]
 def create_currencies_data():
     """Create the currencies_data with all the information, by row (countries),
     stoked into the cells from each column."""
-    if SHEET["A1"].value != "PAYS":
+    if SHEET["A1"].value != "country":
         raise ValueError(
             "Le tableau a subi une translation ! Elle doit commencer à la cellule A1."
         )
