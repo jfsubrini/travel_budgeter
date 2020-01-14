@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <title>Sign Up</title>
+</head>
+
+<body>
+    <h2>Créez votre compte</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Sign up</button>
+    </form>
+    <!-- Input filling errors messages -->
+    <div>
+        {% if errors %}
+        {% for key, error in errors %}
+        {% autoescape off %}
+        {{ error }}
+        {% endautoescape %}
+        {% endfor %}
+        {% endif %}
+    </div>
+</body>
+
+</html>

@@ -43,6 +43,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    "account.apps.AccountConfig",
     "draft.apps.DraftConfig",
     "expenses.apps.ExpensesConfig",
     "monitoring.apps.MonitoringConfig",
