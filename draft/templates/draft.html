@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <title>Draft</title>
+</head>
+
+<body>
+    <h1>Salut à toi, welcome to the Draft.</h1>
+    {% if submitted %}
+    <p>Votre budget prévisionnel a bien été enregistré.</p>
+    {% else %}
+    <form action="" method="post">
+        {% csrf_token %}
+        <h2>Votre budget prévisionnel pour votre prochain voyage :</h2>
+        {{ draft_form.as_p }}
+        {{ draft2_form.as_p }}
+        </br>
+        <input type="submit" value="Validez votre budget prévisionnel">
+    </form>
+    {% endif %}
+</body>
+
+</html>
