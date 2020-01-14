@@ -6,56 +6,43 @@ from django.db import models
 
 
 MONEY_TYPE = [
-    "Carte bancaire Visa",
-    "Carte bancaire MasterCard",
-    "Liquide",
+    "Carte bancaire Visa (compte rattaché)",
+    "Carte bancaire MasterCard (compte rattaché)",
+    "Porte-monnaie",
     "Chèque de voyage",
     "Virement bancaire",
-    "Paiement Paypal, ApplePay, etc.",
+    "Compte Paypal, ApplePay, etc.",
 ]
-TRANSACTION = [
+TRANSACTION_TYPE = [
     "Retrait ATM",
     "Retrait DAB",
     "Achat par carte bancaire",
     "Virement bancaire",
-    "Crédit",
+    "Paiement en liquide",
+    "Paiement Paypal, ApplePay, etc.",
+    "Crédit sur un compte",
 ]
-CURRENCY = ["EUR", "USD", "GBP", "CAD", "CHF", "AUD"]
-
-
-# class Balance(models.Model):  # TODO
-#     """To create the Balance table in the database."""
-
-#     name = models.CharField("Nom du portefeuille", max_length=30)
-#     # money_type = models.PositiveSmallIntegerField(
-#     #     "Type de portefeuille", choices=MONEY_TYPE_CHOICES
-#     # )
-#     created_at = models.DateTimeField(auto_now_add=True)
-#     updated_at = models.DateTimeField(auto_now=True)
-
-#     class Meta:
-#         verbose_name = "Solde"
-
-#     def __str__(self):
-#         return self.name
+CURRENCY = (
+    ("EUR", "EUR"),
+    ("USD", "USD"),
+    ("GBP", "GBP"),
+    ("CAD", "CAD"),
+    ("CHF", "CHF"),
+    ("AUD", "AUD"),
+)
 
 
 class Wallet(models.Model):
     """To create the Wallet table in the database."""
 
     MONEY_TYPE_CHOICES = [(i, money) for i, money in enumerate(MONEY_TYPE, start=1)]
-    CURRENCY_CHOICES = [(i, curr) for i, curr in enumerate(CURRENCY, start=1)]
 
     name = models.CharField("Nom du portefeuille", max_length=30)
     money_type = models.PositiveSmallIntegerField(
         "Type de portefeuille", choices=MONEY_TYPE_CHOICES
     )
-    currency = models.PositiveSmallIntegerField(
-        "Devise", max_length=3, choices=CURRENCY_CHOICES
-    )
-    # balance_calculation = models.OneToOneField(
-    #     Balance, on_delete=models.CASCADE, verbose_name="calcul du solde"
-    # )
+    currency = models.CharField("Devise", max_length=3, choices=CURRENCY)
+    balance = models.PositiveSmallIntegerField("Solde")
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -69,10 +56,12 @@ class Wallet(models.Model):
 class Transaction(models.Model):
     """To create the Transaction table in the database."""
 
-    TRANSACTION_CHOICES = [(i, trans) for i, trans in enumerate(TRANSACTION, start=1)]
+    TRANSACTION_TYPE_CHOICES = [
+        (i, trans) for i, trans in enumerate(TRANSACTION_TYPE, start=1)
+    ]
 
-    type_ = models.PositiveSmallIntegerField(
-        "Type de transaction", choices=TRANSACTION_CHOICES
+    transaction_type = models.PositiveSmallIntegerField(
+        "Type de transaction", choices=TRANSACTION_TYPE_CHOICES
     )
     rate = models.FloatField("Taux de change")
     wallet = models.ForeignKey(
@@ -85,4 +74,4 @@ class Transaction(models.Model):
         verbose_name = "Transaction"
 
     def __str__(self):
-        return self.type_
+        return self.transaction_type

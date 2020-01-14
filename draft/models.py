@@ -1,12 +1,19 @@
 # -*- coding: utf-8 -*-
-# pylint: disable=missing-class-docstring,too-few-public-methods,unnecessary-comprehension
+# pylint: disable=missing-class-docstring,too-few-public-methods
 """All the models for the draft app of the travel_budgeter project."""
 
 from django.conf import settings
 from django.db import models
 
 
-CURRENCY = ["EUR", "USD", "GBP", "CAD", "CHF", "AUD"]
+CURRENCY = (
+    ("EUR", "EUR"),
+    ("USD", "USD"),
+    ("GBP", "GBP"),
+    ("CAD", "CAD"),
+    ("CHF", "CHF"),
+    ("AUD", "AUD"),
+)
 
 
 class Category(models.Model):
@@ -40,10 +47,8 @@ class Category(models.Model):
 class Draft(models.Model):
     """To create the Draft table in the database."""
 
-    CURRENCY_CHOICES = [(i, curr) for i, curr in enumerate(CURRENCY, start=1)]
-
     destination = models.CharField("Nom de la destination de voyage", max_length=70)
-    currency = models.CharField("Devise", max_length=3, choices=CURRENCY_CHOICES)
+    currency = models.CharField("Devise", max_length=3, choices=CURRENCY)
     departure_date = models.DateField("Date de départ en voyage", blank=True, null=True)
     travel_duration = models.PositiveSmallIntegerField("Durée du voyage (en jours)")
     user = models.ForeignKey(
