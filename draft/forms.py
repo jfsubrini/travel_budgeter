@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# pylint: disable=
+# pylint: disable=too-few-public-methods
 """Creation of the Draft form, to define the travel budget goal of the user."""
 
 
@@ -19,7 +19,6 @@ from django.forms import (
 from .models import Category, Draft
 
 
-
 class DateInputNicer(DateInput):
     """A widget which displays a better DateInput interface to place a date."""
 
@@ -34,11 +33,11 @@ class DraftForm(ModelForm):
         """Details of the DraftForm form."""
 
         model = Draft
-        exclude = ["user"]
+        exclude = ["user", "category"]
         widgets = {"departure_date": DateInputNicer()}
 
 
-class DraftForm2(Form):
+class DraftForm2(ModelForm):
     """Form to create the travel budget goal per category."""
 
     class Meta:
@@ -46,4 +45,3 @@ class DraftForm2(Form):
 
         model = Category
         fields = "__all__"
-        widgets = {}
