@@ -16,9 +16,10 @@ def register(request):
             form.save()
             username = form.cleaned_data.get("username")
             password = form.cleaned_data.get("password")
-            user = authenticate(username=username, password=password)
+            user = authenticate(request, username=username, password=password)
+            # If data are valid, automatic log in and redirection to Draft page.
             login(request, user)
-            return redirect("")
+            return redirect("draft")
     else:
         form = UserCreationForm()
 
