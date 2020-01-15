@@ -7,7 +7,20 @@
 </head>
 
 <body>
-    <h2>Salut à toi, tu veux entrer une nouvelle transaction ?</h2>
+    <h1>Salut à toi, tu veux entrer une nouvelle transaction ?</h1>
+    {% if submitted %}
+    <p>Votre nouvelle transaction a bien été enregistrée.</p>
+    {% else %}
+    <h2>Votre solde global actuel est de :</h2>
+    <h3>A calculer ...</h3>
+    <form action="" method="post">
+        {% csrf_token %}
+        <h2>Entrez les informations suivantes :</h2>
+        {{ expense_form.as_p }}
+        </br>
+        <input type="submit" value="Enregistrez cette opération">
+    </form>
+    {% endif %}
 </body>
 
 </html>

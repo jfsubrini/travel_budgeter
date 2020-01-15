@@ -19,7 +19,7 @@ def draft(request):
     submitted = False
     # When the interview has been posted
     if request.method == "POST":
-        # Checking if the forms has been validated.
+        # Checking if the forms have been validated.
         draft_form = DraftForm(request.POST)
         draft2_form = DraftForm2(request.POST)
         if draft_form.is_valid() and draft2_form.is_valid():
