@@ -13,16 +13,10 @@
         {{ form.as_p }}
         <button type="submit">Sign up</button>
     </form>
-    <!-- Input filling errors messages -->
-    <div>
-        {% if errors %}
-        {% for key, error in errors %}
-        {% autoescape off %}
-        {{ error }}
-        {% endautoescape %}
-        {% endfor %}
-        {% endif %}
-    </div>
+    </br>
+    <h2>Login</h2>
+    <h3><a href="signin/">Si vous avez déjà un compte, accèdez à la page login ici.</a></h3>
+    </form>
 </body>
 
 </html>

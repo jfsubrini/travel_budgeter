@@ -24,5 +24,5 @@ def register(request):
         form = UserCreationForm()
 
     # What to render to the template.
-    context = {"form": form, "errors": form.errors.items()}
+    context = {"form": form}
     return render(request, "register.html", context)

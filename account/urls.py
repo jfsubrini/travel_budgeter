@@ -10,6 +10,6 @@ from . import views
 
 
 urlpatterns = [
-    path("register", views.register, name="register"),
-    path("signin", LoginView.as_view(template_name="signin.html"), name="signin"),
+    path("", views.register, name="register"),
+    path("signin/", LoginView.as_view(template_name="signin.html"), name="signin"),
 ]
