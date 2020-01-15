@@ -2,6 +2,7 @@
 # pylint: disable=
 """All the views for the account app of the travel_budgeter project."""
 
+from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import UserCreationForm
 from django.shortcuts import render, redirect
@@ -18,7 +19,12 @@ def register(request):
             password = form.cleaned_data.get("password")
             user = authenticate(request, username=username, password=password)
             # If data are valid, automatic log in and redirection to Draft page.
-            login(request, user)
+            if user is not None:
+                login(request, user)
+            else:
+                messages.add_message(
+                    request, messages.ERROR, "Incorrect user or password"
+                )
             return redirect("draft")
     else:
         form = UserCreationForm()

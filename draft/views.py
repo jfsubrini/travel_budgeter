@@ -15,7 +15,7 @@ def draft(request):
     """
     View to the travel user draft form page.
     """
-    # Analysis and treatment of the register form that has been sent.
+    # Analysis and treatment of the draft form that has been sent.
     submitted = False
     # When the interview has been posted
     if request.method == "POST":
@@ -24,13 +24,15 @@ def draft(request):
         draft2_form = DraftForm2(request.POST)
         if draft_form.is_valid() and draft2_form.is_valid():
             # Saving the data from the forms to the database and redirect to the expenses page.
-            travel_user = User.objects.get(username=username, password=password)
-            user = _save_forms(
-                draft_form, draft2_form, travel_user.username, travel_user.password
-            )
-            return redirect(f"/expenses/new_expense?submitted=True&user={user.id}")
+            # travel_user = User.objects.get(username=username, password=password)
+            # user = _save_forms(
+            #     draft_form, draft2_form, travel_user.username, travel_user.password
+            # )
+            print("request.user.id .... ", request.user.id)
+            return redirect(f"/expenses?submitted=True&user={request.user.id}")
 
-    # To display the empty interview forms.
+    # To display the empty draft forms : the first one about travel data and
+    # the second one about the draft budget for each category.
     else:
         draft_form = DraftForm()
         draft2_form = DraftForm2()
