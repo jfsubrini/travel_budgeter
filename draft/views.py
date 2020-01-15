@@ -10,7 +10,7 @@ from .forms import DraftForm, DraftForm2
 from .models import Category, Draft
 
 
-@login_required(login_url="/account/signin/", redirect_field_name="redirection_vers")
+@login_required(login_url="/signin/", redirect_field_name="redirection_vers")
 def draft(request):
     """
     View to the travel user draft form page.
