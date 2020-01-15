@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# pylint: disable=
+# pylint: disable=no-member
 """All the views for the draft app of the travel_budgeter project."""
 
 from django.shortcuts import render, redirect
@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
 from .forms import DraftForm, DraftForm2
-from .models import Category, Draft
+from .models import Category
 
 
 @login_required(login_url="/signin/", redirect_field_name="redirection_vers")
@@ -23,12 +23,22 @@ def draft(request):
         draft_form = DraftForm(request.POST)
         draft2_form = DraftForm2(request.POST)
         if draft_form.is_valid() and draft2_form.is_valid():
-            # Saving the data from the forms to the database and redirect to the expenses page.
-            # travel_user = User.objects.get(username=username, password=password)
-            # user = _save_forms(
-            #     draft_form, draft2_form, travel_user.username, travel_user.password
-            # )
-            print("request.user.id .... ", request.user.id)
+            # Saving the data from the draft forms to the database.
+            form1 = draft_form.save(commit=False)
+            form2 = draft2_form.save(commit=False)
+            # Link the instance with a specific travel user (the one that made the draft).
+            travel_user = User.objects.get(
+                username=request.user.username, password=request.user.password
+            )
+            form1.user = travel_user
+            form2.user = travel_user
+            # Saving the categories data.
+            form2.save()
+            # Link the travel data with the right categories data (the last saved).
+            draft_category = Category.objects.last()
+            form1.category = draft_category
+            form1.save()
+            # Redirecting to the expenses page.
             return redirect(f"/expenses?submitted=True&user={request.user.id}")
 
     # To display the empty draft forms : the first one about travel data and
@@ -47,18 +57,3 @@ def draft(request):
     }
 
     return render(request, "draft.html", context)
-
-
-def _save_forms(draft_form, draft2_form, username, password):
-    """Saving the data from the forms to the database."""
-    # Create, but don't save the new LikeDislikeSurvey
-    # and TravellingConditionsSurvey instances.
-    form1 = draft_form.save(commit=False)
-    form2 = draft2_form.save(commit=False)
-    # Link the instance with a specific travel user (the one that made the interview).
-    # Save the new instance.
-    travel_user = User.objects.get(username=username, password=password)
-    form1.user = travel_user
-    form1.save()
-
-    return user
