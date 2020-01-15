@@ -17,7 +17,7 @@ def draft(request):
     """
     # Analysis and treatment of the draft form that has been sent.
     submitted = False
-    # When the interview has been posted
+    # When the forms has been posted.
     if request.method == "POST":
         # Checking if the forms have been validated.
         draft_form = DraftForm(request.POST)

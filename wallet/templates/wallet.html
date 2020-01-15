@@ -7,7 +7,18 @@
 </head>
 
 <body>
-    <h2>Salut à toi, welcome to the Wallet.</h2>
+    <h1>Salut à toi, welcome to the Wallet.</h1>
+    {% if submitted %}
+    <p>Votre nouveau wallet a bien été enregistré.</p>
+    {% else %}
+    <form action="" method="post">
+        {% csrf_token %}
+        <h2>Entrez les informations suivantes :</h2>
+        {{ wallet_form.as_p }}
+        </br>
+        <input type="submit" value="Enregistrez ce wallet">
+    </form>
+    {% endif %}
 </body>
 
 </html>

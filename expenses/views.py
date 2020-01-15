@@ -15,7 +15,7 @@ def expenses(request):
     View to the expenses page.
     """
     # Analysis and treatment of the expense form that has been sent.
-    # When the interview has been posted
+    # When the form has been posted.
     if request.method == "POST":
         print("ICI 2")
         # Checking if the form has been validated.
