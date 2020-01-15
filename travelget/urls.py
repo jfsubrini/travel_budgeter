@@ -24,5 +24,4 @@ urlpatterns = [
     path("draft/", include("draft.urls")),
     path("expenses/", include("expenses.urls")),
     path("monitoring/", include("monitoring.urls")),
-    path("xconverter/", include("xconverter.urls")),
 ]
