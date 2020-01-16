@@ -21,5 +21,5 @@ class ExpenseForm(ModelForm):
         """Details of the ExpenseForm form."""
 
         model = Expense
-        exclude = ["draft"]  # TODO attention pour les devises ce n'est pas un set !!!
-        widgets = {"date": DateInputNicer()}  # TODO faire les wallet avant
+        exclude = ["draft"]
+        widgets = {"date": DateInputNicer()}

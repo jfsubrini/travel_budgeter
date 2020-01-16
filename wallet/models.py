@@ -44,8 +44,11 @@ class Wallet(models.Model):
     )
     currency = models.CharField("Devise", max_length=3, choices=CURRENCY)
     balance = models.PositiveSmallIntegerField("Solde")
-    drafts = models.ManyToManyField(
-        Draft, related_name="wallets", verbose_name="budgets prévisionnels"
+    draft = models.ForeignKey(
+        Draft,
+        on_delete=models.CASCADE,
+        related_name="wallets",
+        verbose_name="budgets prévisionnels",
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
