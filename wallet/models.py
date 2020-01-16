@@ -3,6 +3,7 @@
 """All the models for the wallet app of the travel_budgeter project."""
 
 from django.db import models
+from draft.models import Draft
 
 
 MONEY_TYPE = [
@@ -43,6 +44,9 @@ class Wallet(models.Model):
     )
     currency = models.CharField("Devise", max_length=3, choices=CURRENCY)
     balance = models.PositiveSmallIntegerField("Solde")
+    drafts = models.ManyToManyField(
+        Draft, related_name="wallets", verbose_name="budgets prévisionnels"
+    )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
