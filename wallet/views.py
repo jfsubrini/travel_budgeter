@@ -1,50 +1,42 @@
 # -*- coding: utf-8 -*-
-# pylint: disable=
+# pylint: disable=no-member
 """All the views for the wallet app of the travel_budgeter project."""
 
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
 
-from .forms import WalletForm, TransactionForm
+from draft.models import Draft
+from .forms import WalletCreationForm
 
 
 @login_required(login_url="/signin/", redirect_field_name="redirection_vers")
-def wallet(request):
+def wallet_creation(request):
     """
-    View to the wallet page.
+    View to the wallet creation page.
     """
-    # Analysis and treatment of the wallet forms that have been sent.
-    # When the form have been posted.
+    # Analysis and treatment of the wallet form that has been sent.
+    # When the form has been posted.
     if request.method == "POST":
-        # Checking if the forms have been validated.
-        wallet_form = WalletForm(request.POST)
-        transaction_form = TransactionForm(request.POST)
-        if wallet_form.is_valid() and transaction_form.is_valid():
-            # Saving the data from the wallet forms to the database.
-            form1 = wallet_form.save(commit=False)
-            form2 = transaction_form.save(commit=False)
-            # Link the instance with a specific draft
-            # (the one that this transaction has to be related).
-            # travel_user = User.objects.get(
-            #     username=request.user.username, password=request.user.password
-            # )
-            # form.user = travel_user
-            # # Saving the categories data.
-            # form2.save()
-            # # Link the travel data with the right categories data (the last saved).
-            # draft_category = Category.objects.last()
-            # form1.category = draft_category
-            # form1.save()
+        # Checking if the form has been validated.
+        wallet_form = WalletCreationForm(request.POST)
+        if wallet_form.is_valid():
+            # Saving the data from the wallet form to the database.
+            form = wallet_form.save(commit=False)
+            # Link the instance with a specific draft from the travel user logged in.
+            draft_answer = wallet_form.cleaned_data["drafts"]
+            draft_related = Draft.objects.filter(
+                drafts__destination=draft_answer, drafts__user=request.user
+            ).last()
+            form.drafts = draft_related
+            form.save()
             # Redirecting to the expenses page.
             return redirect(f"/monitoring?user={request.user.id}")
 
-    # To display the empty wallet forms.
+    # To display the empty wallet form.
     else:
-        wallet_form = WalletForm()
-        transaction_form = TransactionForm()
+        wallet_form = WalletCreationForm()
 
     # What to render to the template.
-    context = {"wallet_form": wallet_form, "transaction_form": transaction_form}
+    context = {"wallet_form": wallet_form}
 
     return render(request, "wallet.html", context)

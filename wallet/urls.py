@@ -7,4 +7,4 @@ from django.urls import path
 from . import views
 
 
-urlpatterns = [path("", views.wallet, name="wallet")]
+urlpatterns = [path("creation/", views.wallet_creation, name="wallet_creation")]

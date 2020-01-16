@@ -3,17 +3,17 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Wallet</title>
+    <title>Wallet creation</title>
 </head>
 
 <body>
-    <h1>Salut à toi, welcome to the Wallet.</h1>
+    <h1>Salut à toi, welcome to the Wallet creation page.</h1>
     {% if submitted %}
     <p>Votre nouveau wallet a bien été enregistré.</p>
     {% else %}
     <form action="" method="post">
         {% csrf_token %}
-        <h2>Entrez les informations suivantes :</h2>
+        <h2>Création de wallet : entrez les informations suivantes.</h2>
         {{ wallet_form.as_p }}
         </br>
         <input type="submit" value="Enregistrez ce wallet">

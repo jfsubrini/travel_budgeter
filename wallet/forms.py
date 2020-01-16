@@ -3,25 +3,16 @@
 """Creation of the Wallet forms, to save the travel user wallets and transactions types."""
 
 
-from django.forms import ModelForm
-from .models import Wallet, Transaction
+from django.forms import ModelForm, Select
+from .models import Wallet
 
 
-class WalletForm(ModelForm):
+class WalletCreationForm(ModelForm):
     """Form to create the wallet data."""
 
     class Meta:
-        """Details of the WalletForm form."""
+        """Details of the WalletCreationForm form."""
 
         model = Wallet
         fields = "__all__"
-
-
-class TransactionForm(ModelForm):
-    """Form to create the transaction type data."""
-
-    class Meta:
-        """Details of the TransactionForm form."""
-
-        model = Transaction
-        fields = "__all__"
+        widgets = {"drafts": Select()}
