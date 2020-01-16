@@ -38,8 +38,8 @@ def draft(request):
             draft_category = Category.objects.last()
             form1.category = draft_category
             form1.save()
-            # Redirecting to the expenses page.
-            return redirect(f"/expenses?submitted=True&user={request.user.id}")
+            # Redirecting to the wallet creation page.
+            return redirect(f"/wallet/creation?submitted=True&user={request.user.id}")
 
     # To display the empty draft forms : the first one about travel data and
     # the second one about the draft budget for each category.
