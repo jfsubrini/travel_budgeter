@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 
 from draft.models import Draft
 from .forms import WalletCreationForm
+from .models import Wallet
 
 
 @login_required(login_url="/signin/", redirect_field_name="redirection_vers")
@@ -24,10 +25,10 @@ def wallet_creation(request):
             form = wallet_form.save(commit=False)
             # Link the instance with a specific draft from the travel user logged in.
             draft_answer = wallet_form.cleaned_data[
-                "drafts"
+                "draft"
             ]  # TODO à partir de là jusu'à l.33
-            draft_related = Draft.objects.filter(
-                drafts__destination=draft_answer, drafts__user=request.user
+            draft_related = Wallet.objects.filter(
+                draft__destination=draft_answer, draft__user=request.user
             ).last()
             form.drafts = draft_related
             form.save()

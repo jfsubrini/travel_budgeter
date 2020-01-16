@@ -57,7 +57,8 @@ class Wallet(models.Model):
         verbose_name = "Portefeuille"
 
     def __str__(self):
-        return self.name
+        money_type_name = MONEY_TYPE[int(self.money_type)]
+        return f"Wallet {self.name} : {money_type_name} en {self.currency}"
 
 
 class Transaction(models.Model):
