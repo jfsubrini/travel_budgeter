@@ -23,7 +23,9 @@ def wallet_creation(request):
             # Saving the data from the wallet form to the database.
             form = wallet_form.save(commit=False)
             # Link the instance with a specific draft from the travel user logged in.
-            draft_answer = wallet_form.cleaned_data["drafts"]
+            draft_answer = wallet_form.cleaned_data[
+                "drafts"
+            ]  # TODO à partir de là jusu'à l.33
             draft_related = Draft.objects.filter(
                 drafts__destination=draft_answer, drafts__user=request.user
             ).last()
