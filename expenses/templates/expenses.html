@@ -7,7 +7,7 @@
 </head>
 
 <body>
-    <h1>Salut à toi, tu veux entrer une nouvelle transaction ?</h1>
+    <h1>Entrez une nouvelle transaction ?</h1>
     {% if submitted %}
     <p>Votre nouvelle transaction a bien été enregistrée.</p>
     {% else %}
@@ -22,5 +22,14 @@
     </form>
     {% endif %}
 </body>
+<br />
+<br />
+<br />
+<footer>
+    <div><a href="{% url 'draft' %}">Budget prévisionnel</div>
+    <div><a href="{% url 'wallet_creation' %}">Wallet</div>
+    <div><a href="{% url 'monitoring' %}">Monitoring</div>
+    <div><a href="{% url 'register' %}">Compte</div>
+</footer>
 
 </html>

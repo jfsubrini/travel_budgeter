@@ -7,7 +7,7 @@
 </head>
 
 <body>
-    <h1>Salut à toi, welcome to the Wallet creation page.</h1>
+    <h1>Welcome to the Wallet creation page.</h1>
     {% if submitted %}
     <p>Votre nouveau wallet a bien été enregistré.</p>
     {% else %}
@@ -20,5 +20,14 @@
     </form>
     {% endif %}
 </body>
+<br />
+<br />
+<br />
+<footer>
+    <div><a href="{% url 'draft' %}">Wallet</div>
+    <div><a href="{% url 'expenses' %}">Opérations</div>
+    <div><a href="{% url 'monitoring' %}">Monitoring</div>
+    <div><a href="{% url 'register' %}">Compte</div>
+</footer>
 
 </html>

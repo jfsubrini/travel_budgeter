@@ -7,7 +7,7 @@
 </head>
 
 <body>
-    <h1>Salut à toi, welcome to the Draft.</h1>
+    <h1>Welcome to the Draft.</h1>
     {% if submitted %}
     <p>Votre budget prévisionnel a bien été enregistré.</p>
     {% else %}
@@ -21,5 +21,14 @@
     </form>
     {% endif %}
 </body>
+<br />
+<br />
+<br />
+<footer>
+    <div><a href="{% url 'expenses' %}">Opérations</div>
+    <div><a href="{% url 'wallet_creation' %}">Wallet</div>
+    <div><a href="{% url 'monitoring' %}">Monitoring</div>
+    <div><a href="{% url 'register' %}">Compte</div>
+</footer>
 
 </html>
