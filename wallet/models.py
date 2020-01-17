@@ -11,7 +11,6 @@ MONEY_TYPE = [
     "Carte bancaire MasterCard (compte rattaché)",
     "Porte-monnaie",
     "Chèque de voyage",
-    "Virement bancaire",
     "Compte Paypal, ApplePay, etc.",
 ]
 TRANSACTION_TYPE = [

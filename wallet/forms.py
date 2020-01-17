@@ -15,6 +15,6 @@ class WalletCreationForm(ModelForm):
 
         model = Wallet
         fields = "__all__"
-        widgets = {"drafts": Select()}
+        widgets = {"draft": Select()}
         # TODO pour la sélection des drafts ne doiventt apparaître
         # que ceux fait par le travel user logged.

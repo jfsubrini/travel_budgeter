@@ -1,41 +1,42 @@
 # -*- coding: utf-8 -*-
-# pylint: disable=
+# pylint: disable=no-member
 """All the views for the expenses app of the travel_budgeter project."""
 
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
 
+from .models import Expense
 from .forms import ExpenseForm
 
 
 @login_required(login_url="/signin/", redirect_field_name="redirection_vers")
 def expenses(request):
     """
-    View to the expenses page.
+    View to the expense page.
     """
     # Analysis and treatment of the expense form that has been sent.
     # When the form has been posted.
     if request.method == "POST":
-        print("ICI 2")
         # Checking if the form has been validated.
         expense_form = ExpenseForm(request.POST)
         if expense_form.is_valid():
             # Saving the data from the expense form to the database.
             form = expense_form.save(commit=False)
-            # Link the instance with a specific draft
-            # (the one that this transaction has to be related).
-            # travel_user = User.objects.get(
-            #     username=request.user.username, password=request.user.password
-            # )
-            # form.user = travel_user
-            # # Saving the categories data.
-            # form2.save()
-            # # Link the travel data with the right categories data (the last saved).
-            # draft_category = Category.objects.last()
-            # form1.category = draft_category
-            # form1.save()
-            # Redirecting to the expenses page.
+            # Link the instance with a specific draft from the travel user logged in.
+            draft_answer = expense_form.cleaned_data["draft"]
+            draft_related = Expense.objects.filter(
+                draft__destination=draft_answer, draft__user=request.user
+            ).last()
+            form.draft = draft_related
+            form.save()
+            # Link the instance with a specific wallet from the travel user logged in.
+            expense_answer2 = expense_form.cleaned_data["wallet"]
+            wallet_related = Expense.objects.filter(
+                wallet__destination=expense_answer2, wallet__user=request.user
+            ).last()
+            form.wallets = wallet_related
+            form.save()
+            # Redirecting to the monitoring page.
             return redirect(f"/monitoring?user={request.user.id}")
 
     # To display the empty expense form.

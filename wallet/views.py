@@ -5,7 +5,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 
-from draft.models import Draft
 from .forms import WalletCreationForm
 from .models import Wallet
 
@@ -24,15 +23,13 @@ def wallet_creation(request):
             # Saving the data from the wallet form to the database.
             form = wallet_form.save(commit=False)
             # Link the instance with a specific draft from the travel user logged in.
-            draft_answer = wallet_form.cleaned_data[
-                "draft"
-            ]  # TODO à partir de là jusu'à l.33
+            draft_answer = wallet_form.cleaned_data["draft"]
             draft_related = Wallet.objects.filter(
                 draft__destination=draft_answer, draft__user=request.user
             ).last()
             form.drafts = draft_related
             form.save()
-            # Redirecting to the expenses page.
+            # Redirecting to the monitoring page.
             return redirect(f"/monitoring?user={request.user.id}")
 
     # To display the empty wallet form.
