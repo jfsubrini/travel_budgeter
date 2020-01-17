@@ -38,7 +38,10 @@ class Expense(models.Model):
     )
     simulation = models.BooleanField("Simulation", default=False)
     draft = models.ForeignKey(
-        Draft, on_delete=models.CASCADE, verbose_name="budget prévisionnel"
+        Draft,
+        on_delete=models.CASCADE,
+        related_name="expenses",
+        verbose_name="budget prévisionnel",
     )
     wallet = models.ForeignKey(
         Wallet, on_delete=models.CASCADE, verbose_name="portefeuille"

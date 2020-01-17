@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
-# pylint: disable=no-member
+# pylint: disable=
 """All the views for the expenses app of the travel_budgeter project."""
 
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 
-from .models import Expense
 from .forms import ExpenseForm
 
 
@@ -21,21 +20,7 @@ def expenses(request):
         expense_form = ExpenseForm(request.POST)
         if expense_form.is_valid():
             # Saving the data from the expense form to the database.
-            form = expense_form.save(commit=False)
-            # Link the instance with a specific draft from the travel user logged in.
-            draft_answer = expense_form.cleaned_data["draft"]
-            draft_related = Expense.objects.filter(
-                draft__destination=draft_answer, draft__user=request.user
-            ).last()
-            form.draft = draft_related
-            form.save()
-            # Link the instance with a specific wallet from the travel user logged in.
-            expense_answer2 = expense_form.cleaned_data["wallet"]
-            wallet_related = Expense.objects.filter(
-                wallet__destination=expense_answer2, wallet__user=request.user
-            ).last()
-            form.wallets = wallet_related
-            form.save()
+            expense_form.save()
             # Redirecting to the monitoring page.
             return redirect(f"/monitoring?user={request.user.id}")
 

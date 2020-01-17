@@ -6,7 +6,6 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 
 from .forms import WalletCreationForm
-from .models import Wallet
 
 
 @login_required(login_url="/signin/", redirect_field_name="redirection_vers")
@@ -21,14 +20,7 @@ def wallet_creation(request):
         wallet_form = WalletCreationForm(request.POST)
         if wallet_form.is_valid():
             # Saving the data from the wallet form to the database.
-            form = wallet_form.save(commit=False)
-            # Link the instance with a specific draft from the travel user logged in.
-            draft_answer = wallet_form.cleaned_data["draft"]
-            draft_related = Wallet.objects.filter(
-                draft__destination=draft_answer, draft__user=request.user
-            ).last()
-            form.drafts = draft_related
-            form.save()
+            wallet_form.save()
             # Redirecting to the monitoring page.
             return redirect(f"/monitoring?user={request.user.id}")
 

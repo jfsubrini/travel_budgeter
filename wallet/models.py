@@ -47,7 +47,7 @@ class Wallet(models.Model):
         Draft,
         on_delete=models.CASCADE,
         related_name="wallets",
-        verbose_name="budgets prévisionnels",
+        verbose_name="budget prévisionnel",
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -56,7 +56,7 @@ class Wallet(models.Model):
         verbose_name = "Portefeuille"
 
     def __str__(self):
-        money_type_name = MONEY_TYPE[int(self.money_type)]
+        money_type_name = MONEY_TYPE[int(self.money_type) - 1]
         return f"Wallet {self.name} : {money_type_name} en {self.currency}"
 
 
