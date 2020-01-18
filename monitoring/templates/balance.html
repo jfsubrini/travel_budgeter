@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <title>Balance</title>
+</head>
+
+<body>
+    <h2>Balance page</h2>
+    {% for wallet, balance in wallet_dict.items %}
+    <div>
+        Le wallet {{ wallet }} a un solde après dépenses de {{ balance }}
+    </div>
+    {% endfor %}
+</body>
+<br />
+<br />
+<br />
+<footer>
+    <div><a href="{% url 'draft' %}">Budget prévisionnel</div>
+    <div><a href="{% url 'wallet_creation' %}">Création de wallet</div>
+    <div><a href="{% url 'expenses' %}">Opération - Transaction</div>
+    <div><a href="{% url 'register' %}">Compte</div>
+    <div><a href="{% url 'monitoring' %}">Monitoring</div>
+</footer>
+
+</html>
