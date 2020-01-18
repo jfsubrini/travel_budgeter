@@ -131,3 +131,6 @@ dmypy.json
 
 # Code Editor
 .vscode
+
+# Configuration - Secret keys, passwords...
+config.py
