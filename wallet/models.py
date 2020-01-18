@@ -11,16 +11,16 @@ MONEY_TYPE = [
     "Carte bancaire MasterCard (compte rattaché)",
     "Porte-monnaie",
     "Chèque de voyage",
-    "Compte Paypal, ApplePay, etc.",
+    "Compte Paypal, ApplePay, etc., ou bancaire pour virement",
 ]
 TRANSACTION_TYPE = [
     "Retrait ATM",
     "Retrait DAB",
     "Achat par carte bancaire",
-    "Virement bancaire",
     "Paiement en liquide",
-    "Paiement Paypal, ApplePay, etc.",
-    "Crédit sur un compte",
+    "Paiement par chèque de voyage",
+    "Virement bancaire, Paypal, ApplePay, etc.",
+    "Crédit",
 ]
 CURRENCY = (
     ("EUR", "EUR"),
