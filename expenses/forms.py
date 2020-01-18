@@ -21,5 +21,5 @@ class ExpenseForm(ModelForm):
         """Details of the ExpenseForm form."""
 
         model = Expense
-        fields = "__all__"
+        exclude = ["draft"]
         widgets = {"date": DateInputNicer()}
