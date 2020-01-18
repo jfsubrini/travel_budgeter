@@ -3,11 +3,36 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Expenses</title>
+    <title>Nouvelle entrée</title>
 </head>
 
 <body>
-    <h2>Salut à toi, welcome to the Expenses.</h2>
+    <h1>Entrez une nouvelle transaction :</h1>
+    <h2>{{ last_draft }}</h2>
+    {% if submitted %}
+    <p>Votre nouvelle transaction a bien été enregistrée.</p>
+    {% else %}
+    <br />
+    <h2>Votre solde global actuel est de :</h2>
+    <h3>A calculer ...</h3>
+    <br />
+    <form action="" method="post">
+        {% csrf_token %}
+        <h2>Entrez les informations suivantes :</h2>
+        {{ expense_form.as_p }}
+        </br>
+        <input type="submit" value="Enregistrez cette opération">
+    </form>
+    {% endif %}
 </body>
+<br />
+<br />
+<br />
+<footer>
+    <div><a href="{% url 'draft' %}">Budget prévisionnel</div>
+    <div><a href="{% url 'wallet_creation' %}">Création de wallet</div>
+    <div><a href="{% url 'monitoring' %}">Monitoring</div>
+    <div><a href="{% url 'register' %}">Compte</div>
+</footer>
 
 </html>

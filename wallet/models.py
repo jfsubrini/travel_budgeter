@@ -3,6 +3,7 @@
 """All the models for the wallet app of the travel_budgeter project."""
 
 from django.db import models
+from draft.models import Draft
 
 
 MONEY_TYPE = [
@@ -10,17 +11,16 @@ MONEY_TYPE = [
     "Carte bancaire MasterCard (compte rattaché)",
     "Porte-monnaie",
     "Chèque de voyage",
-    "Virement bancaire",
-    "Compte Paypal, ApplePay, etc.",
+    "Compte Paypal, ApplePay, etc., ou bancaire pour virement",
 ]
 TRANSACTION_TYPE = [
     "Retrait ATM",
     "Retrait DAB",
     "Achat par carte bancaire",
-    "Virement bancaire",
     "Paiement en liquide",
-    "Paiement Paypal, ApplePay, etc.",
-    "Crédit sur un compte",
+    "Paiement par chèque de voyage",
+    "Virement bancaire, Paypal, ApplePay, etc.",
+    "Crédit",
 ]
 CURRENCY = (
     ("EUR", "EUR"),
@@ -43,6 +43,12 @@ class Wallet(models.Model):
     )
     currency = models.CharField("Devise", max_length=3, choices=CURRENCY)
     balance = models.PositiveSmallIntegerField("Solde")
+    draft = models.ForeignKey(
+        Draft,
+        on_delete=models.CASCADE,
+        related_name="wallets",
+        verbose_name="budget prévisionnel",
+    )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -50,7 +56,8 @@ class Wallet(models.Model):
         verbose_name = "Portefeuille"
 
     def __str__(self):
-        return self.name
+        money_type_name = MONEY_TYPE[int(self.money_type) - 1]
+        return f"Wallet {self.name} : {money_type_name} en {self.currency}"
 
 
 class Transaction(models.Model):
