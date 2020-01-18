@@ -35,7 +35,7 @@ def expenses(request):
 
     # To display the empty expense form.
     else:
-        expense_form = ExpenseForm()
+        expense_form = ExpenseForm(request.user)
 
     # What to render to the template.
     last_draft = Draft.objects.filter(user=request.user).last()
