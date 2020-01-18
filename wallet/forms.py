@@ -3,7 +3,7 @@
 """Creation of the Wallet forms, to save the travel user wallets and transactions types."""
 
 
-from django.forms import ModelForm, Select
+from django.forms import ModelForm
 from .models import Wallet
 
 
@@ -14,7 +14,4 @@ class WalletCreationForm(ModelForm):
         """Details of the WalletCreationForm form."""
 
         model = Wallet
-        fields = "__all__"
-        widgets = {"draft": Select()}
-        # TODO pour la sélection des drafts ne doiventt apparaître
-        # que ceux fait par le travel user logged.
+        exclude = ["draft"]
