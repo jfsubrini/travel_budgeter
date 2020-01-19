@@ -20,7 +20,6 @@ TRANSACTION_TYPE = [
     "Paiement en liquide",
     "Paiement par chèque de voyage",
     "Virement bancaire, Paypal, ApplePay, etc.",
-    "Crédit",
 ]
 CURRENCY = (
     ("EUR", "EUR"),
