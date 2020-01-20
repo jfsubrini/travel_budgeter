@@ -4,7 +4,7 @@
 
 
 from django.forms import ModelForm
-from .models import Wallet
+from .models import PaymentType
 
 
 class WalletCreationForm(ModelForm):
@@ -13,5 +13,5 @@ class WalletCreationForm(ModelForm):
     class Meta:
         """Details of the WalletCreationForm form."""
 
-        model = Wallet
+        model = PaymentType
         exclude = ["draft"]
