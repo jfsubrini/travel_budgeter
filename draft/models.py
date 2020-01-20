@@ -55,7 +55,7 @@ class Draft(models.Model):
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="drafts"
     )
     category = models.OneToOneField(
-        Category, on_delete=models.CASCADE, verbose_name="catégorie"
+        Category, on_delete=models.CASCADE, verbose_name="Catégorie"
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

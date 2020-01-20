@@ -4,6 +4,7 @@
 
 from django.db import models
 from draft.models import Draft
+from xconverter.models import Currency
 
 
 PAYMENT_TYPE = [
@@ -49,3 +50,38 @@ class PaymentType(models.Model):
     def __str__(self):
         payment_type_name = PAYMENT_TYPE[int(self.payment_type) - 1]
         return f"Wallet {self.wallet_name} : {payment_type_name} en {self.currency}"
+
+
+class Withdrawal(models.Model):
+    """To create the Withdrawal table in the database."""
+
+    PAYMENT_TYPE_CHOICES = [
+        (i, money) for i, money in enumerate(PAYMENT_TYPE, start=1)
+    ]  # TODO
+
+    bank = models.CharField(
+        "Nom de la banque de retrait", max_length=30, blank=True, null=True
+    )
+    country = models.CharField("Pays", max_length=70, blank=True, null=True)
+    place = models.CharField("Lieu", max_length=70, blank=True, null=True)
+    payment_type_out = models.ForeignKey(
+        PaymentType, on_delete=models.CASCADE, verbose_name="Carte bancaire débitée"
+    )  # TODO
+    amount = models.PositiveSmallIntegerField("Montant")
+    currency = models.ForeignKey(
+        Currency, on_delete=models.CASCADE, verbose_name="Monnaie"
+    )
+    rate = models.FloatField("Taux de change (si vous l'avez)", blank=True, null=True)
+    date = models.DateField("Date")
+    payment_type_in = models.ForeignKey(
+        PaymentType, on_delete=models.CASCADE, verbose_name="Porte-monnaie crédité"
+    )  # TODO
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "Retrait"
+
+    def __str__(self):
+        payment_type_name = PAYMENT_TYPE[int(self.payment_type_out) - 1]  # TODO
+        return f"Retrait avec {payment_type_name} en {self.currency}"
