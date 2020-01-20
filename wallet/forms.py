@@ -15,3 +15,14 @@ class WalletCreationForm(ModelForm):
 
         model = PaymentType
         exclude = ["draft"]
+
+
+class WalletWithdrawalForm(ModelForm):
+    """Form to get the credit card withdrawal data."""
+
+    class Meta:
+        """Details of the WalletWithdrawalForm form."""
+
+        model = PaymentType
+        exclude = ["draft"]
+

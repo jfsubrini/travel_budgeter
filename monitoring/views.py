@@ -22,7 +22,7 @@ def monitoring(request):
         initial_balance = wallet.balance
         wallet_currency = wallet.currency
         expenses_related_queryset = Expense.objects.filter(
-            wallet=wallet, draft=last_draft
+            payment_type=wallet, draft=last_draft
         )
         expense_amount_list = []
         for expense in expenses_related_queryset:
