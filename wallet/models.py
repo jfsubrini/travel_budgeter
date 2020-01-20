@@ -85,3 +85,45 @@ class Withdrawal(models.Model):
     def __str__(self):
         payment_type_name = PAYMENT_TYPE[int(self.payment_type_out) - 1]  # TODO
         return f"Retrait avec {payment_type_name} en {self.currency}"
+
+
+class Change(models.Model):
+    """To create the Change table in the database."""
+
+    PAYMENT_TYPE_CHOICES = [
+        (i, money) for i, money in enumerate(PAYMENT_TYPE, start=1)
+    ]  # TODO
+
+    changer = models.CharField(
+        "Banque ou changeur", max_length=30, blank=True, null=True
+    )
+    country = models.CharField("Pays", max_length=70, blank=True, null=True)
+    place = models.CharField("Lieu", max_length=70, blank=True, null=True)
+    payment_type_out = models.ForeignKey(
+        PaymentType,
+        on_delete=models.CASCADE,
+        verbose_name="Porte-monnaie de la devise à changer",
+    )  # TODO
+    amount = models.PositiveSmallIntegerField("Montant")
+    currency_out = models.ForeignKey(
+        Currency, on_delete=models.CASCADE, verbose_name="Devise à changer"
+    )
+    currency_in = models.ForeignKey(
+        Currency, on_delete=models.CASCADE, verbose_name="Devise reçue"
+    )
+    rate = models.FloatField("Taux de change")
+    date = models.DateField("Date")
+    payment_type_in = models.ForeignKey(
+        PaymentType,
+        on_delete=models.CASCADE,
+        verbose_name="Porte-monnaie de la devise reçue",
+    )  # TODO
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "Change de devises"
+
+    def __str__(self):
+        payment_type_name = PAYMENT_TYPE[int(self.payment_type_out) - 1]  # TODO
+        return f"Change avec {payment_type_name} de {self.currency_out} en {self.currency_in}"
