@@ -1,10 +1,17 @@
 # -*- coding: utf-8 -*-
 # pylint: disable=too-few-public-methods
-"""Creation of the Wallet forms, to save the travel user wallets and transactions types."""
+"""Creation of the Wallet forms, to save the travel user wallets,
+withdrawals and currency exchange data."""
 
 
-from django.forms import ModelForm
-from .models import PaymentType
+from django.forms import DateInput, ModelForm
+from .models import Change, PaymentType, Withdrawal
+
+
+class DateInputNicer(DateInput):
+    """A widget which displays a better DateInput interface to place a date."""
+
+    input_type = "date"
 
 
 class WalletCreationForm(ModelForm):
@@ -23,8 +30,10 @@ class WalletWithdrawalForm(ModelForm):
     class Meta:
         """Details of the WalletWithdrawalForm form."""
 
-        model = PaymentType
-        exclude = ["draft"]
+        model = Withdrawal
+        fields = "__all__"
+        widgets = {"date": DateInputNicer()}
+        # TODO afficher les bons choix pour carte bancaire débitée et porte-monnaie crédité
 
 
 class WalletChangeForm(ModelForm):
@@ -33,5 +42,7 @@ class WalletChangeForm(ModelForm):
     class Meta:
         """Details of the WalletChangeForm form."""
 
-        model = PaymentType
-        exclude = ["draft"]
+        model = Change
+        fields = "__all__"
+        widgets = {"date": DateInputNicer()}
+        # TODO afficher les bons choix pour carte bancaire débitée et porte-monnaie crédité
