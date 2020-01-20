@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# pylint: disable=too-few-public-methods
+# pylint: disable=too-few-public-methods,no-member
 """Creation of the Wallet forms, to save the travel user wallets,
 withdrawals and currency exchange data."""
 
@@ -33,7 +33,18 @@ class WalletWithdrawalForm(ModelForm):
         model = Withdrawal
         fields = "__all__"
         widgets = {"date": DateInputNicer()}
-        # TODO afficher les bons choix pour carte bancaire débitée et porte-monnaie crédité
+
+    def __init__(self, user, *args, **kwargs):
+        # To filter the wallet choices : for 'Carte bancaire débitée', only credit card(s)
+        # of the travel user logged and the one(s) created for the current draft.
+        # For 'Porte-monnaie crédité', idem but only wallet(s).
+        super(WalletWithdrawalForm, self).__init__(*args, **kwargs)
+        self.fields["payment_type_out"].queryset = PaymentType.objects.filter(
+            draft__user=user, payment_type__lte=2
+        )
+        self.fields["payment_type_in"].queryset = PaymentType.objects.filter(
+            draft__user=user, payment_type=3
+        )
 
 
 class WalletChangeForm(ModelForm):
@@ -45,4 +56,14 @@ class WalletChangeForm(ModelForm):
         model = Change
         fields = "__all__"
         widgets = {"date": DateInputNicer()}
-        # TODO afficher les bons choix pour carte bancaire débitée et porte-monnaie crédité
+
+    def __init__(self, user, *args, **kwargs):
+        # To filter the wallet choices : only wallet(s) of the travel user logged
+        # and the one(s) created for the current draft.
+        super(WalletChangeForm, self).__init__(*args, **kwargs)
+        self.fields["payment_type_out"].queryset = PaymentType.objects.filter(
+            draft__user=user, payment_type=3
+        )
+        self.fields["payment_type_in"].queryset = PaymentType.objects.filter(
+            draft__user=user, payment_type=3
+        )

@@ -64,7 +64,7 @@ def wallet_withdrawal(request):
 
     # To display the empty wallet withdrawal form.
     else:
-        withdrawal_form = WalletWithdrawalForm()
+        withdrawal_form = WalletWithdrawalForm(request.user)
 
     # What to render to the template.
     context = {"withdrawal_form": withdrawal_form, "last_draft": last_draft}
@@ -92,7 +92,7 @@ def wallet_change(request):
 
     # To display the empty wallet change form.
     else:
-        change_form = WalletChangeForm()
+        change_form = WalletChangeForm(request.user)
 
     # What to render to the template.
     context = {"change_form": change_form, "last_draft": last_draft}
