@@ -5,7 +5,7 @@ before and during his journey."""
 
 
 from django.forms import DateInput, ModelForm
-from wallet.models import Wallet
+from wallet.models import PaymentType
 from .models import Expense
 
 
@@ -29,4 +29,6 @@ class ExpenseForm(ModelForm):
         # To filter the wallet choices : only the one(s) of the travel user logged
         # and the one(s) created for the current draft.
         super(ExpenseForm, self).__init__(*args, **kwargs)
-        self.fields["wallet"].queryset = Wallet.objects.filter(draft__user=user)
+        self.fields["payment_type"].queryset = PaymentType.objects.filter(
+            draft__user=user
+        )

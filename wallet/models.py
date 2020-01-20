@@ -6,21 +6,12 @@ from django.db import models
 from draft.models import Draft
 
 
-MONEY_TYPE = [
-    "Carte bancaire Visa (compte rattaché)",
-    "Carte bancaire MasterCard (compte rattaché)",
-    "Porte-monnaie",
-    "Chèque de voyage",
-    "Compte Paypal, ApplePay, etc., ou bancaire pour virement",
-]
-TRANSACTION_TYPE = [
-    "Retrait ATM",
-    "Retrait DAB",
-    "Achat par carte bancaire",
-    "Paiement en liquide",
+PAYMENT_TYPE = [
+    "Achat par carte bancaire Visa",
+    "Achat par carte bancaire MasterCard",
+    "Paiement en liquide avec le porte-monnaie",
     "Paiement par chèque de voyage",
-    "Virement bancaire, Paypal, ApplePay, etc.",
-    "Crédit",
+    "Paiement ou virement d'un compte Paypal, ApplePay, bancaire, etc.",
 ]
 CURRENCY = (
     ("EUR", "EUR"),
@@ -32,14 +23,14 @@ CURRENCY = (
 )
 
 
-class Wallet(models.Model):
-    """To create the Wallet table in the database."""
+class PaymentType(models.Model):
+    """To create the PaymentType table in the database."""
 
-    MONEY_TYPE_CHOICES = [(i, money) for i, money in enumerate(MONEY_TYPE, start=1)]
+    PAYMENT_TYPE_CHOICES = [(i, money) for i, money in enumerate(PAYMENT_TYPE, start=1)]
 
-    name = models.CharField("Nom du portefeuille", max_length=30)
-    money_type = models.PositiveSmallIntegerField(
-        "Type de portefeuille", choices=MONEY_TYPE_CHOICES
+    wallet_name = models.CharField("Nom du portefeuille", max_length=30)
+    payment_type = models.PositiveSmallIntegerField(
+        "Type de portefeuille", choices=PAYMENT_TYPE_CHOICES
     )
     currency = models.CharField("Devise", max_length=3, choices=CURRENCY)
     balance = models.PositiveSmallIntegerField("Solde")
@@ -56,29 +47,5 @@ class Wallet(models.Model):
         verbose_name = "Portefeuille"
 
     def __str__(self):
-        money_type_name = MONEY_TYPE[int(self.money_type) - 1]
-        return f"Wallet {self.name} : {money_type_name} en {self.currency}"
-
-
-class Transaction(models.Model):
-    """To create the Transaction table in the database."""
-
-    TRANSACTION_TYPE_CHOICES = [
-        (i, trans) for i, trans in enumerate(TRANSACTION_TYPE, start=1)
-    ]
-
-    transaction_type = models.PositiveSmallIntegerField(
-        "Type de transaction", choices=TRANSACTION_TYPE_CHOICES
-    )
-    rate = models.FloatField("Taux de change")
-    wallet = models.ForeignKey(
-        Wallet, on_delete=models.CASCADE, verbose_name="portefeuille"
-    )
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        verbose_name = "Transaction"
-
-    def __str__(self):
-        return self.transaction_type
+        payment_type_name = PAYMENT_TYPE[int(self.payment_type) - 1]
+        return f"Wallet {self.wallet_name} : {payment_type_name} en {self.currency}"

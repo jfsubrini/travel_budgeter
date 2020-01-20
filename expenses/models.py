@@ -5,7 +5,7 @@
 from django.db import models
 
 from draft.models import Draft
-from wallet.models import Wallet
+from wallet.models import PaymentType
 from xconverter.models import Currency
 
 
@@ -43,8 +43,8 @@ class Expense(models.Model):
         related_name="expenses",
         verbose_name="budget prévisionnel",
     )
-    wallet = models.ForeignKey(
-        Wallet, on_delete=models.CASCADE, verbose_name="portefeuille"
+    payment_type = models.ForeignKey(
+        PaymentType, on_delete=models.CASCADE, verbose_name="type de paiement"
     )
     photo = models.ImageField(
         "Photo de la facture", upload_to="expenses/", blank=True, null=True
