@@ -7,11 +7,18 @@
 </head>
 
 <body>
-    <h2>Welcome to the Monitoring.</h2>
+    <h1>Welcome {{ user }},</h1>
+    <h2>Informations sur ton {{ last_draft }}</h2>
+    <h4>Cliquez sur un des liens ci-dessous.</h4>
+    <main>
+        <div><a href="{% url 'monitoring-wallet-balance' %}">Solde des wallets</div>
+    </main>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
 </body>
-<br />
-<br />
-<br />
 <footer>
     <div><a href="{% url 'draft' %}">Budget prévisionnel</div>
     <div><a href="{% url 'wallet-creation' %}">Création de wallet</div>

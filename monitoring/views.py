@@ -13,7 +13,17 @@ from .currency_api import CurrencyConverter
 @login_required(login_url="/signin/", redirect_field_name="redirection_vers")
 def monitoring(request):
     """
-    View to the monitoring balance page.
+    View to the monitoring page.
+    """
+    last_draft = Draft.objects.filter(user=request.user).last()
+    context = {"user": request.user, "last_draft": last_draft}
+    return render(request, "monitoring.html", context)
+
+
+@login_required(login_url="/signin/", redirect_field_name="redirection_vers")
+def wallet_balance(request):
+    """
+    View to the wallet balance page.
     """
     last_draft = Draft.objects.filter(user=request.user).last()
     wallet_queryset = last_draft.wallets.all()
@@ -41,4 +51,3 @@ def monitoring(request):
 
     context = {"wallet_dict": wallet_dict}
     return render(request, "balance.html", context)
-
