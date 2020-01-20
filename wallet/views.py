@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 
 from draft.models import Draft
-from .forms import WalletCreationForm, WalletWithdrawalForm
+from .forms import WalletCreationForm, WalletWithdrawalForm, WalletChangeForm
 
 
 @login_required(login_url="/signin/", redirect_field_name="redirection_vers")
@@ -83,6 +83,32 @@ def wallet_change(request):
     """
     View to the currency change page.
     """
+
+    """
+    View to the credit card withdrawal page.
+    """
+    # When the form has been posted.
+    if request.method == "POST":
+        # Checking if the form has been validated.
+        change_form = WalletChangeForm(request.POST)
+        if change_form.is_valid():
+            # Saving the data from the wallet form to the database.
+            # First, create, but don't save the new Wallet instance.
+            # form = wallet_form.save(commit=False)
+            # # Then, link the instance with the last draft from that logged travel user.
+            # last_draft = Draft.objects.filter(user=request.user).last()
+            # form.draft = last_draft
+            # # Finally, save the new instance.
+            # form.save()
+            # And redirect to the monitoring page.
+            return redirect(
+                f"/monitoring?user={request.user.id}?destination={last_draft}"
+            )
+
+    # To display the empty wallet change form.
+    else:
+        change_form = WalletChangeForm()
+
     # What to render to the template.
     last_draft = Draft.objects.filter(user=request.user).last()
     context = {"change_form": change_form, "last_draft": last_draft}

@@ -18,7 +18,7 @@ class WalletCreationForm(ModelForm):
 
 
 class WalletWithdrawalForm(ModelForm):
-    """Form to get the credit card withdrawal data."""
+    """Form to enter the credit card withdrawal data."""
 
     class Meta:
         """Details of the WalletWithdrawalForm form."""
@@ -26,3 +26,12 @@ class WalletWithdrawalForm(ModelForm):
         model = PaymentType
         exclude = ["draft"]
 
+
+class WalletChangeForm(ModelForm):
+    """Form to enter the currency change data."""
+
+    class Meta:
+        """Details of the WalletChangeForm form."""
+
+        model = PaymentType
+        exclude = ["draft"]

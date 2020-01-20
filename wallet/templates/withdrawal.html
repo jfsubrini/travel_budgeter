@@ -7,18 +7,18 @@
 </head>
 
 <body>
-    <h1>Creation d'un wallet pour :</h1>
+    <h1>Enregistrement d'un retrait ATM ou DAB</h1>
     <h2>{{ last_draft }}</h2>
     {% if submitted %}
-    <p>Votre nouveau wallet a bien été enregistré.</p>
+    <p>Votre nouveau retrait a bien été enregistré.</p>
     {% else %}
     <br />
     <form action="" method="post">
         {% csrf_token %}
-        <h2>Création de wallet : entrez les informations suivantes.</h2>
-        {{ wallet_form.as_p }}
+        <h2>Entrez les informations suivantes :</h2>
+        {{ withdrawal_form.as_p }}
         </br>
-        <input type="submit" value="Enregistrez ce wallet">
+        <input type="submit" value="Enregistrez ce retrait">
     </form>
     {% endif %}
 </body>
