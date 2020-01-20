@@ -32,7 +32,7 @@ class Expense(models.Model):
     place = models.CharField("Lieu", max_length=70, blank=True, null=True)
     date = models.DateField("Date")
     category = models.PositiveSmallIntegerField("Catégorie", choices=CATEGORY_CHOICES)
-    amount = models.PositiveSmallIntegerField("Montant")
+    amount = models.PositiveIntegerField("Montant")
     currency = models.ForeignKey(
         Currency, on_delete=models.CASCADE, verbose_name="Monnaie"
     )

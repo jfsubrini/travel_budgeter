@@ -34,7 +34,7 @@ class PaymentType(models.Model):
         "Type de portefeuille", choices=PAYMENT_TYPE_CHOICES
     )
     currency = models.CharField("Devise", max_length=3, choices=CURRENCY)
-    balance = models.PositiveSmallIntegerField("Solde")
+    balance = models.PositiveIntegerField("Solde")
     draft = models.ForeignKey(
         Draft,
         on_delete=models.CASCADE,
@@ -55,9 +55,7 @@ class PaymentType(models.Model):
 class Withdrawal(models.Model):
     """To create the Withdrawal table in the database."""
 
-    PAYMENT_TYPE_CHOICES = [
-        (i, money) for i, money in enumerate(PAYMENT_TYPE, start=1)
-    ]  # TODO
+    PAYMENT_TYPE_CHOICES = [(i, money) for i, money in enumerate(PAYMENT_TYPE, start=1)]
 
     bank = models.CharField(
         "Nom de la banque de retrait", max_length=30, blank=True, null=True
@@ -69,8 +67,8 @@ class Withdrawal(models.Model):
         on_delete=models.CASCADE,
         related_name="credit_card_withdrawals",
         verbose_name="Carte bancaire débitée",
-    )  # TODO
-    amount = models.PositiveSmallIntegerField("Montant")
+    )
+    amount = models.PositiveIntegerField("Montant")
     currency = models.ForeignKey(
         Currency, on_delete=models.CASCADE, verbose_name="Monnaie"
     )
@@ -81,7 +79,7 @@ class Withdrawal(models.Model):
         on_delete=models.CASCADE,
         related_name="withdrawals_to_wallet",
         verbose_name="Porte-monnaie crédité",
-    )  # TODO
+    )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -96,9 +94,7 @@ class Withdrawal(models.Model):
 class Change(models.Model):
     """To create the Change table in the database."""
 
-    PAYMENT_TYPE_CHOICES = [
-        (i, money) for i, money in enumerate(PAYMENT_TYPE, start=1)
-    ]  # TODO
+    PAYMENT_TYPE_CHOICES = [(i, money) for i, money in enumerate(PAYMENT_TYPE, start=1)]
 
     changer = models.CharField(
         "Banque ou changeur", max_length=30, blank=True, null=True
@@ -110,8 +106,8 @@ class Change(models.Model):
         on_delete=models.CASCADE,
         related_name="wallet_for_changes",
         verbose_name="Porte-monnaie de la devise à changer",
-    )  # TODO
-    amount = models.PositiveSmallIntegerField("Montant")
+    )
+    amount = models.PositiveIntegerField("Montant")
     currency_out = models.ForeignKey(
         Currency,
         on_delete=models.CASCADE,
@@ -131,7 +127,7 @@ class Change(models.Model):
         on_delete=models.CASCADE,
         related_name="changes_to_wallet",
         verbose_name="Porte-monnaie de la devise reçue",
-    )  # TODO
+    )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

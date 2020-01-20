@@ -19,21 +19,21 @@ CURRENCY = (
 class Category(models.Model):
     """To create the Category table."""
 
-    pre_departure = models.PositiveSmallIntegerField(
+    pre_departure = models.PositiveIntegerField(
         "Dépenses avant le départ", blank=True, null=True
     )
-    international_transport = models.PositiveSmallIntegerField(
+    international_transport = models.PositiveIntegerField(
         "Transports internationaux", blank=True, null=True
     )
-    local_transport = models.PositiveSmallIntegerField(
+    local_transport = models.PositiveIntegerField(
         "Transports nationaux", blank=True, null=True
     )
-    lodging = models.PositiveSmallIntegerField("Hébergements", blank=True, null=True)
-    fooding = models.PositiveSmallIntegerField("Nourriture", blank=True, null=True)
-    visiting = models.PositiveSmallIntegerField("Visites", blank=True, null=True)
-    activities = models.PositiveSmallIntegerField("Activités", blank=True, null=True)
-    souvenirs = models.PositiveSmallIntegerField("Souvenirs", blank=True, null=True)
-    various = models.PositiveSmallIntegerField("Divers", blank=True, null=True)
+    lodging = models.PositiveIntegerField("Hébergements", blank=True, null=True)
+    fooding = models.PositiveIntegerField("Nourriture", blank=True, null=True)
+    visiting = models.PositiveIntegerField("Visites", blank=True, null=True)
+    activities = models.PositiveIntegerField("Activités", blank=True, null=True)
+    souvenirs = models.PositiveIntegerField("Souvenirs", blank=True, null=True)
+    various = models.PositiveIntegerField("Divers", blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
