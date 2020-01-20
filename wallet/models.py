@@ -65,7 +65,10 @@ class Withdrawal(models.Model):
     country = models.CharField("Pays", max_length=70, blank=True, null=True)
     place = models.CharField("Lieu", max_length=70, blank=True, null=True)
     payment_type_out = models.ForeignKey(
-        PaymentType, on_delete=models.CASCADE, verbose_name="Carte bancaire débitée"
+        PaymentType,
+        on_delete=models.CASCADE,
+        related_name="credit_card_withdrawals",
+        verbose_name="Carte bancaire débitée",
     )  # TODO
     amount = models.PositiveSmallIntegerField("Montant")
     currency = models.ForeignKey(
@@ -74,7 +77,10 @@ class Withdrawal(models.Model):
     rate = models.FloatField("Taux de change (si vous l'avez)", blank=True, null=True)
     date = models.DateField("Date")
     payment_type_in = models.ForeignKey(
-        PaymentType, on_delete=models.CASCADE, verbose_name="Porte-monnaie crédité"
+        PaymentType,
+        on_delete=models.CASCADE,
+        related_name="withdrawals_to_wallet",
+        verbose_name="Porte-monnaie crédité",
     )  # TODO
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -102,20 +108,28 @@ class Change(models.Model):
     payment_type_out = models.ForeignKey(
         PaymentType,
         on_delete=models.CASCADE,
+        related_name="wallet_for_changes",
         verbose_name="Porte-monnaie de la devise à changer",
     )  # TODO
     amount = models.PositiveSmallIntegerField("Montant")
     currency_out = models.ForeignKey(
-        Currency, on_delete=models.CASCADE, verbose_name="Devise à changer"
+        Currency,
+        on_delete=models.CASCADE,
+        related_name="changes_currencies",
+        verbose_name="Devise à changer",
     )
     currency_in = models.ForeignKey(
-        Currency, on_delete=models.CASCADE, verbose_name="Devise reçue"
+        Currency,
+        on_delete=models.CASCADE,
+        related_name="changed_currencies",
+        verbose_name="Devise reçue",
     )
     rate = models.FloatField("Taux de change")
     date = models.DateField("Date")
     payment_type_in = models.ForeignKey(
         PaymentType,
         on_delete=models.CASCADE,
+        related_name="changes_to_wallet",
         verbose_name="Porte-monnaie de la devise reçue",
     )  # TODO
     created_at = models.DateTimeField(auto_now_add=True)
