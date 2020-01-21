@@ -8,10 +8,10 @@ from xconverter.models import Currency
 
 
 PAYMENT_TYPE = [
-    "Achat par carte bancaire Visa",
-    "Achat par carte bancaire MasterCard",
-    "Paiement en liquide avec le porte-monnaie",
-    "Paiement par chèque de voyage",
+    "Carte bancaire Visa",
+    "Carte bancaire MasterCard",
+    "Porte-monnaie",
+    "Chèque de voyage",
     "Paiement ou virement d'un compte Paypal, ApplePay, bancaire, etc.",
 ]
 CURRENCY = (
