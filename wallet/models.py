@@ -51,7 +51,7 @@ class PaymentType(models.Model):
 
     def __str__(self):
         payment_type_name = PAYMENT_TYPE[int(self.payment_type) - 1]
-        return f"Wallet {self.wallet_name} : {payment_type_name} en {self.currency}"
+        return f"{payment_type_name} du compte {self.wallet_name} en {self.currency}"
 
 
 class Withdrawal(models.Model):

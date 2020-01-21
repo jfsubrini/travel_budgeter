@@ -51,7 +51,7 @@ def wallet_balance(request):
             - change_out_sum
             + change_in_sum
         )
-        wallet_dict[wallet.id] = w_balance
+        wallet_dict[wallet] = w_balance
 
     context = {"wallet_dict": wallet_dict}
 

@@ -18,4 +18,4 @@ class Currency(models.Model):
         verbose_name = "Monnaie"
 
     def __str__(self):
-        return f"{self.country} : {self.name} ({self.iso})"
+        return f"{self.name} ({self.iso})"
