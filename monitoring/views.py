@@ -30,16 +30,16 @@ def wallet_balance(request):
     wallet_queryset = last_draft.wallets.all()
     wallet_dict = {}
     # Balance calculation for each wallet (for the current draft).
+    # TODO vérifier que les devises des comptes et porte-monnaies sont ok.
     for wallet in wallet_queryset:
-        print("wallet_queryset ... ", wallet_queryset)
         initial_balance = wallet.balance
         wallet_currency = wallet.currency
         # Balance calculation for each wallet considering expenses.
-        expenses_sum = _expense_calculation(wallet, last_draft, wallet_currency)
+        expenses_sum = _expense_calculation(wallet, wallet_currency)
         # Balance calculation for each wallet considering withdrawals.
-        withdrawal_sum = _withdrawal_calculation(wallet, last_draft, wallet_currency)
+        withdrawal_sum = _withdrawal_calculation(wallet, wallet_currency)
         # Balance calculation for each wallet considering changes.
-        change_sum = _change_calculation(wallet, last_draft, wallet_currency)
+        change_sum = _change_calculation(wallet, wallet_currency)
         # Balance calculation for each wallet after all transactions.
         w_balance = initial_balance - expenses_sum - withdrawal_sum - change_sum
         wallet_dict[wallet.id] = w_balance
@@ -48,10 +48,8 @@ def wallet_balance(request):
     return render(request, "balance.html", context)
 
 
-def _expense_calculation(wallet, last_draft, wallet_currency):
-    expenses_related_queryset = Expense.objects.filter(
-        payment_type=wallet, draft=last_draft
-    )
+def _expense_calculation(wallet, wallet_currency):
+    expenses_related_queryset = Expense.objects.filter(payment_type=wallet)
     expense_amount_list = []
     for expense in expenses_related_queryset:
         expense_amount = expense.amount
@@ -59,47 +57,43 @@ def _expense_calculation(wallet, last_draft, wallet_currency):
         if wallet_currency != expense_currency:
             expense_date = expense.date
             currency_rate = CurrencyConverter(
-                wallet_currency, expense_currency, expense_date
+                expense_currency, wallet_currency, expense_date
             ).exchange()
             expense_amount *= currency_rate
         expense_amount_list.append(expense_amount)
-        expenses_sum = sum(expense_amount_list)
-        return expenses_sum
+    expenses_sum = sum(expense_amount_list)
+    return expenses_sum
 
 
-def _withdrawal_calculation(wallet, last_draft, wallet_currency):
-    withdrawals_related_queryset = Withdrawal.objects.filter(
-        payment_type=wallet, draft=last_draft
-    )
+def _withdrawal_calculation(wallet, wallet_currency):
+    withdrawals_out_queryset = Withdrawal.objects.filter(payment_type_out=wallet.id)
     withdrawal_amount_list = []
-    for withdrawal in withdrawals_related_queryset:
-        withdrawal_amount = withdrawal.amount
-        withdrawal_currency = withdrawal.currency.iso
-        if wallet_currency != withdrawal_currency:
+    for withdrawal in withdrawals_out_queryset:
+        withdrawal_out_amount = withdrawal.amount
+        withdrawal_in_currency = withdrawal.currency.iso
+        if wallet_currency != withdrawal_in_currency:
             withdrawal_date = withdrawal.date
             currency_rate = CurrencyConverter(
-                wallet_currency, withdrawal_currency, withdrawal_date
+                withdrawal_in_currency, wallet_currency, withdrawal_date
             ).exchange()
-            withdrawal_amount *= currency_rate
-        withdrawal_amount_list.append(withdrawal_amount)
-        withdrawal_sum = sum(withdrawal_amount_list)
-        return withdrawal_sum
+            withdrawal_out_amount *= currency_rate
+        withdrawal_amount_list.append(withdrawal_out_amount)
+    withdrawal_sum = sum(withdrawal_amount_list)
+    return withdrawal_sum
 
 
-def _change_calculation(wallet, last_draft, wallet_currency):
-    changes_related_queryset = Change.objects.filter(
-        payment_type=wallet, draft=last_draft
-    )
+def _change_calculation(wallet, wallet_currency):
+    changes_out_queryset = Change.objects.filter(payment_type_out=wallet.id)
     change_amount_list = []
-    for change in changes_related_queryset:
-        change_amount = change.amount
-        change_currency = change.currency.iso
-        if wallet_currency != change_currency:
+    for change in changes_out_queryset:
+        change_out_amount = change.amount
+        change_in_currency = change.currency_in.iso
+        if wallet_currency != change_in_currency:
             change_date = change.date
             currency_rate = CurrencyConverter(
-                wallet_currency, change_currency, change_date
+                change_in_currency, wallet_currency, change_date
             ).exchange()
-            change_amount *= currency_rate
-        change_amount_list.append(change_amount)
-        change_sum = sum(change_amount_list)
-        return change_sum
+            change_out_amount *= currency_rate
+        change_amount_list.append(change_out_amount)
+    change_sum = sum(change_amount_list)
+    return change_sum

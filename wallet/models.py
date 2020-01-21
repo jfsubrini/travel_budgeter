@@ -87,8 +87,7 @@ class Withdrawal(models.Model):
         verbose_name = "Retrait"
 
     def __str__(self):
-        payment_type_name = PAYMENT_TYPE[int(self.payment_type_out) - 1]  # TODO
-        return f"Retrait avec {payment_type_name} en {self.currency}"
+        return f"Retrait avec {self.payment_type_out} en {self.currency}"
 
 
 class Change(models.Model):
@@ -135,5 +134,4 @@ class Change(models.Model):
         verbose_name = "Change de devises"
 
     def __str__(self):
-        payment_type_name = PAYMENT_TYPE[int(self.payment_type_out) - 1]  # TODO
-        return f"Change avec {payment_type_name} de {self.currency_out} en {self.currency_in}"
+        return f"Change avec {self.payment_type_out} de {self.currency_out} en {self.currency_in}"
