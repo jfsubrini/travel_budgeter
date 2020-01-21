@@ -85,10 +85,15 @@ def _withdrawal_calculation(wallet, wallet_currency):
         withdrawal_out_amount = withdrawal.amount
         withdrawal_in_currency = withdrawal.currency.iso
         if wallet_currency != withdrawal_in_currency:
-            withdrawal_date = withdrawal.date
-            currency_rate = CurrencyConverter(
-                withdrawal_in_currency, wallet_currency, withdrawal_date
-            ).exchange()
+            # When the rate is given by the user.
+            if withdrawal.rate:
+                currency_rate = withdrawal.rate
+            # Else, online rate.
+            else:
+                withdrawal_date = withdrawal.date
+                currency_rate = CurrencyConverter(
+                    withdrawal_in_currency, wallet_currency, withdrawal_date
+                ).exchange()
             withdrawal_out_amount *= currency_rate
         withdrawal_out_amount_list.append(withdrawal_out_amount)
     withdrawal_out_sum = sum(withdrawal_out_amount_list)
