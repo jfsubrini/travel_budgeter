@@ -3,14 +3,26 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Soldes</title>
+    <title>Catégories</title>
 </head>
 
 <body>
-    <h2>Page des soldes</h2>
-    {% for wallet, balance in wallet_dict.items %}
+    <h2>Page Catégories</h2>
+    {% for category, amount in draft_categories_dict.items %}
     <div>
-        {{ wallet }} a un solde après dépenses de : {{ balance|stringformat:".2f" }}
+        Budget prévisionnel pour la catégorie "{{ category }}" : {{ amount }}
+    </div>
+    {% endfor %}
+    <br />
+    {% for category, amount in expenses_categories_dict.items %}
+    <div>
+        Budget prévisionnel pour la catégorie "{{ category }}" : {{ amount }}
+    </div>
+    {% endfor %}
+    <br />
+    {% for category, percent in category_ratio_dict.items %}
+    <div>
+        Pourcentage de consommation pour la catégorie "{{ category }}" : {{ percent|stringformat:".2f" }} %
     </div>
     {% endfor %}
 </body>

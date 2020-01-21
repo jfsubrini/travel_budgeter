@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
-# pylint: disable=no-member
+# pylint: disable=no-member,too-many-locals
 """All the views for the monitoring app of the travel_budgeter project."""
 
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
 from draft.models import Draft
-from expenses.models import Expense
+from expenses.models import Expense, CATEGORY
 from wallet.models import Withdrawal, Change
 from .currency_api import CurrencyConverter
 
@@ -132,3 +132,53 @@ def _change_calculation(wallet, wallet_currency):  # TODO A REVOIR TOUT ICI
     print("change_in_sum ... :", change_in_sum)
 
     return change_out_sum, change_in_sum
+
+
+@login_required(login_url="/signin/", redirect_field_name="redirection_vers")
+def category_consumption(request):
+    """
+    View to the category consumption page.
+    """
+    # Gathering all the draft categories amounts.
+    last_draft = Draft.objects.filter(user=request.user).last()
+    draft_categories = last_draft.category
+    draft_pre_departure = draft_categories.pre_departure
+    draft_international_transport = draft_categories.international_transport
+    draft_local_transport = draft_categories.local_transport
+    draft_lodging = draft_categories.lodging
+    draft_fooding = draft_categories.fooding
+    draft_visiting = draft_categories.visiting
+    draft_activities = draft_categories.activities
+    draft_souvenirs = draft_categories.souvenirs
+    draft_various = draft_categories.various
+    draft_categories_dict = {
+        CATEGORY[0]: draft_pre_departure,
+        CATEGORY[1]: draft_international_transport,
+        CATEGORY[2]: draft_local_transport,
+        CATEGORY[3]: draft_lodging,
+        CATEGORY[4]: draft_fooding,
+        CATEGORY[5]: draft_visiting,
+        CATEGORY[6]: draft_activities,
+        CATEGORY[7]: draft_souvenirs,
+        CATEGORY[8]: draft_various,
+    }
+    # Gathering all the expenses categories amounts.
+    expenses_queryset = Expense.objects.filter(draft=last_draft)
+    expenses_categories_dict = {}
+    i = 0
+    for expense in expenses_queryset:
+        expense_category = expense.category
+        expenses_categories_dict[CATEGORY[i]] = expense_category
+        i += 1
+    # Ratio between expenses and draft for each category.
+    category_ratio_dict = {}
+    for category, amount in expenses_categories_dict.items():
+        category_ratio_dict[category] = amount / draft_categories_dict[category] * 100
+
+    context = {
+        "draft_categories_dict": draft_categories_dict,
+        "expenses_categories_dict": expenses_categories_dict,
+        "category_ratio_dict": category_ratio_dict,
+    }
+
+    return render(request, "category.html", context)
