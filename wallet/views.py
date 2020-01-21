@@ -53,7 +53,7 @@ def wallet_withdrawal(request):
     # When the form has been posted.
     if request.method == "POST":
         # Checking if the form has been validated.
-        withdrawal_form = WalletWithdrawalForm(request.POST)
+        withdrawal_form = WalletWithdrawalForm(request.user, request.POST)
         if withdrawal_form.is_valid():
             # Saving the data from the withdrawal form to the database.
             withdrawal_form.save()
@@ -81,7 +81,7 @@ def wallet_change(request):
     # When the form has been posted.
     if request.method == "POST":
         # Checking if the form has been validated.
-        change_form = WalletChangeForm(request.POST)
+        change_form = WalletChangeForm(request.user, request.POST)
         if change_form.is_valid():
             # Saving the data from the change form to the database.
             change_form.save()

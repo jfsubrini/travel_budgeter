@@ -18,7 +18,7 @@ def expenses(request):
     # When the form has been posted.
     if request.method == "POST":
         # Checking if the form has been validated.
-        expense_form = ExpenseForm(request.POST)
+        expense_form = ExpenseForm(request.user, request.POST)
         if expense_form.is_valid():
             # Saving the data from the expense form to the database.
             # First, create, but don't save the new Expense instance.

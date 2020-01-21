@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# pylint: disable=no-member
+# pylint: disable=no-member,too-many-locals
 """All the views for the monitoring app of the travel_budgeter project."""
 
 from django.contrib.auth.decorators import login_required
@@ -36,18 +36,17 @@ def wallet_balance(request):
         )
         expense_amount_list = []
         for expense in expenses_related_queryset:
-            # TODO pour crédit et pas que dépenses
             expense_amount = expense.amount
             expense_currency = expense.currency.iso
             if wallet_currency != expense_currency:
                 expense_date = expense.date
                 currency_rate = CurrencyConverter(
                     wallet_currency, expense_currency, expense_date
-                ).exchange()  # TODO Attention pb car les dates sont dans le futur. Refaire les expenses avec dates dans le passé.
+                ).exchange()
                 expense_amount *= currency_rate
             expense_amount_list.append(expense_amount)
-        wallet_balance = initial_balance - sum(expense_amount_list)
-        wallet_dict[wallet.id] = wallet_balance
+        w_balance = initial_balance - sum(expense_amount_list)
+        wallet_dict[wallet.id] = w_balance
 
     context = {"wallet_dict": wallet_dict}
     return render(request, "balance.html", context)
