@@ -30,5 +30,5 @@ class CurrencyConverter:
             "https://free.currconv.com/api/v7/convert?", params=payload
         )
         curr_conv = response.json()
-        rate = curr_conv[currencies][self.date]
+        rate = curr_conv[currencies][str(self.date)]
         return rate
