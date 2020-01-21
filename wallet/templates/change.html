@@ -3,22 +3,22 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Wallet creation</title>
+    <title>Change de devises</title>
 </head>
 
 <body>
-    <h1>Creation d'un wallet pour :</h1>
+    <h1>Change de devises pour :</h1>
     <h2>{{ last_draft }}</h2>
     {% if submitted %}
-    <p>Votre nouveau wallet a bien été enregistré.</p>
+    <p>Votre nouveau change de devises a bien été enregistré.</p>
     {% else %}
     <br />
     <form action="" method="post">
         {% csrf_token %}
-        <h2>Création de wallet : entrez les informations suivantes.</h2>
-        {{ wallet_form.as_p }}
+        <h2>Entrez les informations suivantes :</h2>
+        {{ change_form.as_p }}
         </br>
-        <input type="submit" value="Enregistrez ce wallet">
+        <input type="submit" value="Enregistrez ce change de devises">
     </form>
     {% endif %}
 </body>
@@ -30,8 +30,8 @@
     <div><a href="{% url 'expenses' %}">Dépenses</div>
     <div><a href="{% url 'monitoring' %}">Monitoring</div>
     <div><a href="{% url 'register' %}">Compte</div>
+    <div><a href="{% url 'wallet-creation' %}">Création de wallet</div>
     <div><a href="{% url 'wallet-withdrawal' %}">Retrait ATM/DAB</div>
-    <div><a href="{% url 'wallet-change' %}">Change de devises</div>
 </footer>
 
 </html>

@@ -29,22 +29,22 @@ class Expense(models.Model):
 
     label = models.CharField("Intitulé de la dépense", max_length=200)
     country = models.CharField("Pays", max_length=70)
-    place = models.CharField("Endroit", max_length=70, blank=True, null=True)
+    place = models.CharField("Lieu", max_length=70, blank=True, null=True)
     date = models.DateField("Date")
-    category = models.PositiveSmallIntegerField("catégorie", choices=CATEGORY_CHOICES)
-    amount = models.PositiveSmallIntegerField("Montant")
+    category = models.PositiveSmallIntegerField("Catégorie", choices=CATEGORY_CHOICES)
+    amount = models.PositiveIntegerField("Montant")
     currency = models.ForeignKey(
-        Currency, on_delete=models.CASCADE, verbose_name="monnaie"
+        Currency, on_delete=models.CASCADE, verbose_name="Monnaie"
     )
     simulation = models.BooleanField("Simulation", default=False)
     draft = models.ForeignKey(
         Draft,
         on_delete=models.CASCADE,
         related_name="expenses",
-        verbose_name="budget prévisionnel",
+        verbose_name="Budget prévisionnel",
     )
     payment_type = models.ForeignKey(
-        PaymentType, on_delete=models.CASCADE, verbose_name="type de paiement"
+        PaymentType, on_delete=models.CASCADE, verbose_name="Type de paiement"
     )
     photo = models.ImageField(
         "Photo de la facture", upload_to="expenses/", blank=True, null=True
