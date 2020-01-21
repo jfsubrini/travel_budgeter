@@ -33,18 +33,28 @@ def wallet_balance(request):
     # TODO vérifier que les devises des comptes et porte-monnaies sont ok.
     for wallet in wallet_queryset:
         initial_balance = wallet.balance
-        wallet_currency = wallet.currency
+        wallet_currency = wallet.currency.iso
         # Balance calculation for each wallet considering expenses.
         expenses_sum = _expense_calculation(wallet, wallet_currency)
         # Balance calculation for each wallet considering withdrawals.
-        withdrawal_sum = _withdrawal_calculation(wallet, wallet_currency)
+        withdrawal_out_sum, withdrawal_in_sum = _withdrawal_calculation(
+            wallet, wallet_currency
+        )
         # Balance calculation for each wallet considering changes.
-        change_sum = _change_calculation(wallet, wallet_currency)
+        change_out_sum, change_in_sum = _change_calculation(wallet, wallet_currency)
         # Balance calculation for each wallet after all transactions.
-        w_balance = initial_balance - expenses_sum - withdrawal_sum - change_sum
+        w_balance = (
+            initial_balance
+            - expenses_sum
+            - withdrawal_out_sum
+            + withdrawal_in_sum
+            - change_out_sum
+            + change_in_sum
+        )
         wallet_dict[wallet.id] = w_balance
 
     context = {"wallet_dict": wallet_dict}
+
     return render(request, "balance.html", context)
 
 
@@ -62,12 +72,15 @@ def _expense_calculation(wallet, wallet_currency):
             expense_amount *= currency_rate
         expense_amount_list.append(expense_amount)
     expenses_sum = sum(expense_amount_list)
+
     return expenses_sum
 
 
 def _withdrawal_calculation(wallet, wallet_currency):
     withdrawals_out_queryset = Withdrawal.objects.filter(payment_type_out=wallet.id)
-    withdrawal_amount_list = []
+    withdrawals_in_queryset = Withdrawal.objects.filter(payment_type_in=wallet.id)
+    # Calculate the sum to debit from the credit cards.
+    withdrawal_out_amount_list = []
     for withdrawal in withdrawals_out_queryset:
         withdrawal_out_amount = withdrawal.amount
         withdrawal_in_currency = withdrawal.currency.iso
@@ -77,14 +90,23 @@ def _withdrawal_calculation(wallet, wallet_currency):
                 withdrawal_in_currency, wallet_currency, withdrawal_date
             ).exchange()
             withdrawal_out_amount *= currency_rate
-        withdrawal_amount_list.append(withdrawal_out_amount)
-    withdrawal_sum = sum(withdrawal_amount_list)
-    return withdrawal_sum
+        withdrawal_out_amount_list.append(withdrawal_out_amount)
+    withdrawal_out_sum = sum(withdrawal_out_amount_list)
+    # Calculate the sum to credit the wallets.
+    withdrawal_in_amount_list = []
+    for withdrawal in withdrawals_in_queryset:
+        withdrawal_in_amount = withdrawal.amount
+        withdrawal_in_amount_list.append(withdrawal_in_amount)
+    withdrawal_in_sum = sum(withdrawal_in_amount_list)
+
+    return withdrawal_out_sum, withdrawal_in_sum
 
 
-def _change_calculation(wallet, wallet_currency):
+def _change_calculation(wallet, wallet_currency):  # TODO A REVOIR TOUT ICI
     changes_out_queryset = Change.objects.filter(payment_type_out=wallet.id)
-    change_amount_list = []
+    changes_in_queryset = Change.objects.filter(payment_type_in=wallet.id)
+    # Calculate the sum to debit from the wallet of the currency to change.
+    change_out_amount_list = []
     for change in changes_out_queryset:
         change_out_amount = change.amount
         change_in_currency = change.currency_in.iso
@@ -94,6 +116,14 @@ def _change_calculation(wallet, wallet_currency):
                 change_in_currency, wallet_currency, change_date
             ).exchange()
             change_out_amount *= currency_rate
-        change_amount_list.append(change_out_amount)
-    change_sum = sum(change_amount_list)
-    return change_sum
+        change_out_amount_list.append(change_out_amount)
+    change_out_sum = sum(change_out_amount_list)
+    # Calculate the sum to credit the wallets.
+    change_in_amount_list = []
+    for change in changes_in_queryset:
+        change_in_amount = change.amount
+        change_in_amount_list.append(change_in_amount)
+    change_in_sum = sum(change_in_amount_list)
+    print("change_in_sum ... :", change_in_sum)
+
+    return change_out_sum, change_in_sum
