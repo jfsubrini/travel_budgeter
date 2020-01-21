@@ -10,7 +10,7 @@
     <h2>Balance page</h2>
     {% for wallet, balance in wallet_dict.items %}
     <div>
-        Le wallet {{ wallet }} a un solde après dépenses de {{ balance }}
+        Le wallet {{ wallet }} a un solde après dépenses de {{ balance|stringformat:".2f" }}
     </div>
     {% endfor %}
 </body>
