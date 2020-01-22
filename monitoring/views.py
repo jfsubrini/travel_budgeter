@@ -2,6 +2,8 @@
 # pylint: disable=no-member,too-many-locals
 """All the views for the monitoring app of the travel_budgeter project."""
 
+from datetime import date
+
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
@@ -136,11 +138,11 @@ def _change_calculation(wallet, wallet_currency):  # TODO A REVOIR TOUT ICI
     return change_out_sum, change_in_sum
 
 
-#### CATEGORY CONSOMPTION WITH SIMULATION PAGE ####
+#### CATEGORY CONSOMPTION WITH SIMULATION PAGE - UP TO DATE ####
 @login_required(login_url="/signin/", redirect_field_name="redirection_vers")
 def category_consumption_sim(request):
     """
-    View to the category consumption page, with simulations.
+    View to the category consumption page, with simulation(s).
     """
     last_draft = Draft.objects.filter(user=request.user).last()
     last_draft_currency = last_draft.currency
@@ -190,11 +192,11 @@ def category_consumption_sim(request):
     return render(request, "current_category_sim.html", context)
 
 
-#### CATEGORY CONSOMPTION WITHOUT SIMULATION PAGE ####
+#### CATEGORY CONSOMPTION WITHOUT SIMULATION PAGE - UP TO DATE ####
 @login_required(login_url="/signin/", redirect_field_name="redirection_vers")
 def category_consumption(request):
     """
-    View to the category consumption page, without simulations.
+    View to the category consumption page, without simulation.
     """
     last_draft = Draft.objects.filter(user=request.user).last()
     last_draft_currency = last_draft.currency
@@ -269,3 +271,71 @@ def _draft_categories(last_draft):
         CATEGORY[8]: draft_various or 0,
     }
     return draft_categories_dict
+
+
+#### CATEGORY CONSOMPTION WITH SIMULATION PAGE - JUST FOR ONE DAY (TODAY) ####
+@login_required(login_url="/signin/", redirect_field_name="redirection_vers")
+def category_consumption_today_sim(request):
+    """
+    View to the today's category consumption page, with simulation(s).
+    """
+    last_draft = Draft.objects.filter(user=request.user).last()
+    last_draft_currency = last_draft.currency
+    last_draft_days = last_draft.travel_duration
+
+    # Gathering all the draft categories amounts.
+    draft_categories_dict = _draft_categories(last_draft)
+
+    # Gathering all the today's expenses categories amounts, with the simulation(s).
+    today = date.today()
+    expenses_queryset = Expense.objects.filter(draft=last_draft, date=today)
+    expenses_today_cat_sim_dict = {}
+    for expense in expenses_queryset:
+        expense_category = expense.category
+        expense_amount = expense.amount
+        expense_currency = expense.currency.iso
+        if last_draft_currency != expense_currency:
+            expense_date = expense.date
+            currency_rate = CurrencyConverter(
+                expense_currency, last_draft_currency, expense_date
+            ).exchange()
+            expense_amount *= currency_rate
+        if CATEGORY[expense_category - 1] not in expenses_today_cat_sim_dict.keys():
+            expenses_today_cat_sim_dict[CATEGORY[expense_category - 1]] = expense_amount
+        else:
+            expenses_today_cat_sim_dict[
+                CATEGORY[expense_category - 1]
+            ] += expense_amount
+
+    # Ratio between expenses and draft for each category, with simulation(s).
+    category_today_sim_ratio_dict = {}
+    for category, amount in expenses_today_cat_sim_dict.items():
+        category_today_sim_ratio_dict[category] = (
+            amount / draft_categories_dict[category] * 100
+        )
+
+    # Global consumption ratio, with simulation(s).
+    draft_global_day = (
+        sum(draft_categories_dict.values()) / last_draft_days
+    )  # TODO enlever vols et frais avant départ
+    expenses_today_global_sim = sum(expenses_today_cat_sim_dict.values())
+    global_day_sim_ratio = expenses_today_global_sim / draft_global_day * 100
+
+    context = {
+        "expenses_today_cat_sim_dict": expenses_today_cat_sim_dict,
+        "category_today_sim_ratio_dict": category_today_sim_ratio_dict,
+        "draft_global_day": draft_global_day,
+        "expenses_today_global_sim": expenses_today_global_sim,
+        "global_day_sim_ratio": global_day_sim_ratio,
+    }
+
+    return render(request, "current_category_sim.html", context)
+
+
+#### CATEGORY CONSOMPTION WITHOUT SIMULATION PAGE - JUST FOR ONE DAY (TODAY) ####
+@login_required(login_url="/signin/", redirect_field_name="redirection_vers")
+def category_consumption_today(request):
+    """
+    View to the today's category consumption page.
+    """
+    pass
