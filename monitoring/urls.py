@@ -26,4 +26,14 @@ urlpatterns = [
         views.category_consumption_today_sim,
         name="monitoring-category-today-sim",
     ),
+    path(
+        "wallet/category/7days/",
+        views.category_consumption_7days,
+        name="monitoring-category-7days",
+    ),
+    path(
+        "wallet/category/7days/simulation/",
+        views.category_consumption_7days_sim,
+        name="monitoring-category-7days-sim",
+    ),
 ]
