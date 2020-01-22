@@ -166,17 +166,25 @@ def category_consumption_sim(request):
         else:
             expenses_cat_sim_dict[CATEGORY[expense_category - 1]] += expense_amount
 
-    # Ratio between expenses and draft for each category.
+    # Ratio between expenses and draft for each category, with simulation(s).
     category_sim_ratio_dict = {}
     for category, amount in expenses_cat_sim_dict.items():
         category_sim_ratio_dict[category] = (
             amount / draft_categories_dict[category] * 100
         )
 
+    # Global consumption ratio, with simulation(s).
+    draft_global = sum(draft_categories_dict.values())
+    expenses_global_sim = sum(expenses_cat_sim_dict.values())
+    global_sim_ratio = expenses_global_sim / draft_global * 100
+
     context = {
         "draft_categories_dict": draft_categories_dict,
         "expenses_cat_sim_dict": expenses_cat_sim_dict,
         "category_sim_ratio_dict": category_sim_ratio_dict,
+        "draft_global": draft_global,
+        "expenses_global_sim": expenses_global_sim,
+        "global_sim_ratio": global_sim_ratio,
     }
 
     return render(request, "category_sim.html", context)
@@ -218,10 +226,18 @@ def category_consumption(request):
     for category, amount in expenses_categories_dict.items():
         category_ratio_dict[category] = amount / draft_categories_dict[category] * 100
 
+    # Global consumption ratio.
+    draft_global = sum(draft_categories_dict.values())
+    expenses_global = sum(expenses_categories_dict.values())
+    global_ratio = expenses_global / draft_global * 100
+
     context = {
         "draft_categories_dict": draft_categories_dict,
         "expenses_categories_dict": expenses_categories_dict,
         "category_ratio_dict": category_ratio_dict,
+        "draft_global": draft_global,
+        "expenses_global": expenses_global,
+        "global_ratio": global_ratio,
     }
 
     return render(request, "category.html", context)
@@ -242,14 +258,14 @@ def _draft_categories(last_draft):
     draft_souvenirs = draft_categories.souvenirs
     draft_various = draft_categories.various
     draft_categories_dict = {
-        CATEGORY[0]: draft_pre_departure,
-        CATEGORY[1]: draft_international_transport,
-        CATEGORY[2]: draft_local_transport,
-        CATEGORY[3]: draft_lodging,
-        CATEGORY[4]: draft_fooding,
-        CATEGORY[5]: draft_visiting,
-        CATEGORY[6]: draft_activities,
-        CATEGORY[7]: draft_souvenirs,
-        CATEGORY[8]: draft_various,
+        CATEGORY[0]: draft_pre_departure or 0,
+        CATEGORY[1]: draft_international_transport or 0,
+        CATEGORY[2]: draft_local_transport or 0,
+        CATEGORY[3]: draft_lodging or 0,
+        CATEGORY[4]: draft_fooding or 0,
+        CATEGORY[5]: draft_visiting or 0,
+        CATEGORY[6]: draft_activities or 0,
+        CATEGORY[7]: draft_souvenirs or 0,
+        CATEGORY[8]: draft_various or 0,
     }
     return draft_categories_dict

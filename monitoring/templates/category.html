@@ -26,6 +26,10 @@
         Pourcentage de consommation pour la catégorie "{{ category }}" : {{ percent|stringformat:".2f" }} %
     </div>
     {% endfor %}
+    <br />
+    <h3>Budget prévisionnel global : {{ draft_global }}</h3>
+    <h3>Budget consommé global : {{ expenses_global|stringformat:".2f" }}</h3>
+    <h3>Pourcentage de consommation globale du budget prévisionnel : {{ global_ratio|stringformat:".2f" }} %</h3>
 </body>
 <br />
 <br />
