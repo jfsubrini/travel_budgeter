@@ -3,25 +3,25 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Catégories</title>
+    <title>Catégories avec simulations</title>
 </head>
 
 <body>
-    <h2>Page Catégories sans simulation</h2>
+    <h2>Page Catégories avec simulations</h2>
     {% for category, amount in draft_categories_dict.items %}
     <div>
         Budget prévisionnel pour la catégorie "{{ category }}" : {{ amount }}
     </div>
     {% endfor %}
     <br />
-    {% for category, amount in expenses_categories_dict.items %}
+    {% for category, amount in expenses_cat_sim_dict.items %}
     <div>
         Budget consommé pour la catégorie "{{ category }}" : {{ amount|stringformat:".2f" }}
     </div>
     {% endfor %}
     <br />
-    <h2>Consommation par catégorie sans simulation :</h2>
-    {% for category, percent in category_ratio_dict.items %}
+    <h2>Consommation par catégorie avec simulations :</h2>
+    {% for category, percent in category_sim_ratio_dict.items %}
     <div>
         Pourcentage de consommation pour la catégorie "{{ category }}" : {{ percent|stringformat:".2f" }} %
     </div>

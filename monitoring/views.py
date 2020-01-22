@@ -11,6 +11,7 @@ from wallet.models import Withdrawal, Change
 from .currency_api import CurrencyConverter
 
 
+#### GENERAL PAGE ####
 @login_required(login_url="/signin/", redirect_field_name="redirection_vers")
 def monitoring(request):
     """
@@ -21,6 +22,7 @@ def monitoring(request):
     return render(request, "monitoring.html", context)
 
 
+#### WALLETS BALANCE PAGE ####
 @login_required(login_url="/signin/", redirect_field_name="redirection_vers")
 def wallet_balance(request):
     """
@@ -134,13 +136,101 @@ def _change_calculation(wallet, wallet_currency):  # TODO A REVOIR TOUT ICI
     return change_out_sum, change_in_sum
 
 
+#### CATEGORY CONSOMPTION WITH SIMULATION PAGE ####
+@login_required(login_url="/signin/", redirect_field_name="redirection_vers")
+def category_consumption_sim(request):
+    """
+    View to the category consumption page, with simulations.
+    """
+    last_draft = Draft.objects.filter(user=request.user).last()
+    last_draft_currency = last_draft.currency
+
+    # Gathering all the draft categories amounts.
+    draft_categories_dict = _draft_categories(last_draft)
+
+    # Gathering all the expenses categories amounts, with the simulation(s).
+    expenses_queryset = Expense.objects.filter(draft=last_draft)
+    expenses_cat_sim_dict = {}
+    for expense in expenses_queryset:
+        expense_category = expense.category
+        expense_amount = expense.amount
+        expense_currency = expense.currency.iso
+        if last_draft_currency != expense_currency:
+            expense_date = expense.date
+            currency_rate = CurrencyConverter(
+                expense_currency, last_draft_currency, expense_date
+            ).exchange()
+            expense_amount *= currency_rate
+        if CATEGORY[expense_category - 1] not in expenses_cat_sim_dict.keys():
+            expenses_cat_sim_dict[CATEGORY[expense_category - 1]] = expense_amount
+        else:
+            expenses_cat_sim_dict[CATEGORY[expense_category - 1]] += expense_amount
+
+    # Ratio between expenses and draft for each category.
+    category_sim_ratio_dict = {}
+    for category, amount in expenses_cat_sim_dict.items():
+        category_sim_ratio_dict[category] = (
+            amount / draft_categories_dict[category] * 100
+        )
+
+    context = {
+        "draft_categories_dict": draft_categories_dict,
+        "expenses_cat_sim_dict": expenses_cat_sim_dict,
+        "category_sim_ratio_dict": category_sim_ratio_dict,
+    }
+
+    return render(request, "category_sim.html", context)
+
+
+#### CATEGORY CONSOMPTION WITHOUT SIMULATION PAGE ####
 @login_required(login_url="/signin/", redirect_field_name="redirection_vers")
 def category_consumption(request):
     """
-    View to the category consumption page.
+    View to the category consumption page, without simulations.
     """
-    # Gathering all the draft categories amounts.
     last_draft = Draft.objects.filter(user=request.user).last()
+    last_draft_currency = last_draft.currency
+
+    # Gathering all the draft categories amounts.
+    draft_categories_dict = _draft_categories(last_draft)
+
+    # Gathering all the expenses categories amounts.
+    expenses_queryset = Expense.objects.filter(draft=last_draft, simulation=False)
+    expenses_categories_dict = {}
+
+    for expense in expenses_queryset:
+        expense_category = expense.category
+        expense_amount = expense.amount
+        expense_currency = expense.currency.iso
+        if last_draft_currency != expense_currency:
+            expense_date = expense.date
+            currency_rate = CurrencyConverter(
+                expense_currency, last_draft_currency, expense_date
+            ).exchange()
+            expense_amount *= currency_rate
+        if CATEGORY[expense_category - 1] not in expenses_categories_dict.keys():
+            expenses_categories_dict[CATEGORY[expense_category - 1]] = expense_amount
+        else:
+            expenses_categories_dict[CATEGORY[expense_category - 1]] += expense_amount
+
+    # Ratio between expenses and draft for each category.
+    category_ratio_dict = {}
+    for category, amount in expenses_categories_dict.items():
+        category_ratio_dict[category] = amount / draft_categories_dict[category] * 100
+
+    context = {
+        "draft_categories_dict": draft_categories_dict,
+        "expenses_categories_dict": expenses_categories_dict,
+        "category_ratio_dict": category_ratio_dict,
+    }
+
+    return render(request, "category.html", context)
+
+
+def _draft_categories(last_draft):
+    """
+    Gathering all the draft categories amounts.
+    """
     draft_categories = last_draft.category
     draft_pre_departure = draft_categories.pre_departure
     draft_international_transport = draft_categories.international_transport
@@ -162,23 +252,4 @@ def category_consumption(request):
         CATEGORY[7]: draft_souvenirs,
         CATEGORY[8]: draft_various,
     }
-    # Gathering all the expenses categories amounts.
-    expenses_queryset = Expense.objects.filter(draft=last_draft)
-    expenses_categories_dict = {}
-    i = 0
-    for expense in expenses_queryset:
-        expense_category = expense.category
-        expenses_categories_dict[CATEGORY[i]] = expense_category
-        i += 1
-    # Ratio between expenses and draft for each category.
-    category_ratio_dict = {}
-    for category, amount in expenses_categories_dict.items():
-        category_ratio_dict[category] = amount / draft_categories_dict[category] * 100
-
-    context = {
-        "draft_categories_dict": draft_categories_dict,
-        "expenses_categories_dict": expenses_categories_dict,
-        "category_ratio_dict": category_ratio_dict,
-    }
-
-    return render(request, "category.html", context)
+    return draft_categories_dict
