@@ -33,7 +33,9 @@ class PaymentType(models.Model):
     payment_type = models.PositiveSmallIntegerField(
         "Type de portefeuille", choices=PAYMENT_TYPE_CHOICES
     )
-    currency = models.CharField("Devise", max_length=3, choices=CURRENCY)
+    currency = models.ForeignKey(
+        Currency, on_delete=models.CASCADE, verbose_name="Devise"
+    )
     balance = models.PositiveIntegerField("Solde")
     draft = models.ForeignKey(
         Draft,
@@ -49,7 +51,7 @@ class PaymentType(models.Model):
 
     def __str__(self):
         payment_type_name = PAYMENT_TYPE[int(self.payment_type) - 1]
-        return f"Wallet {self.wallet_name} : {payment_type_name} en {self.currency}"
+        return f"{payment_type_name} du compte {self.wallet_name} en {self.currency}"
 
 
 class Withdrawal(models.Model):
@@ -70,7 +72,7 @@ class Withdrawal(models.Model):
     )
     amount = models.PositiveIntegerField("Montant")
     currency = models.ForeignKey(
-        Currency, on_delete=models.CASCADE, verbose_name="Monnaie"
+        Currency, on_delete=models.CASCADE, verbose_name="Devise"
     )
     rate = models.FloatField("Taux de change (si vous l'avez)", blank=True, null=True)
     date = models.DateField("Date")

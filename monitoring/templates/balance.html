@@ -3,14 +3,14 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Balance</title>
+    <title>Soldes</title>
 </head>
 
 <body>
-    <h2>Balance page</h2>
+    <h2>Page des soldes</h2>
     {% for wallet, balance in wallet_dict.items %}
     <div>
-        Le wallet {{ wallet }} a un solde après dépenses de {{ balance }}
+        {{ wallet }} a un solde après dépenses de : {{ balance|stringformat:".2f" }}
     </div>
     {% endfor %}
 </body>
@@ -19,12 +19,12 @@
 <br />
 <footer>
     <div><a href="{% url 'draft' %}">Budget prévisionnel</div>
-    <div><a href="{% url 'wallet-creation' %}">Création de wallet</div>
-    <div><a href="{% url 'wallet-withdrawal' %}">Retrait ATM/DAB</div>
     <div><a href="{% url 'wallet-change' %}">Change de devises</div>
-    <div><a href="{% url 'expenses' %}">Dépenses</div>
     <div><a href="{% url 'register' %}">Compte</div>
+    <div><a href="{% url 'wallet-creation' %}">Création de wallet</div>
+    <div><a href="{% url 'expenses' %}">Dépenses</div>
     <div><a href="{% url 'monitoring' %}">Monitoring</div>
+    <div><a href="{% url 'wallet-withdrawal' %}">Retrait ATM/DAB</div>
 </footer>
 
 </html>
