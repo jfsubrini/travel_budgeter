@@ -3,33 +3,35 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Catégories</title>
+    <title>Catégories avec simulations - A ce jour</title>
 </head>
 
 <body>
-    <h2>Page Catégories sans simulation</h2>
+    <h2>A ce jour...</h2>
+    <h2>Page Catégories avec simulations</h2>
     {% for category, amount in draft_categories_dict.items %}
     <div>
         Budget prévisionnel pour la catégorie "{{ category }}" : {{ amount }}
     </div>
     {% endfor %}
     <br />
-    {% for category, amount in expenses_categories_dict.items %}
+    {% for category, amount in expenses_cat_sim_dict.items %}
     <div>
         Budget consommé pour la catégorie "{{ category }}" : {{ amount|stringformat:".2f" }}
     </div>
     {% endfor %}
     <br />
-    <h2>Consommation par catégorie sans simulation :</h2>
-    {% for category, percent in category_ratio_dict.items %}
+    <h2>Consommation par catégorie avec simulations :</h2>
+    {% for category, percent in category_sim_ratio_dict.items %}
     <div>
         Pourcentage de consommation pour la catégorie "{{ category }}" : {{ percent|stringformat:".2f" }} %
     </div>
     {% endfor %}
     <br />
     <h3>Budget prévisionnel global : {{ draft_global }}</h3>
-    <h3>Budget consommé global : {{ expenses_global|stringformat:".2f" }}</h3>
-    <h3>Pourcentage de consommation globale du budget prévisionnel : {{ global_ratio|stringformat:".2f" }} %</h3>
+    <h3>Budget consommé global (avec simulations) : {{ expenses_global_sim|stringformat:".2f" }}</h3>
+    <h3>Pourcentage de consommation globale du budget prévisionnel (avec simulations) :
+        {{ global_sim_ratio|stringformat:".2f" }} %</h3>
 </body>
 <br />
 <br />

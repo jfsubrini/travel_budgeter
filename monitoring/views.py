@@ -187,7 +187,7 @@ def category_consumption_sim(request):
         "global_sim_ratio": global_sim_ratio,
     }
 
-    return render(request, "category_sim.html", context)
+    return render(request, "current_category_sim.html", context)
 
 
 #### CATEGORY CONSOMPTION WITHOUT SIMULATION PAGE ####
@@ -240,7 +240,7 @@ def category_consumption(request):
         "global_ratio": global_ratio,
     }
 
-    return render(request, "category.html", context)
+    return render(request, "current_category.html", context)
 
 
 def _draft_categories(last_draft):
