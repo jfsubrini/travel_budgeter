@@ -133,7 +133,6 @@ def _change_calculation(wallet, wallet_currency):  # TODO A REVOIR TOUT ICI
         change_in_amount = change.amount
         change_in_amount_list.append(change_in_amount)
     change_in_sum = sum(change_in_amount_list)
-    print("change_in_sum ... :", change_in_sum)
 
     return change_out_sum, change_in_sum
 
@@ -171,7 +170,7 @@ def category_consumption_sim(request):
     # Ratio between expenses and draft for each category, with simulation(s).
     category_sim_ratio_dict = {}
     for category, amount in expenses_cat_sim_dict.items():
-        if category_sim_ratio_dict[category]:
+        if draft_categories_dict[category]:
             category_sim_ratio_dict[category] = (
                 amount / draft_categories_dict[category] * 100
             )
@@ -229,7 +228,7 @@ def category_consumption(request):
     # Ratio between expenses and draft for each category.
     category_ratio_dict = {}
     for category, amount in expenses_categories_dict.items():
-        if category_ratio_dict[category]:
+        if draft_categories_dict[category]:
             category_ratio_dict[category] = (
                 amount / draft_categories_dict[category] * 100
             )
