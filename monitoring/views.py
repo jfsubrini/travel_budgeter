@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# pylint: disable=no-member,too-many-locals
+# pylint: disable=no-member,too-many-locals,line-too-long
 """All the views for the monitoring app of the travel_budgeter project."""
 
 from datetime import date
@@ -13,7 +13,9 @@ from wallet.models import Withdrawal, Change
 from .currency_api import CurrencyConverter
 
 
+######################
 #### GENERAL PAGE ####
+######################
 @login_required(login_url="/signin/", redirect_field_name="redirection_vers")
 def monitoring(request):
     """
@@ -24,7 +26,9 @@ def monitoring(request):
     return render(request, "monitoring.html", context)
 
 
+##############################
 #### WALLETS BALANCE PAGE ####
+##############################
 @login_required(login_url="/signin/", redirect_field_name="redirection_vers")
 def wallet_balance(request):
     """
@@ -137,50 +141,17 @@ def _change_calculation(wallet, wallet_currency):  # TODO A REVOIR TOUT ICI
     return change_out_sum, change_in_sum
 
 
-#### CATEGORY CONSOMPTION WITH SIMULATION PAGE - UP TO DATE ####
+################################################################
+#### CATEGORY CONSUMPTION WITH SIMULATION PAGE - UP TO DATE ####
+################################################################
 @login_required(login_url="/signin/", redirect_field_name="redirection_vers")
 def category_consumption_sim(request):
     """
     View to the category consumption page, with simulation(s).
     """
-    last_draft = Draft.objects.filter(user=request.user).last()
-    last_draft_currency = last_draft.currency
-
-    # Gathering all the draft categories amounts.
-    draft_categories_dict = _draft_categories(last_draft)
-
-    # Gathering all the expenses categories amounts, with the simulation(s).
-    expenses_queryset = Expense.objects.filter(draft=last_draft)
-    expenses_cat_sim_dict = {}
-    for expense in expenses_queryset:
-        expense_category = expense.category
-        expense_amount = expense.amount
-        expense_currency = expense.currency.iso
-        if last_draft_currency != expense_currency:
-            expense_date = expense.date
-            currency_rate = CurrencyConverter(
-                expense_currency, last_draft_currency, expense_date
-            ).exchange()
-            expense_amount *= currency_rate
-        if CATEGORY[expense_category - 1] not in expenses_cat_sim_dict.keys():
-            expenses_cat_sim_dict[CATEGORY[expense_category - 1]] = expense_amount
-        else:
-            expenses_cat_sim_dict[CATEGORY[expense_category - 1]] += expense_amount
-
-    # Ratio between expenses and draft for each category, with simulation(s).
-    category_sim_ratio_dict = {}
-    for category, amount in expenses_cat_sim_dict.items():
-        if draft_categories_dict[category]:
-            category_sim_ratio_dict[category] = (
-                amount / draft_categories_dict[category] * 100
-            )
-        else:
-            category_sim_ratio_dict[category] = None
-
-    # Global consumption ratio, with simulation(s).
-    draft_global = sum(draft_categories_dict.values())
-    expenses_global_sim = sum(expenses_cat_sim_dict.values())
-    global_sim_ratio = expenses_global_sim / draft_global * 100
+    draft_categories_dict, expenses_cat_sim_dict, category_sim_ratio_dict, draft_global, expenses_global_sim, global_sim_ratio = _common_algo(
+        request
+    )
 
     context = {
         "draft_categories_dict": draft_categories_dict,
@@ -194,51 +165,17 @@ def category_consumption_sim(request):
     return render(request, "current_category_sim.html", context)
 
 
-#### CATEGORY CONSOMPTION WITHOUT SIMULATION PAGE - UP TO DATE ####
+###################################################################
+#### CATEGORY CONSUMPTION WITHOUT SIMULATION PAGE - UP TO DATE ####
+###################################################################
 @login_required(login_url="/signin/", redirect_field_name="redirection_vers")
 def category_consumption(request):
     """
     View to the category consumption page, without simulation.
     """
-    last_draft = Draft.objects.filter(user=request.user).last()
-    last_draft_currency = last_draft.currency
-
-    # Gathering all the draft categories amounts.
-    draft_categories_dict = _draft_categories(last_draft)
-
-    # Gathering all the expenses categories amounts.
-    expenses_queryset = Expense.objects.filter(draft=last_draft, simulation=False)
-    expenses_categories_dict = {}
-
-    for expense in expenses_queryset:
-        expense_category = expense.category
-        expense_amount = expense.amount
-        expense_currency = expense.currency.iso
-        if last_draft_currency != expense_currency:
-            expense_date = expense.date
-            currency_rate = CurrencyConverter(
-                expense_currency, last_draft_currency, expense_date
-            ).exchange()
-            expense_amount *= currency_rate
-        if CATEGORY[expense_category - 1] not in expenses_categories_dict.keys():
-            expenses_categories_dict[CATEGORY[expense_category - 1]] = expense_amount
-        else:
-            expenses_categories_dict[CATEGORY[expense_category - 1]] += expense_amount
-
-    # Ratio between expenses and draft for each category.
-    category_ratio_dict = {}
-    for category, amount in expenses_categories_dict.items():
-        if draft_categories_dict[category]:
-            category_ratio_dict[category] = (
-                amount / draft_categories_dict[category] * 100
-            )
-        else:
-            category_ratio_dict[category] = None
-
-    # Global consumption ratio.
-    draft_global = sum(draft_categories_dict.values())
-    expenses_global = sum(expenses_categories_dict.values())
-    global_ratio = expenses_global / draft_global * 100
+    draft_categories_dict, expenses_categories_dict, category_ratio_dict, draft_global, expenses_global, global_ratio = _common_algo(
+        request, False
+    )
 
     context = {
         "draft_categories_dict": draft_categories_dict,
@@ -252,84 +189,18 @@ def category_consumption(request):
     return render(request, "current_category.html", context)
 
 
-def _draft_categories(last_draft):
-    """
-    Gathering all the draft categories amounts.
-    """
-    draft_categories = last_draft.category
-    draft_pre_departure = draft_categories.pre_departure
-    draft_international_transport = draft_categories.international_transport
-    draft_local_transport = draft_categories.local_transport
-    draft_lodging = draft_categories.lodging
-    draft_fooding = draft_categories.fooding
-    draft_visiting = draft_categories.visiting
-    draft_activities = draft_categories.activities
-    draft_souvenirs = draft_categories.souvenirs
-    draft_various = draft_categories.various
-    draft_categories_dict = {
-        CATEGORY[0]: draft_pre_departure or 0,
-        CATEGORY[1]: draft_international_transport or 0,
-        CATEGORY[2]: draft_local_transport or 0,
-        CATEGORY[3]: draft_lodging or 0,
-        CATEGORY[4]: draft_fooding or 0,
-        CATEGORY[5]: draft_visiting or 0,
-        CATEGORY[6]: draft_activities or 0,
-        CATEGORY[7]: draft_souvenirs or 0,
-        CATEGORY[8]: draft_various or 0,
-    }
-    return draft_categories_dict
-
-
-#### CATEGORY CONSOMPTION WITH SIMULATION PAGE - JUST FOR ONE DAY (TODAY) ####
+##############################################################################
+#### CATEGORY CONSUMPTION WITH SIMULATION PAGE - JUST FOR ONE DAY (TODAY) ####
+##############################################################################
 @login_required(login_url="/signin/", redirect_field_name="redirection_vers")
 def category_consumption_today_sim(request):
     """
     View to the today's category consumption page, with simulation(s).
     """
-    last_draft = Draft.objects.filter(user=request.user).last()
-    last_draft_currency = last_draft.currency
-    last_draft_days = last_draft.travel_duration
-
-    # Gathering all the draft categories amounts.
-    draft_categories_dict = _draft_categories(last_draft)
-
-    # Gathering all the today's expenses categories amounts, with the simulation(s).
     today = date.today()
-    expenses_queryset = Expense.objects.filter(draft=last_draft, date=today)
-    expenses_today_cat_sim_dict = {}
-    for expense in expenses_queryset:
-        expense_category = expense.category
-        expense_amount = expense.amount
-        expense_currency = expense.currency.iso
-        if last_draft_currency != expense_currency:
-            expense_date = expense.date
-            currency_rate = CurrencyConverter(
-                expense_currency, last_draft_currency, expense_date
-            ).exchange()
-            expense_amount *= currency_rate
-        if CATEGORY[expense_category - 1] not in expenses_today_cat_sim_dict.keys():
-            expenses_today_cat_sim_dict[CATEGORY[expense_category - 1]] = expense_amount
-        else:
-            expenses_today_cat_sim_dict[
-                CATEGORY[expense_category - 1]
-            ] += expense_amount
-
-    # Ratio between expenses and draft for each category, with simulation(s).
-    category_today_sim_ratio_dict = {}
-    for category, amount in expenses_today_cat_sim_dict.items():
-        if draft_categories_dict[category]:
-            category_today_sim_ratio_dict[category] = (
-                amount / draft_categories_dict[category] * 100
-            )
-        else:
-            category_today_sim_ratio_dict[category] = None
-
-    # Global consumption ratio, with simulation(s).
-    del draft_categories_dict["Dépenses avant le départ"]
-    del draft_categories_dict["Transport international"]
-    draft_global_day = sum(draft_categories_dict.values()) / last_draft_days
-    expenses_today_global_sim = sum(expenses_today_cat_sim_dict.values())
-    global_day_sim_ratio = expenses_today_global_sim / draft_global_day * 100
+    expenses_today_cat_sim_dict, category_today_sim_ratio_dict, draft_global_day, expenses_today_global_sim, global_day_sim_ratio = _common_algo_days(
+        request, day=today
+    )
 
     context = {
         "expenses_today_cat_sim_dict": expenses_today_cat_sim_dict,
@@ -342,56 +213,18 @@ def category_consumption_today_sim(request):
     return render(request, "today_category_sim.html", context)
 
 
-#### CATEGORY CONSOMPTION WITHOUT SIMULATION PAGE - JUST FOR ONE DAY (TODAY) ####
+#################################################################################
+#### CATEGORY CONSUMPTION WITHOUT SIMULATION PAGE - JUST FOR ONE DAY (TODAY) ####
+#################################################################################
 @login_required(login_url="/signin/", redirect_field_name="redirection_vers")
 def category_consumption_today(request):
     """
     View to the today's category consumption page, without simulation.
     """
-    last_draft = Draft.objects.filter(user=request.user).last()
-    last_draft_currency = last_draft.currency
-    last_draft_days = last_draft.travel_duration
-
-    # Gathering all the draft categories amounts.
-    draft_categories_dict = _draft_categories(last_draft)
-
-    # Gathering all the today's expenses categories amounts, with the simulation(s).
     today = date.today()
-    expenses_queryset = Expense.objects.filter(
-        draft=last_draft, date=today, simulation=False
+    expenses_today_cat_dict, category_today_ratio_dict, draft_global_day, expenses_today_global, global_day_ratio = _common_algo_days(
+        request, False, day=today
     )
-    expenses_today_cat_dict = {}
-    for expense in expenses_queryset:
-        expense_category = expense.category
-        expense_amount = expense.amount
-        expense_currency = expense.currency.iso
-        if last_draft_currency != expense_currency:
-            expense_date = expense.date
-            currency_rate = CurrencyConverter(
-                expense_currency, last_draft_currency, expense_date
-            ).exchange()
-            expense_amount *= currency_rate
-        if CATEGORY[expense_category - 1] not in expenses_today_cat_dict.keys():
-            expenses_today_cat_dict[CATEGORY[expense_category - 1]] = expense_amount
-        else:
-            expenses_today_cat_dict[CATEGORY[expense_category - 1]] += expense_amount
-
-    # Ratio between expenses and draft for each category, with simulation(s).
-    category_today_ratio_dict = {}
-    for category, amount in expenses_today_cat_dict.items():
-        if draft_categories_dict[category]:
-            category_today_ratio_dict[category] = (
-                amount / draft_categories_dict[category] * 100
-            )
-        else:
-            category_today_ratio_dict[category] = None
-
-    # Global consumption ratio, with simulation(s).
-    del draft_categories_dict["Dépenses avant le départ"]
-    del draft_categories_dict["Transport international"]
-    draft_global_day = sum(draft_categories_dict.values()) / last_draft_days
-    expenses_today_global = sum(expenses_today_cat_dict.values())
-    global_day_ratio = expenses_today_global / draft_global_day * 100
 
     context = {
         "expenses_today_cat_dict": expenses_today_cat_dict,
@@ -404,7 +237,9 @@ def category_consumption_today(request):
     return render(request, "today_category.html", context)
 
 
-#### CATEGORY CONSOMPTION WITH SIMULATION PAGE - FOR THE LAST 7 DAYS ####
+#########################################################################
+#### CATEGORY CONSUMPTION WITH SIMULATION PAGE - FOR THE LAST 7 DAYS ####
+#########################################################################
 @login_required(login_url="/signin/", redirect_field_name="redirection_vers")
 def category_consumption_7days_sim(request):
     """
@@ -466,7 +301,9 @@ def category_consumption_7days_sim(request):
     return render(request, "7days_category_sim.html", context)
 
 
-#### CATEGORY CONSOMPTION WITHOUT SIMULATION PAGE - FOR THE LAST 7 DAYS ####
+############################################################################
+#### CATEGORY CONSUMPTION WITHOUT SIMULATION PAGE - FOR THE LAST 7 DAYS ####
+############################################################################
 @login_required(login_url="/signin/", redirect_field_name="redirection_vers")
 def category_consumption_7days(request):
     """
@@ -526,3 +363,151 @@ def category_consumption_7days(request):
     }
 
     return render(request, "7days_category.html", context)
+
+
+def _common_algo(request, *simulation):
+    """
+    Common algo for category consumption functions, with or without simulation(s).
+    """
+    last_draft = Draft.objects.filter(user=request.user).last()
+    last_draft_currency = last_draft.currency
+
+    # Gathering all the draft categories amounts.
+    draft_categories_dict = _draft_categories(last_draft)
+
+    # Gathering all the expenses categories amounts, with or without simulation(s).
+    if simulation:
+        expenses_queryset = Expense.objects.filter(
+            draft=last_draft, simulation=simulation[0]
+        )
+    else:
+        expenses_queryset = Expense.objects.filter(draft=last_draft)
+
+    expenses_categories_dict = {}
+    for expense in expenses_queryset:
+        expense_category = expense.category
+        expense_amount = expense.amount
+        expense_currency = expense.currency.iso
+        if last_draft_currency != expense_currency:
+            expense_date = expense.date
+            currency_rate = CurrencyConverter(
+                expense_currency, last_draft_currency, expense_date
+            ).exchange()
+            expense_amount *= currency_rate
+        if CATEGORY[expense_category - 1] not in expenses_categories_dict.keys():
+            expenses_categories_dict[CATEGORY[expense_category - 1]] = expense_amount
+        else:
+            expenses_categories_dict[CATEGORY[expense_category - 1]] += expense_amount
+
+    # Ratio between expenses and draft for each category, with or without simulation(s).
+    category_ratio_dict = {}
+    for category, amount in expenses_categories_dict.items():
+        if draft_categories_dict[category]:
+            category_ratio_dict[category] = (
+                amount / draft_categories_dict[category] * 100
+            )
+        else:
+            category_ratio_dict[category] = None
+
+    # Global consumption ratio, with or without simulation(s).
+    draft_global = sum(draft_categories_dict.values())
+    expenses_global = sum(expenses_categories_dict.values())
+    global_ratio = expenses_global / draft_global * 100
+
+    return (
+        draft_categories_dict,
+        expenses_categories_dict,
+        category_ratio_dict,
+        draft_global,
+        expenses_global,
+        global_ratio,
+    )
+
+
+def _common_algo_days(request, *simulation, day):
+    """
+    Common algo for today's or for 7 days category consumption functions, with or without simulation(s).
+    """
+    last_draft = Draft.objects.filter(user=request.user).last()
+    last_draft_currency = last_draft.currency
+    last_draft_days = last_draft.travel_duration
+
+    # Gathering all the draft categories amounts.
+    draft_categories_dict = _draft_categories(last_draft)
+
+    # Gathering all the today's expenses categories amounts, with or without simulation(s).
+    if simulation:
+        expenses_queryset = Expense.objects.filter(
+            draft=last_draft, date=day, simulation=simulation[0]
+        )
+    else:
+        expenses_queryset = Expense.objects.filter(draft=last_draft, date=day)
+
+    expenses_day_cat_dict = {}
+    for expense in expenses_queryset:
+        expense_category = expense.category
+        expense_amount = expense.amount
+        expense_currency = expense.currency.iso
+        if last_draft_currency != expense_currency:
+            expense_date = expense.date
+            currency_rate = CurrencyConverter(
+                expense_currency, last_draft_currency, expense_date
+            ).exchange()
+            expense_amount *= currency_rate
+        if CATEGORY[expense_category - 1] not in expenses_day_cat_dict.keys():
+            expenses_day_cat_dict[CATEGORY[expense_category - 1]] = expense_amount
+        else:
+            expenses_day_cat_dict[CATEGORY[expense_category - 1]] += expense_amount
+
+    # Ratio between expenses and draft for each category, with or without simulation(s).
+    category_day_ratio_dict = {}
+    for category, amount in expenses_day_cat_dict.items():
+        if draft_categories_dict[category]:
+            category_day_ratio_dict[category] = (
+                amount / draft_categories_dict[category] * 100
+            )
+        else:
+            category_day_ratio_dict[category] = None
+
+    # Global consumption ratio, with or without simulation(s).
+    del draft_categories_dict["Dépenses avant le départ"]
+    del draft_categories_dict["Transport international"]
+    draft_global_day = sum(draft_categories_dict.values()) / last_draft_days
+    expenses_day_global = sum(expenses_day_cat_dict.values())
+    global_day_ratio = expenses_day_global / draft_global_day * 100
+
+    return (
+        expenses_day_cat_dict,
+        category_day_ratio_dict,
+        draft_global_day,
+        expenses_day_global,
+        global_day_ratio,
+    )
+
+
+def _draft_categories(last_draft):
+    """
+    Gathering all the draft categories amounts.
+    """
+    draft_categories = last_draft.category
+    draft_pre_departure = draft_categories.pre_departure
+    draft_international_transport = draft_categories.international_transport
+    draft_local_transport = draft_categories.local_transport
+    draft_lodging = draft_categories.lodging
+    draft_fooding = draft_categories.fooding
+    draft_visiting = draft_categories.visiting
+    draft_activities = draft_categories.activities
+    draft_souvenirs = draft_categories.souvenirs
+    draft_various = draft_categories.various
+    draft_categories_dict = {
+        CATEGORY[0]: draft_pre_departure or 0,
+        CATEGORY[1]: draft_international_transport or 0,
+        CATEGORY[2]: draft_local_transport or 0,
+        CATEGORY[3]: draft_lodging or 0,
+        CATEGORY[4]: draft_fooding or 0,
+        CATEGORY[5]: draft_visiting or 0,
+        CATEGORY[6]: draft_activities or 0,
+        CATEGORY[7]: draft_souvenirs or 0,
+        CATEGORY[8]: draft_various or 0,
+    }
+    return draft_categories_dict
