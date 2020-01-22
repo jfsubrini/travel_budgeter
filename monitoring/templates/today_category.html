@@ -3,20 +3,20 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Catégories avec simulations - Pour aujourd'hui</title>
+    <title>Catégories - Pour aujourd'hui</title>
 </head>
 
 <body>
     <h2>Aujourd'hui...</h2>
-    <h2>Page Catégories avec simulations</h2>
-    {% for category, amount in expenses_today_cat_sim_dict.items %}
+    <h2>Page Catégories</h2>
+    {% for category, amount in expenses_today_cat_dict.items %}
     <div>
         Budget consommé aujourd'hui pour la catégorie "{{ category }}" : {{ amount|stringformat:".2f" }}
     </div>
     {% endfor %}
     <br />
-    <h2>Consommation par catégorie avec simulations :</h2>
-    {% for category, percent in category_today_sim_ratio_dict.items %}
+    <h2>Consommation par catégorie :</h2>
+    {% for category, percent in category_today_ratio_dict.items %}
     {% if percent %}
     <div>
         Pourcentage de consommation pour la catégorie "{{ category }}" : {{ percent|stringformat:".2f" }} %
@@ -29,9 +29,9 @@
     <br />
     <h3>Budget prévisionnel global par jour (hors transports internationaux et dépenses avant le départ):
         {{ draft_global_day }}</h3>
-    <h3>Budget consommé global aujourd'hui (avec simulations) : {{ expenses_today_global_sim|stringformat:".2f" }}</h3>
-    <h3>Pourcentage de consommation globale du budget prévisionnel journalier (avec simulations) :
-        {{ global_day_sim_ratio|stringformat:".2f" }} %</h3>
+    <h3>Budget consommé global aujourd'hui : {{ expenses_today_global|stringformat:".2f" }}</h3>
+    <h3>Pourcentage de consommation globale du budget prévisionnel journalier :
+        {{ global_day_ratio|stringformat:".2f" }} %</h3>
 </body>
 <br />
 <br />
