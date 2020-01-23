@@ -14,10 +14,11 @@
     <form action="" method="post">
         {% csrf_token %}
         <h2>Votre budget prévisionnel pour votre prochain voyage :</h2>
-        {{ draft_form.as_p }}
-        {{ draft2_form.as_p }}
-        </br>
-        <input type="submit" value="Validez votre budget prévisionnel">
+        {% for draft in user_drafts %}
+        <div><a href="{% url 'draft' %}">{{ draft }}</div>
+        {% endfor %}
+        <br />
+        <input type="submit" value="Validez vos changements">
     </form>
     {% endif %}
 </body>

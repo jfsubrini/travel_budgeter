@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
 from .forms import DraftForm, DraftForm2
-from .models import Category
+from .models import Category, Draft
 
 
 @login_required(login_url="/signin/", redirect_field_name="redirection_vers")
@@ -64,7 +64,12 @@ def edit_draft(request):
     """
     View to an existing travel user draft to be modified.
     """
+    travel_user = User.objects.get(
+        username=request.user.username, password=request.user.password
+    )
+    user_drafts = Draft.objects.filter(user=travel_user)
+
     # What to render to the template.
-    context = {}
+    context = {"user_drafts": user_drafts}
 
     return render(request, "edit_draft.html", context)
