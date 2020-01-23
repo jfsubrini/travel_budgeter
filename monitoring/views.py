@@ -115,26 +115,24 @@ def _withdrawal_calculation(wallet, wallet_currency):
     return withdrawal_out_sum, withdrawal_in_sum
 
 
-def _change_calculation(wallet, wallet_currency):  # TODO A REVOIR TOUT ICI
+def _change_calculation(wallet, wallet_currency):
     changes_out_queryset = Change.objects.filter(payment_type_out=wallet.id)
     changes_in_queryset = Change.objects.filter(payment_type_in=wallet.id)
-    # Calculate the sum to debit from the wallet of the currency to change.
+    # TODO control that this is the right currency before crediting or debiting a wallet.
+    # Calculate the sum to debit from the wallets of the currency to change.
     change_out_amount_list = []
     for change in changes_out_queryset:
         change_out_amount = change.amount
-        change_in_currency = change.currency_in.iso
-        if wallet_currency != change_in_currency:
-            change_date = change.date
-            currency_rate = CurrencyConverter(
-                change_in_currency, wallet_currency, change_date
-            ).exchange()
-            change_out_amount *= currency_rate
         change_out_amount_list.append(change_out_amount)
     change_out_sum = sum(change_out_amount_list)
     # Calculate the sum to credit the wallets.
     change_in_amount_list = []
     for change in changes_in_queryset:
         change_in_amount = change.amount
+        change_out_currency = change.currency_out.iso
+        if wallet_currency != change_out_currency:
+            currency_rate = change.rate
+            change_in_amount *= currency_rate
         change_in_amount_list.append(change_in_amount)
     change_in_sum = sum(change_in_amount_list)
 
