@@ -3,22 +3,21 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Retrait ATM/DAB</title>
+    <title>Editer les Drafts</title>
 </head>
 
 <body>
-    <h1>Enregistrement d'un retrait ATM ou DAB</h1>
-    <h2>{{ last_draft }}</h2>
+    <h1>Editez et corrigez les budgets prévisionnels de vos différents voyages.</h1>
     {% if submitted %}
-    <p>Votre nouveau retrait a bien été enregistré.</p>
+    <p>Votre budget prévisionnel a bien été modifié.</p>
     {% else %}
-    <br />
     <form action="" method="post">
         {% csrf_token %}
-        <h2>Entrez les informations suivantes :</h2>
-        {{ withdrawal_form.as_p }}
+        <h2>Votre budget prévisionnel pour votre prochain voyage :</h2>
+        {{ draft_form.as_p }}
+        {{ draft2_form.as_p }}
         </br>
-        <input type="submit" value="Enregistrez ce retrait">
+        <input type="submit" value="Validez votre budget prévisionnel">
     </form>
     {% endif %}
 </body>
@@ -31,8 +30,8 @@
     <div><a href="{% url 'register' %}">Compte</div>
     <div><a href="{% url 'wallet-creation' %}">Création de wallet</div>
     <div><a href="{% url 'expenses' %}">Dépenses</div>
-    <div><a href="{% url 'edit-draft' %}">Modification du budget prévisionnel</div>
     <div><a href="{% url 'monitoring' %}">Monitoring</div>
+    <div><a href="{% url 'wallet-withdrawal' %}">Retrait ATM/DAB</div>
 </footer>
 
 </html>

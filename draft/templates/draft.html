@@ -7,7 +7,7 @@
 </head>
 
 <body>
-    <h1>Welcome to the Draft.</h1>
+    <h1>Créez votre budget prévisionnel pour votre prochain voyage.</h1>
     {% if submitted %}
     <p>Votre budget prévisionnel a bien été enregistré.</p>
     {% else %}
@@ -29,6 +29,7 @@
     <div><a href="{% url 'register' %}">Compte</div>
     <div><a href="{% url 'wallet-creation' %}">Création de wallet</div>
     <div><a href="{% url 'expenses' %}">Dépenses</div>
+    <div><a href="{% url 'edit-draft' %}">Modification du budget prévisionnel</div>
     <div><a href="{% url 'monitoring' %}">Monitoring</div>
     <div><a href="{% url 'wallet-withdrawal' %}">Retrait ATM/DAB</div>
 </footer>

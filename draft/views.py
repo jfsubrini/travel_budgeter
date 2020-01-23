@@ -57,3 +57,14 @@ def draft(request):
     }
 
     return render(request, "draft.html", context)
+
+
+@login_required(login_url="/signin/", redirect_field_name="redirection_vers")
+def edit_draft(request):
+    """
+    View to an existing travel user draft to be modified.
+    """
+    # What to render to the template.
+    context = {}
+
+    return render(request, "edit_draft.html", context)

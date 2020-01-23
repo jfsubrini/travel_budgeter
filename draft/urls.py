@@ -7,4 +7,7 @@ from django.urls import path
 from . import views
 
 
-urlpatterns = [path("", views.draft, name="draft")]
+urlpatterns = [
+    path("", views.draft, name="draft"),
+    path("edit/", views.edit_draft, name="edit-draft"),
+]
