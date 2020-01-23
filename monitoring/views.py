@@ -2,7 +2,7 @@
 # pylint: disable=no-member,too-many-locals,line-too-long
 """All the views for the monitoring app of the travel_budgeter project."""
 
-from datetime import date
+from datetime import date, timedelta
 
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
@@ -197,7 +197,7 @@ def category_consumption_today_sim(request):
     """
     today = date.today()
     expenses_today_cat_sim_dict, category_today_sim_ratio_dict, draft_global_day, expenses_today_global_sim, global_day_sim_ratio = _common_algo_days(
-        request, day=today
+        request, day=today, num=1
     )
 
     context = {
@@ -221,7 +221,7 @@ def category_consumption_today(request):
     """
     today = date.today()
     expenses_today_cat_dict, category_today_ratio_dict, draft_global_day, expenses_today_global, global_day_ratio = _common_algo_days(
-        request, False, day=today
+        request, False, day=today, num=1
     )
 
     context = {
@@ -243,50 +243,11 @@ def category_consumption_7days_sim(request):
     """
     View to the last 7 days category consumption page, with simulation(s).
     """
-    last_draft = Draft.objects.filter(user=request.user).last()
-    last_draft_currency = last_draft.currency
-    last_draft_days = last_draft.travel_duration
-
-    # Gathering all the draft categories amounts.
-    draft_categories_dict = _draft_categories(last_draft)
-
-    # Gathering all the last 7 days' expenses categories amounts, with the simulation(s).
-    today = date.today()  # TODO
-    expenses_queryset = Expense.objects.filter(draft=last_draft, date=today)  # TODO
-    expenses_7days_cat_sim_dict = {}
-    for expense in expenses_queryset:
-        expense_category = expense.category
-        expense_amount = expense.amount
-        expense_currency = expense.currency.iso
-        if last_draft_currency != expense_currency:
-            expense_date = expense.date
-            currency_rate = CurrencyConverter(
-                expense_currency, last_draft_currency, expense_date
-            ).exchange()
-            expense_amount *= currency_rate
-        if CATEGORY[expense_category - 1] not in expenses_7days_cat_sim_dict.keys():
-            expenses_7days_cat_sim_dict[CATEGORY[expense_category - 1]] = expense_amount
-        else:
-            expenses_7days_cat_sim_dict[
-                CATEGORY[expense_category - 1]
-            ] += expense_amount
-
-    # Ratio between expenses and draft for each category, with simulation(s).
-    category_7days_sim_ratio_dict = {}
-    for category, amount in expenses_7days_cat_sim_dict.items():
-        if draft_categories_dict[category]:
-            category_7days_sim_ratio_dict[category] = (
-                amount / draft_categories_dict[category] * 100
-            )
-        else:
-            category_7days_sim_ratio_dict[category] = None
-
-    # Global consumption ratio, with simulation(s).
-    del draft_categories_dict["Dépenses avant le départ"]
-    del draft_categories_dict["Transport international"]
-    draft_global_7days = sum(draft_categories_dict.values()) / last_draft_days  # TODO
-    expenses_7days_global_sim = sum(expenses_7days_cat_sim_dict.values())
-    global_7days_sim_ratio = expenses_7days_cat_sim_dict / draft_global_7days * 100
+    num_days_ago = 6
+    date_num_days_ago = date.today() - timedelta(days=num_days_ago)
+    expenses_7days_cat_sim_dict, category_7days_sim_ratio_dict, draft_global_7days, expenses_7days_global_sim, global_7days_sim_ratio = _common_algo_days(
+        request, day=date_num_days_ago, num=7
+    )
 
     context = {
         "expenses_7days_cat_sim_dict": expenses_7days_cat_sim_dict,
@@ -307,50 +268,11 @@ def category_consumption_7days(request):
     """
     View to the today's category consumption page, without simulation.
     """
-    last_draft = Draft.objects.filter(user=request.user).last()
-    last_draft_currency = last_draft.currency
-    last_draft_days = last_draft.travel_duration
-
-    # Gathering all the draft categories amounts.
-    draft_categories_dict = _draft_categories(last_draft)
-
-    # Gathering all the last 7 days' expenses categories amounts, with the simulation(s).
-    today = date.today()  # TODO
-    expenses_queryset = Expense.objects.filter(
-        draft=last_draft, date=today, simulation=False
-    )  # TODO
-    expenses_7days_cat_dict = {}
-    for expense in expenses_queryset:
-        expense_category = expense.category
-        expense_amount = expense.amount
-        expense_currency = expense.currency.iso
-        if last_draft_currency != expense_currency:
-            expense_date = expense.date
-            currency_rate = CurrencyConverter(
-                expense_currency, last_draft_currency, expense_date
-            ).exchange()
-            expense_amount *= currency_rate
-        if CATEGORY[expense_category - 1] not in expenses_7days_cat_dict.keys():
-            expenses_7days_cat_dict[CATEGORY[expense_category - 1]] = expense_amount
-        else:
-            expenses_7days_cat_dict[CATEGORY[expense_category - 1]] += expense_amount
-
-    # Ratio between expenses and draft for each category, with simulation(s).
-    category_7ays_ratio_dict = {}
-    for category, amount in expenses_7days_cat_dict.items():
-        if draft_categories_dict[category]:
-            category_7ays_ratio_dict[category] = (
-                amount / draft_categories_dict[category] * 100
-            )
-        else:
-            category_7ays_ratio_dict[category] = None
-
-    # Global consumption ratio, with simulation(s).
-    del draft_categories_dict["Dépenses avant le départ"]
-    del draft_categories_dict["Transport international"]
-    draft_global_7days = sum(draft_categories_dict.values()) / last_draft_days  # TODO
-    expenses_7days_global = sum(expenses_7days_cat_dict.values())
-    global_7days_ratio = expenses_7days_global / draft_global_7days * 100
+    num_days_ago = 6
+    date_num_days_ago = date.today() - timedelta(days=num_days_ago)
+    expenses_7days_cat_dict, category_7ays_ratio_dict, draft_global_7days, expenses_7days_global, global_7days_ratio = _common_algo_days(
+        request, False, day=date_num_days_ago, num=7
+    )
 
     context = {
         "expenses_7days_cat_dict": expenses_7days_cat_dict,
@@ -422,9 +344,10 @@ def _common_algo(request, *simulation):
     )
 
 
-def _common_algo_days(request, *simulation, day):
+def _common_algo_days(request, *simulation, day, num):
     """
     Common algo for today's or for 7 days category consumption functions, with or without simulation(s).
+    In case of 7 days, it counts today's expenses and the last 6 days' expenses.
     """
     last_draft = Draft.objects.filter(user=request.user).last()
     last_draft_currency = last_draft.currency
@@ -433,13 +356,13 @@ def _common_algo_days(request, *simulation, day):
     # Gathering all the draft categories amounts.
     draft_categories_dict = _draft_categories(last_draft)
 
-    # Gathering all the today's expenses categories amounts, with or without simulation(s).
+    # Gathering all the today's or for 7 days expenses categories amounts, with or without simulation(s).
     if simulation:
         expenses_queryset = Expense.objects.filter(
-            draft=last_draft, date=day, simulation=simulation[0]
+            draft=last_draft, date__gte=day, simulation=simulation[0]
         )
     else:
-        expenses_queryset = Expense.objects.filter(draft=last_draft, date=day)
+        expenses_queryset = Expense.objects.filter(draft=last_draft, date__gte=day)
 
     expenses_day_cat_dict = {}
     for expense in expenses_queryset:
@@ -470,7 +393,7 @@ def _common_algo_days(request, *simulation, day):
     # Global consumption ratio, with or without simulation(s).
     del draft_categories_dict["Dépenses avant le départ"]
     del draft_categories_dict["Transport international"]
-    draft_global_day = sum(draft_categories_dict.values()) / last_draft_days
+    draft_global_day = sum(draft_categories_dict.values()) / last_draft_days * num
     expenses_day_global = sum(expenses_day_cat_dict.values())
     global_day_ratio = expenses_day_global / draft_global_day * 100
 
