@@ -12,9 +12,10 @@
     <h2>Classement par dates</h2>
     {% for expense in all_expenses_by_dates %}
     <div>
-        {% if expense.simulation %}(Simulation){% endif %} {{ expense }}, du {{ expense.date }}, pour un
-        montant de : {{ expense.amount|stringformat:".2f" }}
+        {% if expense.simulation %}(Simulation){% endif %} {{ expense }}, du {{ expense.date }},
+        pour un montant de : {{ expense.amount|stringformat:".2f" }}
         {{ expense.currency}}
+        <br />photo : {{ expense.photo }}
     </div>
     {% endfor %}
     <br />
@@ -22,10 +23,17 @@
     {% for expense in all_expenses_by_categories %}
     <div>
         {% if expense.simulation %}(Simulation){% endif %} {{ expense }}, de la catégorie
-        {% if expense.category == 1 %}"Dépenses avant le
-        départ"{% elif expense.category == 2 %}"Transports internationaux"{% elif expense.category == 3 %}"Transports
-        nationaux"{% elif expense.category == 4 %}"Hébergements"{% elif expense.category == 5 %}"Nourriture"{% elif expense.category == 6 %}"Visites"{% elif expense.category == 7 %}"Activités"{% elif expense.category == 8 %}"Souvenirs",{% elif expense.category == 9 %}"Divers"{% endif %}
+        {% if expense.category == 1 %}"Dépenses avant le départ"
+        {% elif expense.category == 2 %}"Transports internationaux"
+        {% elif expense.category == 3 %}"Transports nationaux"
+        {% elif expense.category == 4 %}"Hébergements"
+        {% elif expense.category == 5 %}"Nourriture"
+        {% elif expense.category == 6 %}"Visites"
+        {% elif expense.category == 7 %}"Activités"
+        {% elif expense.category == 8 %}"Souvenirs"
+        {% elif expense.category == 9 %}"Divers"{% endif %},
         pour un montant de : {{ expense.amount|stringformat:".2f" }} {{ expense.currency}}
+        <br />photo : <a href="{% url 'draft' %}">{{ expense.photo }}</a>
     </div>
     {% endfor %}
 </body>
@@ -33,13 +41,13 @@
 <br />
 <br />
 <footer>
-    <div><a href="{% url 'draft' %}">Création du budget prévisionnel</div>
-    <div><a href="{% url 'wallet-change' %}">Change de devises</div>
-    <div><a href="{% url 'register' %}">Compte</div>
-    <div><a href="{% url 'wallet-creation' %}">Création de wallet</div>
-    <div><a href="{% url 'expenses' %}">Dépenses</div>
-    <div><a href="{% url 'monitoring' %}">Monitoring</div>
-    <div><a href="{% url 'wallet-withdrawal' %}">Retrait ATM/DAB</div>
+    <a href="{% url 'draft' %}">Création du budget prévisionnel</a>
+    <a href="{% url 'wallet-change' %}">Change de devises</a>
+    <a href="{% url 'register' %}">Compte</a>
+    <a href="{% url 'wallet-creation' %}">Création de wallet</a>
+    <a href="{% url 'expenses' %}">Dépenses</a>
+    <a href="{% url 'monitoring' %}">Monitoring</a>
+    <a href="{% url 'wallet-withdrawal' %}">Retrait ATM/DAB</a>
 </footer>
 
 </html>

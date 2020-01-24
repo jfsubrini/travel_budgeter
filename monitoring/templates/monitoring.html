@@ -11,16 +11,19 @@
     <h2>Informations sur ton {{ last_draft }}</h2>
     <h4>Cliquez sur un des liens ci-dessous.</h4>
     <main>
-        <div><a href="{% url 'monitoring-wallet-balance' %}">Solde des wallets</div>
-        <div><a href="{% url 'monitoring-category' %}">Catégories sans simulation</div>
-        <div><a href="{% url 'monitoring-category-sim' %}">Catégories avec simulation(s)</div>
-        <div><a href="{% url 'monitoring-category-today' %}">Catégories sans simulation - Aujourd'hui</div>
-        <div><a href="{% url 'monitoring-category-today-sim' %}">Catégories avec simulation(s) - Aujourd'hui</div>
-        <div><a href="{% url 'monitoring-category-7days' %}">Catégories sans simulation - Pour les 7 derniers jours
-        </div>
-        <div><a href="{% url 'monitoring-category-7days-sim' %}">Catégories avec simulation(s) - Pour les 7 derniers
-                jours</div>
-        <div><a href="{% url 'monitoring-list-expenses' %}">Liste des dépenses</div>
+        <a href="{% url 'monitoring-wallet-balance' %}">Solde des wallets</a>
+        <a href="{% url 'monitoring-category' %}">Catégories sans simulation</a>
+        <a href="{% url 'monitoring-category-sim' %}">Catégories avec simulation(s)</a>
+        <a href="{% url 'monitoring-category-today' %}">Catégories sans simulation - Aujourd'hui</a>
+        <a href="{% url 'monitoring-category-today-sim' %}">Catégories avec simulation(s) - Aujourd'hui
+        </a>
+        <a href="{% url 'monitoring-category-7days' %}">Catégories sans simulation - Pour les 7
+            derniers jours
+        </a>
+        <a href="{% url 'monitoring-category-7days-sim' %}">Catégories avec simulation(s) - Pour les
+            7 derniers
+            jours</a>
+        <a href="{% url 'monitoring-list-expenses' %}">Liste des dépenses</a>
     </main>
     <br />
     <br />
@@ -29,12 +32,12 @@
     <br />
 </body>
 <footer>
-    <div><a href="{% url 'draft' %}">Création du budget prévisionnel</div>
-    <div><a href="{% url 'wallet-change' %}">Change de devises</div>
-    <div><a href="{% url 'register' %}">Compte</div>
-    <div><a href="{% url 'wallet-creation' %}">Création de wallet</div>
-    <div><a href="{% url 'expenses' %}">Dépenses</div>
-    <div><a href="{% url 'wallet-withdrawal' %}">Retrait ATM/DAB</div>
+    <a href="{% url 'draft' %}">Création du budget prévisionnel</a>
+    <a href="{% url 'wallet-change' %}">Change de devises</a>
+    <a href="{% url 'register' %}">Compte</a>
+    <a href="{% url 'wallet-creation' %}">Création de wallet</a>
+    <a href="{% url 'expenses' %}">Dépenses</a>
+    <a href="{% url 'wallet-withdrawal' %}">Retrait ATM/DAB</a>
 </footer>
 
 </html>
