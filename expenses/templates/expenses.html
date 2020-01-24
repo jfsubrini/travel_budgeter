@@ -17,7 +17,7 @@
         {% csrf_token %}
         <h2>Entrez les informations suivantes :</h2>
         {{ expense_form.as_p }}
-        </br>
+        <br />
         <input type="submit" value="Enregistrez cette dépense">
     </form>
     {% endif %}

@@ -22,7 +22,9 @@ def monitoring(request):
     View to the monitoring page.
     """
     last_draft = Draft.objects.filter(user=request.user).last()
+
     context = {"user": request.user, "last_draft": last_draft}
+
     return render(request, "monitoring.html", context)
 
 
@@ -285,6 +287,32 @@ def category_consumption_7days(request):
     return render(request, "7days_category.html", context)
 
 
+#######################
+#### EXPENSES LIST ####
+#######################
+@login_required(login_url="/signin/", redirect_field_name="redirection_vers")
+def list_expenses(request):
+    """
+    View to the list of all expenses from all wallet from one destination.
+    """
+
+    last_draft = Draft.objects.filter(user=request.user).last()
+    all_expenses_by_dates = last_draft.expenses.all().order_by("date")
+    all_expenses_by_categories = last_draft.expenses.all().order_by("category")
+    print("all_expenses_by_dates OOO : ", all_expenses_by_dates)
+    print("all_expenses_by_categories OOO : ", all_expenses_by_categories)
+
+    context = {
+        "all_expenses_by_dates": all_expenses_by_dates,
+        "all_expenses_by_categories": all_expenses_by_categories,
+    }
+
+    return render(request, "expenses_list.html", context)
+
+
+##############################################################################
+##############################################################################
+##############################################################################
 def _common_algo(request, *simulation):
     """
     Common algo for category consumption functions, with or without simulation(s).
