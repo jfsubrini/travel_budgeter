@@ -33,7 +33,8 @@
         {% elif expense.category == 8 %}"Souvenirs"
         {% elif expense.category == 9 %}"Divers"{% endif %},
         pour un montant de : {{ expense.amount|stringformat:".2f" }} {{ expense.currency}}
-        <br />photo : <a href="{% url 'draft' %}">{{ expense.photo }}</a>
+        <br />photo : {% if expense.photo %}<a href="{{ expense.photo.url }}">{{ expense.photo }}
+        </a>{% endif %}
     </div>
     {% endfor %}
 </body>
