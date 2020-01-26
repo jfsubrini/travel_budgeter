@@ -5,12 +5,13 @@
 from datetime import date, timedelta
 
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 from draft.models import Draft
 from expenses.models import Expense, CATEGORY
 from wallet.models import Withdrawal, Change
 from .currency_api import CurrencyConverter
+from .forms import SimulationsDeletionForm
 
 
 ######################
@@ -308,6 +309,44 @@ def list_expenses(request):
     }
 
     return render(request, "expenses_list.html", context)
+
+
+##############################
+#### SIMULATIONS DELETION ####
+##############################
+@login_required(login_url="/signin/", redirect_field_name="redirection_vers")
+def delete_simulations(request):
+    """
+    View to the page where one can delete all the expenses' simulations.
+    """
+
+    last_draft = Draft.objects.filter(user=request.user).last()
+    # When the form has been posted.
+    if request.method == "POST":
+        # Checking if the form has been validated.
+        delete_simulations_form = SimulationsDeletionForm(request.POST)
+        if delete_simulations_form.is_valid():
+            # Catching the form radio choice.
+            radio_deletion = int(delete_simulations_form.cleaned_data["radio_deletion"])
+            # Deleting the instance simulation from the database if the choice is 1 ("Oui").
+            if radio_deletion == 1:
+                Expense.objects.filter(simulation=True).delete()
+            # And redirect to the monitoring page.
+            return redirect(
+                f"/monitoring?user={request.user.id}?destination={last_draft}"
+            )
+
+    # To display the empty wallet change form.
+    else:
+        delete_simulations_form = SimulationsDeletionForm()
+
+    # What to render to the template.
+    context = {
+        "delete_simulations_form": delete_simulations_form,
+        "last_draft": last_draft,
+    }
+
+    return render(request, "delete_simulations.html", context)
 
 
 ##############################################################################

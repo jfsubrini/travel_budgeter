@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <title>Suppression des simulations</title>
+</head>
+
+<body>
+    <h2>Page de suppression des simulations</h2>
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <h2>Voulez-vous supprimer toutes les simulations du budget {{ last_draft }}?</h2>
+        {{ delete_simulations_form.as_p }}
+        <br />
+        <input type="submit" value="Validez">
+    </form>
+</body>
+<br />
+<br />
+<br />
+<footer>
+    <a href="{% url 'draft' %}">Création du budget prévisionnel </a><span>
+        <a href="{% url 'wallet-change' %}"> Change de devises</a>
+        <a href="{% url 'register' %}"> Compte</a>
+        <a href="{% url 'wallet-creation' %}"> Création de wallet</a>
+        <a href="{% url 'expenses' %}"> Dépenses</a>
+        <a href="{% url 'monitoring' %}"> Monitoring</a>
+        <a href="{% url 'wallet-withdrawal' %}">Retrait ATM/DAB</a>
+</footer>
+
+</html>

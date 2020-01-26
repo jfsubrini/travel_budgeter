@@ -40,6 +40,11 @@ urlpatterns = [
         name="monitoring-category-7days-sim",
     ),
     path("wallet/list-expenses/", views.list_expenses, name="monitoring-list-expenses"),
+    path(
+        "wallet/delete-simulations/",
+        views.delete_simulations,
+        name="monitoring-delete-simulations",
+    ),
 ]
 
 if settings.DEBUG:
