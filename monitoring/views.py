@@ -6,7 +6,6 @@ from datetime import date, timedelta
 
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from django.views.generic.detail import DetailView
 
 from draft.models import Draft
 from expenses.models import Expense, CATEGORY
@@ -143,9 +142,9 @@ def _change_calculation(wallet, wallet_currency):
     return change_out_sum, change_in_sum
 
 
-##############################################################################
-#### CATEGORY CONSUMPTION PAGE - UP TO DATE - WITH AND WITHOUR SIMULATION ####
-##############################################################################
+###############################################################################
+#### CATEGORY CONSUMPTION PAGE - UP TO DATE - WITH AND WITHOUT SIMULATIONS ####
+###############################################################################
 @login_required(login_url="/signin/", redirect_field_name="redirection_vers")
 def category_consumption(request):
     """
@@ -180,16 +179,14 @@ def category_consumption(request):
     return render(request, "current_category.html", context)
 
 
-############################################################################################
-#### CATEGORY CONSUMPTION PAGE - JUST FOR ONE DAY (TODAY) - WITH AND WITHOUR SIMULATION ####
-############################################################################################
+#############################################################################################
+#### CATEGORY CONSUMPTION PAGE - JUST FOR ONE DAY (TODAY) - WITH AND WITHOUT SIMULATIONS ####
+#############################################################################################
 @login_required(login_url="/signin/", redirect_field_name="redirection_vers")
 def category_consumption_today(request):
     """
     View to the today's category consumption page, with and without simulation(s).
     """
-    # Get the destination and today's date.
-    last_draft = Draft.objects.filter(user=request.user).last()
     today = date.today()
     # Without simulation
     expenses_today_cat_dict, category_today_ratio_dict, draft_global_day, expenses_today_global, global_day_ratio = _common_algo_days(
@@ -201,7 +198,6 @@ def category_consumption_today(request):
     )
 
     context = {
-        "last_draft": last_draft,
         "expenses_today_cat_dict": expenses_today_cat_dict,
         "expenses_today_cat_sim_dict": expenses_today_cat_sim_dict,
         "category_today_ratio_dict": category_today_ratio_dict,
@@ -216,51 +212,35 @@ def category_consumption_today(request):
     return render(request, "today_category.html", context)
 
 
-#########################################################################
-#### CATEGORY CONSUMPTION WITH SIMULATION PAGE - FOR THE LAST 7 DAYS ####
-#########################################################################
+########################################################################################
+#### CATEGORY CONSUMPTION PAGE - FOR THE LAST 7 DAYS - WITH AND WITHOUT SIMULATIONS ####
+########################################################################################
 @login_required(login_url="/signin/", redirect_field_name="redirection_vers")
-def category_consumption_7days_sim(request):
+def category_consumption_7days(request):
     """
-    View to the last 7 days category consumption page, with simulation(s).
+    View to the today's category consumption page, with or without simulation(s).
     """
     num_days_ago = 6
     date_num_days_ago = date.today() - timedelta(days=num_days_ago)
-    expenses_7days_cat_sim_dict, category_7days_sim_ratio_dict, draft_global_7days, expenses_7days_global_sim, global_7days_sim_ratio = _common_algo_days(
+    # Without simulation
+    expenses_7days_cat_dict, category_7days_ratio_dict, draft_global_7days, expenses_7days_global, global_7days_ratio = _common_algo_days(
+        request, False, day=date_num_days_ago, num=7
+    )
+    # With simulation(s)
+    expenses_7days_cat_sim_dict, category_7days_sim_ratio_dict, _, expenses_7days_global_sim, global_7days_sim_ratio = _common_algo_days(
         request, day=date_num_days_ago, num=7
     )
 
     context = {
+        "expenses_7days_cat_dict": expenses_7days_cat_dict,
         "expenses_7days_cat_sim_dict": expenses_7days_cat_sim_dict,
+        "category_7days_ratio_dict": category_7days_ratio_dict,
         "category_7days_sim_ratio_dict": category_7days_sim_ratio_dict,
         "draft_global_7days": draft_global_7days,
-        "expenses_7days_global_sim": expenses_7days_global_sim,
-        "global_7days_sim_ratio": global_7days_sim_ratio,
-    }
-
-    return render(request, "7days_category_sim.html", context)
-
-
-############################################################################
-#### CATEGORY CONSUMPTION WITHOUT SIMULATION PAGE - FOR THE LAST 7 DAYS ####
-############################################################################
-@login_required(login_url="/signin/", redirect_field_name="redirection_vers")
-def category_consumption_7days(request):
-    """
-    View to the today's category consumption page, without simulation.
-    """
-    num_days_ago = 6
-    date_num_days_ago = date.today() - timedelta(days=num_days_ago)
-    expenses_7days_cat_dict, category_7ays_ratio_dict, draft_global_7days, expenses_7days_global, global_7days_ratio = _common_algo_days(
-        request, False, day=date_num_days_ago, num=7
-    )
-
-    context = {
-        "expenses_7days_cat_dict": expenses_7days_cat_dict,
-        "category_7ays_ratio_dict": category_7ays_ratio_dict,
-        "draft_global_7days": draft_global_7days,
         "expenses_7days_global": expenses_7days_global,
+        "expenses_7days_global_sim": expenses_7days_global_sim,
         "global_7days_ratio": global_7days_ratio,
+        "global_7days_sim_ratio": global_7days_sim_ratio,
     }
 
     return render(request, "7days_category.html", context)
