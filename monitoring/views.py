@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
-# pylint: disable=no-member,too-many-locals,line-too-long
+# pylint: disable=no-member,too-many-locals,line-too-long,too-many-ancestors
 """All the views for the monitoring app of the travel_budgeter project."""
 
 from datetime import date, timedelta
 
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
+from django.views.generic.detail import DetailView
 
 from draft.models import Draft
 from expenses.models import Expense, CATEGORY
@@ -142,97 +143,74 @@ def _change_calculation(wallet, wallet_currency):
     return change_out_sum, change_in_sum
 
 
-################################################################
-#### CATEGORY CONSUMPTION WITH SIMULATION PAGE - UP TO DATE ####
-################################################################
+##############################################################################
+#### CATEGORY CONSUMPTION PAGE - UP TO DATE - WITH AND WITHOUR SIMULATION ####
+##############################################################################
 @login_required(login_url="/signin/", redirect_field_name="redirection_vers")
-def category_consumption_sim(request):
+def category_consumption(request):
     """
-    View to the category consumption page, with simulation(s).
+    View to the category consumption page, up to date, with and without simulation(s).
     """
-    draft_categories_dict, expenses_cat_sim_dict, category_sim_ratio_dict, draft_global, expenses_global_sim, global_sim_ratio = _common_algo(
+
+    # Get the destination.
+    last_draft = Draft.objects.filter(user=request.user).last()
+    # Without simulation
+    draft_categories_dict, expenses_categories_dict, category_ratio_dict, draft_global, expenses_global, global_ratio = _common_algo(
+        request, False
+    )
+    # With simulation(s)
+    _, expenses_cat_sim_dict, category_sim_ratio_dict, _, expenses_global_sim, global_sim_ratio = _common_algo(
         request
     )
 
     context = {
-        "draft_categories_dict": draft_categories_dict,
-        "expenses_cat_sim_dict": expenses_cat_sim_dict,
-        "category_sim_ratio_dict": category_sim_ratio_dict,
-        "draft_global": draft_global,
-        "expenses_global_sim": expenses_global_sim,
-        "global_sim_ratio": global_sim_ratio,
-    }
-
-    return render(request, "current_category_sim.html", context)
-
-
-###################################################################
-#### CATEGORY CONSUMPTION WITHOUT SIMULATION PAGE - UP TO DATE ####
-###################################################################
-@login_required(login_url="/signin/", redirect_field_name="redirection_vers")
-def category_consumption(request):
-    """
-    View to the category consumption page, without simulation.
-    """
-    draft_categories_dict, expenses_categories_dict, category_ratio_dict, draft_global, expenses_global, global_ratio = _common_algo(
-        request, False
-    )
-
-    context = {
+        "last_draft": last_draft,
         "draft_categories_dict": draft_categories_dict,
         "expenses_categories_dict": expenses_categories_dict,
+        "expenses_cat_sim_dict": expenses_cat_sim_dict,
         "category_ratio_dict": category_ratio_dict,
+        "category_sim_ratio_dict": category_sim_ratio_dict,
         "draft_global": draft_global,
         "expenses_global": expenses_global,
+        "expenses_global_sim": expenses_global_sim,
         "global_ratio": global_ratio,
+        "global_sim_ratio": global_sim_ratio,
     }
 
     return render(request, "current_category.html", context)
 
 
-##############################################################################
-#### CATEGORY CONSUMPTION WITH SIMULATION PAGE - JUST FOR ONE DAY (TODAY) ####
-##############################################################################
+############################################################################################
+#### CATEGORY CONSUMPTION PAGE - JUST FOR ONE DAY (TODAY) - WITH AND WITHOUR SIMULATION ####
+############################################################################################
 @login_required(login_url="/signin/", redirect_field_name="redirection_vers")
-def category_consumption_today_sim(request):
+def category_consumption_today(request):
     """
-    View to the today's category consumption page, with simulation(s).
+    View to the today's category consumption page, with and without simulation(s).
     """
+    # Get the destination and today's date.
+    last_draft = Draft.objects.filter(user=request.user).last()
     today = date.today()
-    expenses_today_cat_sim_dict, category_today_sim_ratio_dict, draft_global_day, expenses_today_global_sim, global_day_sim_ratio = _common_algo_days(
+    # Without simulation
+    expenses_today_cat_dict, category_today_ratio_dict, draft_global_day, expenses_today_global, global_day_ratio = _common_algo_days(
+        request, False, day=today, num=1
+    )
+    # With simulation(s)
+    expenses_today_cat_sim_dict, category_today_sim_ratio_dict, _, expenses_today_global_sim, global_day_sim_ratio = _common_algo_days(
         request, day=today, num=1
     )
 
     context = {
+        "last_draft": last_draft,
+        "expenses_today_cat_dict": expenses_today_cat_dict,
         "expenses_today_cat_sim_dict": expenses_today_cat_sim_dict,
+        "category_today_ratio_dict": category_today_ratio_dict,
         "category_today_sim_ratio_dict": category_today_sim_ratio_dict,
         "draft_global_day": draft_global_day,
-        "expenses_today_global_sim": expenses_today_global_sim,
-        "global_day_sim_ratio": global_day_sim_ratio,
-    }
-
-    return render(request, "today_category_sim.html", context)
-
-
-#################################################################################
-#### CATEGORY CONSUMPTION WITHOUT SIMULATION PAGE - JUST FOR ONE DAY (TODAY) ####
-#################################################################################
-@login_required(login_url="/signin/", redirect_field_name="redirection_vers")
-def category_consumption_today(request):
-    """
-    View to the today's category consumption page, without simulation.
-    """
-    today = date.today()
-    expenses_today_cat_dict, category_today_ratio_dict, draft_global_day, expenses_today_global, global_day_ratio = _common_algo_days(
-        request, False, day=today, num=1
-    )
-
-    context = {
-        "expenses_today_cat_dict": expenses_today_cat_dict,
-        "category_today_ratio_dict": category_today_ratio_dict,
-        "draft_global_day": draft_global_day,
         "expenses_today_global": expenses_today_global,
+        "expenses_today_global_sim": expenses_today_global_sim,
         "global_day_ratio": global_day_ratio,
+        "global_day_sim_ratio": global_day_sim_ratio,
     }
 
     return render(request, "today_category.html", context)
@@ -300,8 +278,6 @@ def list_expenses(request):
     last_draft = Draft.objects.filter(user=request.user).last()
     all_expenses_by_dates = last_draft.expenses.all().order_by("date")
     all_expenses_by_categories = last_draft.expenses.all().order_by("category")
-    print("all_expenses_by_dates OOO : ", all_expenses_by_dates)
-    print("all_expenses_by_categories OOO : ", all_expenses_by_categories)
 
     context = {
         "all_expenses_by_dates": all_expenses_by_dates,
