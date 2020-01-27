@@ -71,10 +71,15 @@ def wallet_balance(request):
         w_sim_balance = w_balance + expenses_sum - expenses_sim_sum
         wallet_sim_dict[wallet] = w_sim_balance
 
+    diff = False
+    if expenses_sim_sum != expenses_sum:
+        diff = True
+
     context = {
         "wallet_dict": wallet_dict,
         "wallet_sim_dict": wallet_sim_dict,
         "last_draft": last_draft,
+        "diff": diff,
     }
 
     return render(request, "balance.html", context)

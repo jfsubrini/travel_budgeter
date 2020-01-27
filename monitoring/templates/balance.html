@@ -14,7 +14,7 @@
     </div>
     {% endfor %}
     <br />
-    {% if wallet_sim_dict != wallet_dict %}
+    {% if diff %}
     <h3>Avec simmulations</h3>
     {% for wallet, balance in wallet_sim_dict.items %}
     <div>
