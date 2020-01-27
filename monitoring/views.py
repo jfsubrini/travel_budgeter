@@ -48,9 +48,9 @@ def wallet_balance(request):
         initial_balance = wallet.balance
         wallet_currency = wallet.currency.iso
         # Balance calculation for each wallet considering expenses, without simulation.
-        expenses_sum = _expense_calculation(wallet, wallet_currency)
+        expenses_sum = _expense_calculation(wallet, wallet_currency, False)
         # Balance calculation for each wallet considering expenses, with simulation(s).
-        expenses_sim_sum = _expense_calculation(wallet, wallet_currency, False)
+        expenses_sim_sum = _expense_calculation(wallet, wallet_currency)
         # Balance calculation for each wallet considering withdrawals.
         withdrawal_out_sum, withdrawal_in_sum = _withdrawal_calculation(
             wallet, wallet_currency
