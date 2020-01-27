@@ -44,6 +44,7 @@ def wallet_balance(request):
     wallet_sim_dict = {}
     # Balance calculation for each wallet (for the current draft).
     # TODO vérifier que les devises des comptes et porte-monnaies sont ok.
+    diff = False
     for wallet in wallet_queryset:
         initial_balance = wallet.balance
         wallet_currency = wallet.currency.iso
@@ -69,11 +70,9 @@ def wallet_balance(request):
         wallet_dict[wallet] = w_balance
         # Balance calculation for each wallet after all transactions, with simulation(s).
         w_sim_balance = w_balance + expenses_sum - expenses_sim_sum
+        if expenses_sim_sum != expenses_sum:
+            diff = True
         wallet_sim_dict[wallet] = w_sim_balance
-
-    diff = False
-    if expenses_sim_sum != expenses_sum:
-        diff = True
 
     context = {
         "wallet_dict": wallet_dict,

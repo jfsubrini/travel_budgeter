@@ -15,7 +15,7 @@
     {% endfor %}
     <br />
     {% if diff %}
-    <h3>Avec simmulations</h3>
+    <h3>Avec simulations</h3>
     {% for wallet, balance in wallet_sim_dict.items %}
     <div>
         {{ wallet }} a un solde après dépenses de : {{ balance|stringformat:".2f" }}
