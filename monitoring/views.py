@@ -39,21 +39,25 @@ def wallet_balance(request):
     """
     last_draft = Draft.objects.filter(user=request.user).last()
     wallet_queryset = last_draft.wallets.all()
+    # Calculation with and without simulation(s).
     wallet_dict = {}
+    wallet_sim_dict = {}
     # Balance calculation for each wallet (for the current draft).
     # TODO vérifier que les devises des comptes et porte-monnaies sont ok.
     for wallet in wallet_queryset:
         initial_balance = wallet.balance
         wallet_currency = wallet.currency.iso
-        # Balance calculation for each wallet considering expenses.
+        # Balance calculation for each wallet considering expenses, without simulation.
         expenses_sum = _expense_calculation(wallet, wallet_currency)
+        # Balance calculation for each wallet considering expenses, with simulation(s).
+        expenses_sim_sum = _expense_calculation(wallet, wallet_currency, False)
         # Balance calculation for each wallet considering withdrawals.
         withdrawal_out_sum, withdrawal_in_sum = _withdrawal_calculation(
             wallet, wallet_currency
         )
         # Balance calculation for each wallet considering changes.
         change_out_sum, change_in_sum = _change_calculation(wallet, wallet_currency)
-        # Balance calculation for each wallet after all transactions.
+        # Balance calculation for each wallet after all transactions, without simulation.
         w_balance = (
             initial_balance
             - expenses_sum
@@ -63,16 +67,38 @@ def wallet_balance(request):
             + change_in_sum
         )
         wallet_dict[wallet] = w_balance
+        # Balance calculation for each wallet after all transactions, with simulation(s).
+        w_sim_balance = (
+            initial_balance
+            - expenses_sim_sum
+            - withdrawal_out_sum
+            + withdrawal_in_sum
+            - change_out_sum
+            + change_in_sum
+        )
+        wallet_sim_dict[wallet] = w_sim_balance
 
-    context = {"wallet_dict": wallet_dict}
+    context = {
+        "wallet_dict": wallet_dict,
+        "wallet_sim_dict": wallet_sim_dict,
+        "last_draft": last_draft,
+    }
 
     return render(request, "balance.html", context)
 
 
-def _expense_calculation(wallet, wallet_currency):
-    expenses_related_queryset = Expense.objects.filter(payment_type=wallet)
+def _expense_calculation(wallet, wallet_currency, *simulation):
+    """
+    Calculation for all the expenses, with or without simulation(s).
+    """
+    if simulation:
+        expenses_queryset = Expense.objects.filter(
+            payment_type=wallet, simulation=simulation[0]
+        )
+    else:
+        expenses_queryset = Expense.objects.filter(payment_type=wallet)
     expense_amount_list = []
-    for expense in expenses_related_queryset:
+    for expense in expenses_queryset:
         expense_amount = expense.amount
         expense_currency = expense.currency.iso
         if wallet_currency != expense_currency:
@@ -88,6 +114,9 @@ def _expense_calculation(wallet, wallet_currency):
 
 
 def _withdrawal_calculation(wallet, wallet_currency):
+    """
+    Calculation for ATM and GAB withdrawal with credit cards.
+    """
     withdrawals_out_queryset = Withdrawal.objects.filter(payment_type_out=wallet.id)
     withdrawals_in_queryset = Withdrawal.objects.filter(payment_type_in=wallet.id)
     # Calculate the sum to debit from the credit cards.
@@ -119,6 +148,9 @@ def _withdrawal_calculation(wallet, wallet_currency):
 
 
 def _change_calculation(wallet, wallet_currency):
+    """
+    Calculation for currency changes.
+    """
     changes_out_queryset = Change.objects.filter(payment_type_out=wallet.id)
     changes_in_queryset = Change.objects.filter(payment_type_in=wallet.id)
     # TODO control that this is the right currency before crediting or debiting a wallet.

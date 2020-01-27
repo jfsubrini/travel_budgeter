@@ -7,12 +7,21 @@
 </head>
 
 <body>
-    <h2>Page des soldes</h2>
+    <h2>Soldes des différents "wallets" du {{ last_draft }}</h2>
     {% for wallet, balance in wallet_dict.items %}
     <div>
         {{ wallet }} a un solde après dépenses de : {{ balance|stringformat:".2f" }}
     </div>
     {% endfor %}
+    <br />
+    {% if wallet_sim_dict != wallet_dict %}
+    <h3>Avec simmulations</h3>
+    {% for wallet, balance in wallet_sim_dict.items %}
+    <div>
+        {{ wallet }} a un solde après dépenses de : {{ balance|stringformat:".2f" }}
+    </div>
+    {% endfor %}
+    {% endif  %}
 </body>
 <br />
 <br />
