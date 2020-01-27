@@ -321,7 +321,7 @@ def delete_simulations(request):
                 f"/monitoring?user={request.user.id}?destination={last_draft}"
             )
 
-    # To display the empty wallet change form.
+    # To display the empty delete simulation form.
     else:
         delete_simulations_form = SimulationsDeletionForm()
 

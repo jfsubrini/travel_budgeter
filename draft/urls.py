@@ -9,5 +9,5 @@ from . import views
 
 urlpatterns = [
     path("", views.draft, name="draft"),
-    path("edit/", views.edit_draft, name="edit-draft"),
+    path("select/", views.select_draft, name="select-draft"),
 ]
