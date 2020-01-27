@@ -68,14 +68,7 @@ def wallet_balance(request):
         )
         wallet_dict[wallet] = w_balance
         # Balance calculation for each wallet after all transactions, with simulation(s).
-        w_sim_balance = (
-            initial_balance
-            - expenses_sim_sum
-            - withdrawal_out_sum
-            + withdrawal_in_sum
-            - change_out_sum
-            + change_in_sum
-        )
+        w_sim_balance = w_balance + expenses_sum - expenses_sim_sum
         wallet_sim_dict[wallet] = w_sim_balance
 
     context = {
