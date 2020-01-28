@@ -13,11 +13,11 @@
     <p>Votre nouvelle dépense a bien été enregistrée.</p>
     {% else %}
     <br />
-    <form action="" method="post">
+    <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <h2>Entrez les informations suivantes :</h2>
         {{ expense_form.as_p }}
-        </br>
+        <br />
         <input type="submit" value="Enregistrez cette dépense">
     </form>
     {% endif %}
@@ -26,12 +26,13 @@
 <br />
 <br />
 <footer>
-    <div><a href="{% url 'draft' %}">Budget prévisionnel</div>
-    <div><a href="{% url 'wallet-change' %}">Change de devises</div>
-    <div><a href="{% url 'register' %}">Compte</div>
-    <div><a href="{% url 'wallet-creation' %}">Création de wallet</div>
-    <div><a href="{% url 'monitoring' %}">Monitoring</div>
-    <div><a href="{% url 'wallet-withdrawal' %}">Retrait ATM/DAB</div>
+    <a href="{% url 'draft' %}">Création du budget prévisionnel</a>
+    <a href="{% url 'wallet-change' %}">Change de devises</a>
+    <a href="{% url 'register' %}">Compte</a>
+    <a href="{% url 'wallet-creation' %}">Création de wallet</a>
+    <a href="{% url 'select-draft' %}">Modification d'un budget prévisionnel</a>
+    <a href="{% url 'monitoring' %}">Monitoring</a>
+    <a href="{% url 'wallet-withdrawal' %}">Retrait ATM/DAB</a>
 </footer>
 
 </html>

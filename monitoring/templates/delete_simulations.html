@@ -3,30 +3,25 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Change de devises</title>
+    <title>Suppression des simulations</title>
 </head>
 
 <body>
-    <h1>Change de devises pour :</h1>
-    <h2>{{ last_draft }}</h2>
-    {% if submitted %}
-    <p>Votre nouveau change de devises a bien été enregistré.</p>
-    {% else %}
-    <br />
+    <h2>Page de suppression des simulations</h2>
     <form action="" method="post">
         {% csrf_token %}
-        <h2>Entrez les informations suivantes :</h2>
-        {{ change_form.as_p }}
-        </br>
-        <input type="submit" value="Enregistrez ce change de devises">
+        <h2>Voulez-vous supprimer toutes les simulations du budget {{ last_draft }}?</h2>
+        {{ delete_simulations_form.as_p }}
+        <br />
+        <input type="submit" value="Validez">
     </form>
-    {% endif %}
 </body>
 <br />
 <br />
 <br />
 <footer>
     <a href="{% url 'draft' %}">Création du budget prévisionnel</a>
+    <a href="{% url 'wallet-change' %}">Change de devises</a>
     <a href="{% url 'register' %}">Compte</a>
     <a href="{% url 'wallet-creation' %}">Création de wallet</a>
     <a href="{% url 'expenses' %}">Dépenses</a>

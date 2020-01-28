@@ -22,6 +22,16 @@ CATEGORY = [
 ]
 
 
+def get_upload_path(instance, filename):
+    """
+    Design the path in the media directory to put the expenses' photos.
+    The image will be saved at this address :
+    media/expenses/{draft.destination}/Year/month/day/{photo_name}
+    """
+
+    return f"expenses/{instance.draft.destination}/{instance.date}/{filename}"
+
+
 class Expense(models.Model):
     """To create the Expense table."""
 
@@ -47,7 +57,7 @@ class Expense(models.Model):
         PaymentType, on_delete=models.CASCADE, verbose_name="Type de paiement"
     )
     photo = models.ImageField(
-        "Photo de la facture", upload_to="expenses/", blank=True, null=True
+        "Photo de la facture", upload_to=get_upload_path, blank=True, null=True
     )
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

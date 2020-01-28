@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <title>Editer les Drafts</title>
+</head>
+
+<body>
+    <h1>Editez et corrigez les budgets prévisionnels de vos différents voyages.</h1>
+    {% if submitted %}
+    <p>Votre budget prévisionnel a bien été modifié.</p>
+    {% else %}
+    <form action="" method="post">
+        {% csrf_token %}
+        <h2>Votre budget prévisionnel pour votre prochain voyage :</h2>
+        {% for draft in user_drafts %}
+        <div><a href="{% url 'draft' %}">{{ draft }}</div>
+        {% endfor %}
+        <br />
+        <input type="submit" value="Validez vos changements">
+    </form>
+    {% endif %}
+</body>
+<br />
+<br />
+<br />
+<footer>
+    <div><a href="{% url 'draft' %}">Création du budget prévisionnel</div>
+    <div><a href="{% url 'wallet-change' %}">Change de devises</div>
+    <div><a href="{% url 'register' %}">Compte</div>
+    <div><a href="{% url 'wallet-creation' %}">Création de wallet</div>
+    <div><a href="{% url 'expenses' %}">Dépenses</div>
+    <div><a href="{% url 'monitoring' %}">Monitoring</div>
+    <div><a href="{% url 'wallet-withdrawal' %}">Retrait ATM/DAB</div>
+</footer>
+
+</html>

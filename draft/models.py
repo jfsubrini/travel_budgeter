@@ -64,4 +64,4 @@ class Draft(models.Model):
         verbose_name = "Budget prévisionnel"
 
     def __str__(self):
-        return f"Budget prévisionnel pour la destination : {self.destination}"
+        return f"Budget prévisionnel pour la destination {self.destination}"

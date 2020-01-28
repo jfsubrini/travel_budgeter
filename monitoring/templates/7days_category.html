@@ -3,28 +3,20 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Catégories - A ce jour</title>
+    <title>Catégories - Pour les 7 derniers jours</title>
 </head>
 
 <body>
-    <h2>A ce jour...</h2>
-    <br />
-    <h2>Rappel du {{ last_draft }}</h2>
-    {% for category, amount in draft_categories_dict.items %}
+    <h2>Pour les 7 derniers jours...</h2>
+    <h2>Budget consommé aujourd'hui par catégories, sans simulation : </h2>
+    {% for category, amount in expenses_7days_cat_dict.items %}
     <div>
-        Budget prévisionnel pour la catégorie "{{ category }}" : {{ amount }}
-    </div>
-    {% endfor %}
-    <br />
-    <h2>Budget consommé par catégories sans simulation : </h2>
-    {% for category, amount in expenses_categories_dict.items %}
-    <div>
-        Budget consommé pour la catégorie "{{ category }}" : {{ amount|stringformat:".2f" }}
+        Budget consommé aujourd'hui pour la catégorie "{{ category }}" : {{ amount|stringformat:".2f" }}
     </div>
     {% endfor %}
     <br />
     <h2>Pourcentage de consommation par catégorie, sans simulation :</h2>
-    {% for category, percent in category_ratio_dict.items %}
+    {% for category, percent in category_7days_ratio_dict.items %}
     {% if percent %}
     <div>
         Pourcentage de consommation pour la catégorie "{{ category }}" : {{ percent|stringformat:".2f" }} %
@@ -35,22 +27,24 @@
     </div>
     {% endfor %}
     <br />
-    <h3>Budget prévisionnel global : {{ draft_global|stringformat:".2f" }}</h3>
-    <h3>Budget consommé global : {{ expenses_global|stringformat:".2f" }}</h3>
-    <h3>Pourcentage de consommation globale du budget prévisionnel : {{ global_ratio|stringformat:".2f" }} %</h3>
+    <h3>Budget prévisionnel global pour 7 jours (hors transports internationaux et dépenses avant le départ):
+        {{ draft_global_7days }}</h3>
+    <h3>Budget consommé global ces 7 derniers jours : {{ expenses_7days_global|stringformat:".2f" }}</h3>
+    <h3>Pourcentage de consommation globale du budget prévisionnel ces 7 derniers jours :
+        {{ global_7days_ratio|stringformat:".2f" }} %</h3>
     <br />
 
     <!--When there are simulations-->
-    {% if expenses_cat_sim_dict != expenses_categories_dict %}
-    <h2>Budget consommé par catégories, avec simulations : </h2>
-    {% for category, amount in expenses_cat_sim_dict.items %}
+    {% if expenses_7days_cat_sim_dict != expenses_7days_cat_dict %}
+    <h2>Budget consommé aujourd'hui par catégories, avec simulations : </h2>
+    {% for category, amount in expenses_7days_cat_sim_dict.items %}
     <div>
-        Budget consommé pour la catégorie "{{ category }}" : {{ amount|stringformat:".2f" }}
+        Budget consommé aujourd'hui pour la catégorie "{{ category }}" : {{ amount|stringformat:".2f" }}
     </div>
     {% endfor %}
     <br />
     <h2>Pourcentage de consommation par catégorie, avec simulations :</h2>
-    {% for category, percent in category_sim_ratio_dict.items %}
+    {% for category, percent in category_7days_sim_ratio_dict.items %}
     {% if percent %}
     <div>
         Pourcentage de consommation pour la catégorie "{{ category }}" : {{ percent|stringformat:".2f" }} %
@@ -61,10 +55,11 @@
     </div>
     {% endfor %}
     <br />
-    <h3>Budget prévisionnel global : {{ draft_global|stringformat:".2f" }}</h3>
-    <h3>Budget consommé global (avec simulations) : {{ expenses_global_sim|stringformat:".2f" }}</h3>
-    <h3>Pourcentage de consommation globale du budget prévisionnel (avec simulations) :
-        {{ global_sim_ratio|stringformat:".2f" }} %</h3>
+    <h3>Budget prévisionnel global pour 7 jours (hors transports internationaux et dépenses avant le départ):
+        {{ draft_global_7days }}</h3>
+    <h3>Budget consommé global ces 7 derniers jours : {{ expenses_7days_global_sim|stringformat:".2f" }}</h3>
+    <h3>Pourcentage de consommation globale du budget prévisionnel ces 7 derniers jours :
+        {{ global_7days_sim_ratio|stringformat:".2f" }} %</h3>
     {% endif %}
 </body>
 <br />

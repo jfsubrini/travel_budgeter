@@ -7,24 +7,34 @@
 </head>
 
 <body>
-    <h2>Page des soldes</h2>
+    <h2>Soldes des différents "wallets" du {{ last_draft }}</h2>
     {% for wallet, balance in wallet_dict.items %}
     <div>
         {{ wallet }} a un solde après dépenses de : {{ balance|stringformat:".2f" }}
     </div>
     {% endfor %}
+    <br />
+    {% if diff %}
+    <h3>Avec simulations</h3>
+    {% for wallet, balance in wallet_sim_dict.items %}
+    <div>
+        {{ wallet }} a un solde après dépenses de : {{ balance|stringformat:".2f" }}
+    </div>
+    {% endfor %}
+    {% endif  %}
 </body>
 <br />
 <br />
 <br />
 <footer>
-    <div><a href="{% url 'draft' %}">Budget prévisionnel</div>
-    <div><a href="{% url 'wallet-change' %}">Change de devises</div>
-    <div><a href="{% url 'register' %}">Compte</div>
-    <div><a href="{% url 'wallet-creation' %}">Création de wallet</div>
-    <div><a href="{% url 'expenses' %}">Dépenses</div>
-    <div><a href="{% url 'monitoring' %}">Monitoring</div>
-    <div><a href="{% url 'wallet-withdrawal' %}">Retrait ATM/DAB</div>
+    <a href="{% url 'draft' %}">Création du budget prévisionnel</a>
+    <a href="{% url 'wallet-change' %}">Change de devises</a>
+    <a href="{% url 'register' %}">Compte</a>
+    <a href="{% url 'wallet-creation' %}">Création de wallet</a>
+    <a href="{% url 'expenses' %}">Dépenses</a>
+    <a href="{% url 'select-draft' %}">Modification d'un budget prévisionnel</a>
+    <a href="{% url 'monitoring' %}">Monitoring</a>
+    <a href="{% url 'wallet-withdrawal' %}">Retrait ATM/DAB</a>
 </footer>
 
 </html>

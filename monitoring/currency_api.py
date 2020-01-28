@@ -10,6 +10,7 @@ from .config import CURRCONV_API_KEY
 class CurrencyConverter:
     """
     Getting the currency exchange rate by requesting the Currency Converter Restful API.
+    curr_conv : {'ARS_EUR': {'2020-01-16': 0.014992}}
     """
 
     def __init__(self, currency_in, currency_out, date):
