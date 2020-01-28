@@ -38,7 +38,7 @@ class WalletWithdrawalForm(ModelForm):
         # To filter the wallet choices : for 'Carte bancaire débitée', only credit card(s)
         # of the travel user logged and the one(s) created for the current draft.
         # For 'Porte-monnaie crédité', idem but only wallet(s).
-        super(WalletWithdrawalForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.fields["payment_type_out"].queryset = PaymentType.objects.filter(
             draft__user=user, payment_type__lte=2
         )
@@ -60,7 +60,7 @@ class WalletChangeForm(ModelForm):
     def __init__(self, user, *args, **kwargs):
         # To filter the wallet choices : only wallet(s) of the travel user logged
         # and the one(s) created for the current draft.
-        super(WalletChangeForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.fields["payment_type_out"].queryset = PaymentType.objects.filter(
             draft__user=user, payment_type=3
         )

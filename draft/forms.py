@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-# pylint: disable=too-few-public-methods
+# pylint: disable=too-few-public-methods,no-member
 """Creation of the Draft form, to define the travel budget goal of the user."""
 
 
-from django.forms import DateInput, ModelForm
+from django.forms import DateInput, ModelForm, Form, Select, ModelChoiceField
 from .models import Category, Draft
 
 
@@ -33,3 +33,15 @@ class DraftForm2(ModelForm):
 
         model = Category
         fields = "__all__"
+
+
+# Select Draft form.
+class SelectDraftForm(Form):
+    """Form to select the saved travel user draft(s)."""
+
+    def __init__(self, user, *args, **kwargs):
+        # To display the drafts choices : only the one(s) of the travel user logged.
+        super().__init__(*args, **kwargs)
+        self.fields["select_draft"].queryset = Draft.objects.filter(user=user)
+
+    select_draft = ModelChoiceField(queryset=None, widget=Select, required=True)

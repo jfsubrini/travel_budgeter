@@ -3,28 +3,22 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Modification d'un budget prévisionnel</title>
+    <title>Ticket - Facture</title>
 </head>
 
 <body>
-    <h1>Votre budget prévisionnel à modifier</h1>
+    <h1>Photo de la dépense</h1>
     <br />
-    {% if submitted %}
-    <p>Votre budget prévisionnel a bien été modifié.</p>
-    {% else %}
-    <form action="" method="post">
-        {% csrf_token %}
-        {{ draft_form.as_p }}
-        {{ draft2_form.as_p }}
-        <br />
-        <input type="submit" value="Validez les modifications">
-    </form>
-    {% endif %}
+    <h2>{{ expense_photo.photo }}</h2>
+    <img src="{% media 'expenses/{{ expense_photo.photo }}' %}" alt="" width="100%">
+    src="{{ expense_photo.photo.url }}" alt="{{ expense_photo.photo }}" width="100%">
+    </div>
 </body>
 <br />
 <br />
 <br />
 <footer>
+    <a href="{% url 'draft' %}">Création du budget prévisionnel</a>
     <a href="{% url 'wallet-change' %}">Change de devises</a>
     <a href="{% url 'register' %}">Compte</a>
     <a href="{% url 'wallet-creation' %}">Création de wallet</a>

@@ -28,7 +28,7 @@ class ExpenseForm(ModelForm):
     def __init__(self, user, *args, **kwargs):
         # To filter the wallet choices : only the one(s) of the travel user logged
         # and the one(s) created for the current draft.
-        super(ExpenseForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.fields["payment_type"].queryset = PaymentType.objects.filter(
             draft__user=user
         )
