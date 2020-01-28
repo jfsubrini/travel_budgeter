@@ -70,10 +70,10 @@ def select_draft(request):
         select_draft_form = SelectDraftForm(request.user, request.POST)
         if select_draft_form.is_valid():
             # Catching the form radio choice.
-            select_draft = select_draft_form.cleaned_data["select_draft"]
+            select_draft_id = select_draft_form.cleaned_data["select_draft"].id
             # And redirect to the monitoring page.
             return redirect(
-                f"/draft/edit?user={request.user.id}?destination={select_draft}"
+                f"/draft/edit?user={request.user.id}&destination={select_draft_id}"
             )
 
     # To display the empty select draft form.
@@ -91,22 +91,20 @@ def edit_draft(request):
     """
     View to an existing travel user draft to be modified.
     """
-    # travel_user = User.objects.get(
-    #     username=request.user.username, password=request.user.password
-    # )
-    # user_drafts = Draft.objects.filter(user=travel_user)
-    # user_last_draft = Draft.objects.filter(user=travel_user).last()
-    # departure_date = user_last_draft.departure_date
-    # travel_duration = user_last_draft.travel_duration
-    # pre_departure = user_last_draft.category.pre_departure
-    # international_transport = user_last_draft.category.international_transport
-    # local_transport = user_last_draft.category.local_transport
-    # lodging = user_last_draft.category.lodging
-    # fooding = user_last_draft.category.fooding
-    # visiting = user_last_draft.category.visiting
-    # activities = user_last_draft.category.activities
-    # souvenirs = user_last_draft.category.souvenirs
-    # various = user_last_draft.category.various
+    # Get the right draft and catch the value of its different fields.
+    select_draft_id = request.GET["destination"]
+    selected_draft = Draft.objects.get(id=select_draft_id)
+    departure_date = selected_draft.departure_date
+    travel_duration = selected_draft.travel_duration
+    pre_departure = selected_draft.category.pre_departure
+    international_transport = selected_draft.category.international_transport
+    local_transport = selected_draft.category.local_transport
+    lodging = selected_draft.category.lodging
+    fooding = selected_draft.category.fooding
+    visiting = selected_draft.category.visiting
+    activities = selected_draft.category.activities
+    souvenirs = selected_draft.category.souvenirs
+    various = selected_draft.category.various
 
     # # Analysis and treatment of the draft form that has been sent.
     # submitted = False
@@ -144,17 +142,17 @@ def edit_draft(request):
     # What to render to the template.
     context = {
         # "edit_draft_form": edit_draft_form,
-        # "departure_date": departure_date,
-        # "travel_duration": travel_duration,
-        # "pre_departure": pre_departure,
-        # "international_transport": international_transport,
-        # "local_transport": local_transport,
-        # "lodging": lodging,
-        # "fooding": fooding,
-        # "visiting": visiting,
-        # "activities": activities,
-        # "souvenirs": souvenirs,
-        # "various": various,
+        "departure_date": departure_date,
+        "travel_duration": travel_duration,
+        "pre_departure": pre_departure,
+        "international_transport": international_transport,
+        "local_transport": local_transport,
+        "lodging": lodging,
+        "fooding": fooding,
+        "visiting": visiting,
+        "activities": activities,
+        "souvenirs": souvenirs,
+        "various": various,
     }
 
     return render(request, "edit_draft.html", context)
