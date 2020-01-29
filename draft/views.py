@@ -69,9 +69,9 @@ def select_draft(request):
         # Checking if the form has been validated.
         select_draft_form = SelectDraftForm(request.user, request.POST)
         if select_draft_form.is_valid():
-            # Catching the form radio choice.
+            # Catching the form select choice.
             select_draft_id = select_draft_form.cleaned_data["select_draft"].id
-            # And redirect to the monitoring page.
+            # And redirect to the draft/edit page.
             return redirect(
                 f"/draft/edit?user={request.user.id}&destination={select_draft_id}"
             )
@@ -97,7 +97,7 @@ def edit_draft(request):
     selected_draft_category = Category.objects.get(draft=select_draft_id)
 
     # Analysis and treatment of the draft form that has been sent.
-    # When the forms has been posted.
+    # When the forms have been posted.
     if request.method == "POST":
         # Checking if the forms have been validated.
         edit_draft_form = EditDraftForm(selected_draft, request.POST)
@@ -114,12 +114,12 @@ def edit_draft(request):
             form1.user = request.user
             form1.category = selected_draft_category
             form1.save()
-            # Redirecting to the wallet creation page.
+            # Redirecting to the monitoring page.
             return redirect(
                 f"/monitoring?user={request.user.id}&destination={selected_draft}"
             )
 
-    # To display the draft forms with all the instance data in the placeholders.
+    # To display the draft forms with all the instance data as default data.
     # The first one about travel data and the second one about the draft budget for each category.
     else:
         edit_draft_form = EditDraftForm(instance=selected_draft)
