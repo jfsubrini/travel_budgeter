@@ -116,7 +116,7 @@ def select_wallet(request):
     # When the form has been posted.
     if request.method == "POST":
         # Checking if the form has been validated.
-        select_wallet_form = SelectWalletForm(request.user, request.POST)
+        select_wallet_form = SelectWalletForm(last_draft, request.POST)
         if select_wallet_form.is_valid():
             # Catching the form select choice.
             select_wallet_id = select_wallet_form.cleaned_data["select_wallet"].id
@@ -140,26 +140,26 @@ def edit_wallet(request):
     """
     View to an existing travel user wallet to be modified.
     """
+    last_draft = Draft.objects.filter(user=request.user).last()
     # Get the right wallet and catch the value of its different fields.
-    select_draft_id = request.GET["destination"]
-    selected_wallet = PaymentType.objects.get(draft=select_draft_id)
+    select_wallet_id = request.GET["wallet"]
+    selected_wallet = PaymentType.objects.get(id=select_wallet_id)
 
-    # Analysis and treatment of the draft form that has been sent.
+    # Analysis and treatment of the wallet form that has been sent.
     # When the form has been posted.
     if request.method == "POST":
         # Checking if the form has been validated.
         edit_draft_form = EditWalletForm(selected_wallet, request.POST)
         if edit_draft_form.is_valid():
             # Saving the data from the wallet form to update the data from the database.
-            print("ICI ET LA")
-            # form = edit_draft_form.save(commit=False)
-            # form.id = selected_wallet.id
-            # form.user = request.user
-            # form.category = selected_draft_category
-            # form.save()
-            # Redirecting to the wallet creation page.
+            form = edit_draft_form.save(commit=False)
+            # Updating the wallet data for the id related to the wallet to be modified.
+            form.id = selected_wallet.id
+            form.draft = selected_wallet.draft
+            form.save()
+            # Redirecting to the monitoring page.
             return redirect(
-                f"/monitoring?user={request.user.id}&destination={selected_draft}"
+                f"/monitoring?user={request.user.id}&destination={last_draft}"
             )
 
     # To display the wallet form with all the instance data as default data.
