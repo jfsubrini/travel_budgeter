@@ -3,16 +3,16 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Sélection d'un budget prévisionnel</title>
+    <title>Sélection d'un wallet</title>
 </head>
 
 <body>
-    <h1>Vos budget(s) prévisionnel(s)</h1>
+    <h1>Vos wallets</h1>
     <br />
     <form action="" method="post">
         {% csrf_token %}
-        <h2>Sélectionnez un budget prévisionnel à modifier :</h2>
-        {{ select_draft_form.as_p }}
+        <h2>Sélectionnez un wallet à modifier :</h2>
+        {{ select_wallet_form.as_p }}
         <br />
         <input type="submit" value="Validez">
     </form>
@@ -26,7 +26,7 @@
     <a href="{% url 'register' %}">Compte</a>
     <a href="{% url 'wallet-creation' %}">Création de wallet</a>
     <a href="{% url 'expenses' %}">Dépenses</a>
-    <a href="{% url 'select-wallet' %}">Modification d'un wallet</a>
+    <a href="{% url 'select-draft' %}">Modification d'un budget prévisionnel</a>
     <a href="{% url 'monitoring' %}">Monitoring</a>
     <a href="{% url 'wallet-withdrawal' %}">Retrait ATM/DAB</a>
 </footer>
