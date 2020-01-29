@@ -95,42 +95,31 @@ def edit_draft(request):
     select_draft_id = request.GET["destination"]
     selected_draft = Draft.objects.get(id=select_draft_id)
     selected_draft_category = Category.objects.get(draft=select_draft_id)
-    departure_date = selected_draft.departure_date
-    travel_duration = selected_draft.travel_duration
-    pre_departure = selected_draft.category.pre_departure
-    international_transport = selected_draft.category.international_transport
-    local_transport = selected_draft.category.local_transport
-    lodging = selected_draft.category.lodging
-    fooding = selected_draft.category.fooding
-    visiting = selected_draft.category.visiting
-    activities = selected_draft.category.activities
-    souvenirs = selected_draft.category.souvenirs
-    various = selected_draft.category.various
 
     # Analysis and treatment of the draft form that has been sent.
     submitted = False
     # When the forms has been posted.
     if request.method == "POST":
-        #     # # Checking if the forms have been validated.
-        #     # draft_form = DraftForm(request.POST)
-        #     # draft2_form = DraftForm2(request.POST)
-        #     # if draft_form.is_valid() and draft2_form.is_valid():
-        #     #     # Saving the data from the draft forms to the database.
-        #     #     form1 = draft_form.save(commit=False)
-        #     #     form2 = draft2_form.save(commit=False)
-        #     #     # Link the instance with a specific travel user (the one that made the draft).
-        #     #     travel_user = User.objects.get(
-        #     #         username=request.user.username, password=request.user.password
-        #     #     )
-        #     #     form1.user = travel_user
-        #     #     form2.user = travel_user
-        #     #     # Saving the categories data.
-        #     #     form2.save()
-        #     #     # Link the travel data with the right categories data (the last saved).
-        #     #     draft_category = Category.objects.last()
-        #     #     form1.category = draft_category
-        #     #     form1.save()
-        #     #     # Redirecting to the wallet creation page.
+        # Checking if the forms have been validated.
+        edit_draft_form = EditDraftForm(request.POST)
+        edit_draft2_form = EditDraftForm2(request.POST)
+        if edit_draft_form.is_valid() and edit_draft2_form.is_valid():
+            # Saving the data from the draft forms to update the data from the database.
+            form1 = edit_draft_form.save(commit=False)
+            form2 = edit_draft2_form.save(commit=False)
+            # Link the instance with a specific draft.
+            # TODO à faire en-dessous
+            form1.id = selected_draft.id
+            form2.id = selected_draft.id
+            print("form1 : ", form1)
+            print("form2 : ", form2)
+            # Saving the categories data.
+            # form2.update()
+            # # Link the travel data with the right categories data (the last saved).
+            # draft_category = Category.objects.last()
+            # form1.category = draft_category
+            # form1.save()
+            # Redirecting to the wallet creation page.
         return redirect(f"/wallet/creation?submitted=True&user={request.user.id}")
 
     # To display the draft forms with all the instance data in the placeholders.
@@ -142,20 +131,6 @@ def edit_draft(request):
             submitted = True
 
     # What to render to the template.
-    context = {
-        "edit_draft_form": edit_draft_form,
-        "edit_draft2_form": edit_draft2_form,
-        # "departure_date": departure_date,
-        # "travel_duration": travel_duration,
-        # "pre_departure": pre_departure,
-        # "international_transport": international_transport,
-        # "local_transport": local_transport,
-        # "lodging": lodging,
-        # "fooding": fooding,
-        # "visiting": visiting,
-        # "activities": activities,
-        # "souvenirs": souvenirs,
-        # "various": various,
-    }
+    context = {"edit_draft_form": edit_draft_form, "edit_draft2_form": edit_draft2_form}
 
     return render(request, "edit_draft.html", context)

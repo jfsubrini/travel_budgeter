@@ -61,14 +61,10 @@ class EditDraftForm(ModelForm):
     def __init__(self, instance, *args, **kwargs):
         # To display the instance data into the placeholder for the selected draft.
         super().__init__(*args, **kwargs)
-        self.fields["destination"].widget.attrs["placeholder"] = instance.destination
-        self.fields["currency"].widget.attrs["placeholder"] = instance.currency
-        self.fields["departure_date"].widget.attrs[
-            "placeholder"
-        ] = instance.departure_date
-        self.fields["travel_duration"].widget.attrs[
-            "placeholder"
-        ] = instance.travel_duration
+        self.fields["destination"].initial = instance.destination
+        self.fields["currency"].initial = instance.currency
+        self.fields["departure_date"].initial = instance.departure_date
+        self.fields["travel_duration"].initial = instance.travel_duration
 
 
 class EditDraftForm2(ModelForm):
@@ -83,18 +79,14 @@ class EditDraftForm2(ModelForm):
     def __init__(self, instance, *args, **kwargs):
         # To display the instance data into the placeholder for the selected draft.
         super().__init__(*args, **kwargs)
-        self.fields["pre_departure"].widget.attrs[
-            "placeholder"
-        ] = instance.pre_departure
-        self.fields["international_transport"].widget.attrs[
-            "placeholder"
-        ] = instance.international_transport
-        self.fields["local_transport"].widget.attrs[
-            "placeholder"
-        ] = instance.local_transport
-        self.fields["lodging"].widget.attrs["placeholder"] = instance.lodging
-        self.fields["fooding"].widget.attrs["placeholder"] = instance.fooding
-        self.fields["visiting"].widget.attrs["placeholder"] = instance.visiting
-        self.fields["activities"].widget.attrs["placeholder"] = instance.activities
-        self.fields["souvenirs"].widget.attrs["placeholder"] = instance.souvenirs
-        self.fields["various"].widget.attrs["placeholder"] = instance.various
+        self.fields["pre_departure"].initial = instance.pre_departure
+        self.fields[
+            "international_transport"
+        ].initial = instance.international_transport
+        self.fields["local_transport"].initial = instance.local_transport
+        self.fields["lodging"].initial = instance.lodging
+        self.fields["fooding"].initial = instance.fooding
+        self.fields["visiting"].initial = instance.visiting
+        self.fields["activities"].initial = instance.activities
+        self.fields["souvenirs"].initial = instance.souvenirs
+        self.fields["various"].initial = instance.various
