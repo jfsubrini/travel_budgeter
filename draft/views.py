@@ -6,7 +6,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 
-from .forms import DraftForm, DraftForm2, SelectDraftForm
+from .forms import DraftForm, DraftForm2, SelectDraftForm, EditDraftForm, EditDraftForm2
 from .models import Category, Draft
 
 
@@ -94,6 +94,7 @@ def edit_draft(request):
     # Get the right draft and catch the value of its different fields.
     select_draft_id = request.GET["destination"]
     selected_draft = Draft.objects.get(id=select_draft_id)
+    selected_draft_category = Category.objects.get(draft=select_draft_id)
     departure_date = selected_draft.departure_date
     travel_duration = selected_draft.travel_duration
     pre_departure = selected_draft.category.pre_departure
@@ -106,53 +107,55 @@ def edit_draft(request):
     souvenirs = selected_draft.category.souvenirs
     various = selected_draft.category.various
 
-    # # Analysis and treatment of the draft form that has been sent.
-    # submitted = False
-    # # When the forms has been posted.
-    # if request.method == "POST":
-    #     # # Checking if the forms have been validated.
-    #     # draft_form = DraftForm(request.POST)
-    #     # draft2_form = DraftForm2(request.POST)
-    #     # if draft_form.is_valid() and draft2_form.is_valid():
-    #     #     # Saving the data from the draft forms to the database.
-    #     #     form1 = draft_form.save(commit=False)
-    #     #     form2 = draft2_form.save(commit=False)
-    #     #     # Link the instance with a specific travel user (the one that made the draft).
-    #     #     travel_user = User.objects.get(
-    #     #         username=request.user.username, password=request.user.password
-    #     #     )
-    #     #     form1.user = travel_user
-    #     #     form2.user = travel_user
-    #     #     # Saving the categories data.
-    #     #     form2.save()
-    #     #     # Link the travel data with the right categories data (the last saved).
-    #     #     draft_category = Category.objects.last()
-    #     #     form1.category = draft_category
-    #     #     form1.save()
-    #     #     # Redirecting to the wallet creation page.
-    #     return redirect(f"/wallet/creation?submitted=True&user={request.user.id}")
+    # Analysis and treatment of the draft form that has been sent.
+    submitted = False
+    # When the forms has been posted.
+    if request.method == "POST":
+        #     # # Checking if the forms have been validated.
+        #     # draft_form = DraftForm(request.POST)
+        #     # draft2_form = DraftForm2(request.POST)
+        #     # if draft_form.is_valid() and draft2_form.is_valid():
+        #     #     # Saving the data from the draft forms to the database.
+        #     #     form1 = draft_form.save(commit=False)
+        #     #     form2 = draft2_form.save(commit=False)
+        #     #     # Link the instance with a specific travel user (the one that made the draft).
+        #     #     travel_user = User.objects.get(
+        #     #         username=request.user.username, password=request.user.password
+        #     #     )
+        #     #     form1.user = travel_user
+        #     #     form2.user = travel_user
+        #     #     # Saving the categories data.
+        #     #     form2.save()
+        #     #     # Link the travel data with the right categories data (the last saved).
+        #     #     draft_category = Category.objects.last()
+        #     #     form1.category = draft_category
+        #     #     form1.save()
+        #     #     # Redirecting to the wallet creation page.
+        return redirect(f"/wallet/creation?submitted=True&user={request.user.id}")
 
-    # # To display the empty draft forms : the first one about travel data and
-    # # the second one about the draft budget for each category.
-    # else:
-    #     edit_draft_form = EditDraftForm()
-    #     if "submitted" in request.GET:
-    #         submitted = True
+    # To display the draft forms with all the instance data in the placeholders.
+    # The first one about travel data and the second one about the draft budget for each category.
+    else:
+        edit_draft_form = EditDraftForm(instance=selected_draft)
+        edit_draft2_form = EditDraftForm2(instance=selected_draft_category)
+        if "submitted" in request.GET:
+            submitted = True
 
     # What to render to the template.
     context = {
-        # "edit_draft_form": edit_draft_form,
-        "departure_date": departure_date,
-        "travel_duration": travel_duration,
-        "pre_departure": pre_departure,
-        "international_transport": international_transport,
-        "local_transport": local_transport,
-        "lodging": lodging,
-        "fooding": fooding,
-        "visiting": visiting,
-        "activities": activities,
-        "souvenirs": souvenirs,
-        "various": various,
+        "edit_draft_form": edit_draft_form,
+        "edit_draft2_form": edit_draft2_form,
+        # "departure_date": departure_date,
+        # "travel_duration": travel_duration,
+        # "pre_departure": pre_departure,
+        # "international_transport": international_transport,
+        # "local_transport": local_transport,
+        # "lodging": lodging,
+        # "fooding": fooding,
+        # "visiting": visiting,
+        # "activities": activities,
+        # "souvenirs": souvenirs,
+        # "various": various,
     }
 
     return render(request, "edit_draft.html", context)
