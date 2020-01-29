@@ -59,7 +59,7 @@ class EditDraftForm(ModelForm):
         widgets = {"departure_date": DateInput()}
 
     def __init__(self, instance, *args, **kwargs):
-        # To display the instance data into the placeholder for the selected draft.
+        # To display the instance data as default values for the selected draft.
         super().__init__(*args, **kwargs)
         self.fields["destination"].initial = instance.destination
         self.fields["currency"].initial = instance.currency
@@ -77,7 +77,7 @@ class EditDraftForm2(ModelForm):
         fields = "__all__"
 
     def __init__(self, instance, *args, **kwargs):
-        # To display the instance data into the placeholder for the selected draft.
+        # To display the instance data as default values for the selected draft.
         super().__init__(*args, **kwargs)
         self.fields["pre_departure"].initial = instance.pre_departure
         self.fields[

@@ -97,40 +97,39 @@ def edit_draft(request):
     selected_draft_category = Category.objects.get(draft=select_draft_id)
 
     # Analysis and treatment of the draft form that has been sent.
-    submitted = False
     # When the forms has been posted.
     if request.method == "POST":
         # Checking if the forms have been validated.
-        edit_draft_form = EditDraftForm(request.POST)
-        edit_draft2_form = EditDraftForm2(request.POST)
+        edit_draft_form = EditDraftForm(selected_draft, request.POST)
+        edit_draft2_form = EditDraftForm2(selected_draft_category, request.POST)
         if edit_draft_form.is_valid() and edit_draft2_form.is_valid():
             # Saving the data from the draft forms to update the data from the database.
             form1 = edit_draft_form.save(commit=False)
             form2 = edit_draft2_form.save(commit=False)
-            # Link the instance with a specific draft.
-            # TODO à faire en-dessous
+            # Updating the category data for the id related to the draft to be modified.
+            form2.id = selected_draft_category.id
+            form2.save()
+            # Updating the other draft data for the one to be modified.
             form1.id = selected_draft.id
-            form2.id = selected_draft.id
-            print("form1 : ", form1)
-            print("form2 : ", form2)
-            # Saving the categories data.
-            # form2.update()
-            # # Link the travel data with the right categories data (the last saved).
-            # draft_category = Category.objects.last()
-            # form1.category = draft_category
-            # form1.save()
+            form1.user = request.user
+            form1.category = selected_draft_category
+            form1.save()
             # Redirecting to the wallet creation page.
-        return redirect(f"/wallet/creation?submitted=True&user={request.user.id}")
+            return redirect(
+                f"/monitoring?user={request.user.id}&destination={selected_draft}"
+            )
 
     # To display the draft forms with all the instance data in the placeholders.
     # The first one about travel data and the second one about the draft budget for each category.
     else:
         edit_draft_form = EditDraftForm(instance=selected_draft)
         edit_draft2_form = EditDraftForm2(instance=selected_draft_category)
-        if "submitted" in request.GET:
-            submitted = True
 
     # What to render to the template.
-    context = {"edit_draft_form": edit_draft_form, "edit_draft2_form": edit_draft2_form}
+    context = {
+        "edit_draft_form": edit_draft_form,
+        "edit_draft2_form": edit_draft2_form,
+        "selected_draft": selected_draft,
+    }
 
     return render(request, "edit_draft.html", context)

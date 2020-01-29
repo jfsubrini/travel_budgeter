@@ -34,7 +34,7 @@ class Category(models.Model):
     activities = models.PositiveIntegerField("Activités", blank=True, null=True)
     souvenirs = models.PositiveIntegerField("Souvenirs", blank=True, null=True)
     various = models.PositiveIntegerField("Divers", blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
@@ -57,7 +57,7 @@ class Draft(models.Model):
     category = models.OneToOneField(
         Category, on_delete=models.CASCADE, verbose_name="Catégorie"
     )
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
