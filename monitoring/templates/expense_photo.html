@@ -10,8 +10,7 @@
 <body>
     <h1>Photo de la dépense</h1>
     <br />
-    <h2>{{ expense_photo.photo }}</h2>
-    <img src="{% static 'media/{{ expense_photo.photo.url }}' %}" alt="{{ expense_photo.photo }}" width="100%">
+    <img src="{% static 'media/' %}{{ expense_photo.photo }}" alt="{{ expense_photo.photo }}" width="100%">
     </div>
 </body>
 <br />
