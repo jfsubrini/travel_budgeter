@@ -156,6 +156,7 @@ def edit_wallet(request):
             # Updating the wallet data for the id related to the wallet to be modified.
             form.id = selected_wallet.id
             form.draft = selected_wallet.draft
+            form.created_at = selected_wallet.created_at
             form.save()
             # Redirecting to the monitoring page.
             return redirect(

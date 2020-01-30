@@ -108,11 +108,13 @@ def edit_draft(request):
             form2 = edit_draft2_form.save(commit=False)
             # Updating the category data for the id related to the draft to be modified.
             form2.id = selected_draft_category.id
+            form2.created_at = selected_draft_category.created_at
             form2.save()
             # Updating the other draft data for the one to be modified.
             form1.id = selected_draft.id
             form1.user = request.user
             form1.category = selected_draft_category
+            form1.created_at = selected_draft.created_at
             form1.save()
             # Redirecting to the monitoring page.
             return redirect(

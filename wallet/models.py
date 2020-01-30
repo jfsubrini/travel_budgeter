@@ -43,7 +43,7 @@ class PaymentType(models.Model):
         related_name="wallets",
         verbose_name="budget prévisionnel",
     )
-    created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
