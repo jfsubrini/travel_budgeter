@@ -1,0 +1,1 @@
+web: gunicorn travelget.wsgi --log-file -
