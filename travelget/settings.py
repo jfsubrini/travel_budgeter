@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+# pylint: disable=invalid-name
 """
 Django settings for travelget project.
 
@@ -13,6 +15,8 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 import os
 
 from django.core.exceptions import ImproperlyConfigured
+
+import dj_database_url
 
 
 def get_env_variable(var_name):
@@ -32,12 +36,17 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "$#k5@cm+fu#%p50$na9zhq3+sa=ckkfu)sp%2tgoq215fpuxyx"
+SECRET_KEY = os.environ.get(
+    "SECRET_KEY", "$#k5@cm+fu#%p50$na9zhq3+sa=ckkfu)sp%2tgoq215fpuxyx"
+)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = []
+if os.environ.get("ENV") == "PRODUCTION":
+    DEBUG = False
+    ALLOWED_HOSTS = ["travel-budgeter.herokuapp.com"]
+else:
+    DEBUG = True
+    ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -65,6 +74,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
 ROOT_URLCONF = "travelget.urls"
@@ -143,3 +153,22 @@ LOGIN_REDIRECT_URL = "/draft/"
 # For uploading files, the expenses photos.
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
+
+
+if os.environ.get("ENV") == "PRODUCTION":
+
+    # Static files settings
+    PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
+
+    STATIC_ROOT = os.path.join(PROJECT_ROOT, "staticfiles")
+
+    # Extra places for collectstatic to find static files.
+    STATICFILES_DIRS = (os.path.join(PROJECT_ROOT, "static"),)
+
+    # Simplified static file serving.
+    # https://warehouse.python.org/project/whitenoise/
+    STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+    # For Heroku to deal with the database.
+    db_from_env = dj_database_url.config(conn_max_age=500)
+    DATABASES["default"].update(db_from_env)

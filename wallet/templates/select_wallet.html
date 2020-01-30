@@ -3,24 +3,19 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Wallet creation</title>
+    <title>Sélection d'un wallet</title>
 </head>
 
 <body>
-    <h1>Creation d'un wallet pour :</h1>
-    <h2>{{ last_draft }}</h2>
-    {% if submitted %}
-    <p>Votre nouveau wallet a bien été enregistré.</p>
-    {% else %}
+    <h1>Vos wallets rattachés au "{{ last_draft }}"</h1>
     <br />
     <form action="" method="post">
         {% csrf_token %}
-        <h2>Création de wallet : entrez les informations suivantes.</h2>
-        {{ wallet_form.as_p }}
-        </br>
-        <input type="submit" value="Enregistrez ce wallet">
+        <h2>Sélectionnez un wallet à modifier :</h2>
+        {{ select_wallet_form.as_p }}
+        <br />
+        <input type="submit" value="Validez">
     </form>
-    {% endif %}
 </body>
 <br />
 <br />
@@ -29,9 +24,9 @@
     <a href="{% url 'draft' %}">Création du budget prévisionnel__</a>
     <a href="{% url 'wallet-change' %}">__Change de devises__</a>
     <a href="{% url 'register' %}">__Compte__</a>
+    <a href="{% url 'wallet-creation' %}">__Création de wallet__</a>
     <a href="{% url 'expenses' %}">__Dépenses__</a>
     <a href="{% url 'select-draft' %}">__Modification d'un budget prévisionnel__</a>
-    <a href="{% url 'select-wallet' %}">__Modification d'un wallet__</a>
     <a href="{% url 'monitoring' %}">__Monitoring__</a>
     <a href="{% url 'wallet-withdrawal' %}">__Retrait ATM/DAB</a>
 </footer>

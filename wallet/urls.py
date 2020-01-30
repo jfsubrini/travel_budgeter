@@ -11,4 +11,6 @@ urlpatterns = [
     path("creation/", views.wallet_creation, name="wallet-creation"),
     path("withdrawal/", views.wallet_withdrawal, name="wallet-withdrawal"),
     path("change/", views.wallet_change, name="wallet-change"),
+    path("select/", views.select_wallet, name="select-wallet"),
+    path("edit/", views.edit_wallet, name="edit-wallet"),
 ]

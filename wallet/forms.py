@@ -4,7 +4,7 @@
 withdrawals and currency exchange data."""
 
 
-from django.forms import DateInput, ModelForm
+from django.forms import DateInput, ModelForm, Form, ModelChoiceField, Select
 from .models import Change, PaymentType, Withdrawal
 
 
@@ -38,7 +38,7 @@ class WalletWithdrawalForm(ModelForm):
         # To filter the wallet choices : for 'Carte bancaire débitée', only credit card(s)
         # of the travel user logged and the one(s) created for the current draft.
         # For 'Porte-monnaie crédité', idem but only wallet(s).
-        super(WalletWithdrawalForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.fields["payment_type_out"].queryset = PaymentType.objects.filter(
             draft__user=user, payment_type__lte=2
         )
@@ -60,10 +60,43 @@ class WalletChangeForm(ModelForm):
     def __init__(self, user, *args, **kwargs):
         # To filter the wallet choices : only wallet(s) of the travel user logged
         # and the one(s) created for the current draft.
-        super(WalletChangeForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.fields["payment_type_out"].queryset = PaymentType.objects.filter(
             draft__user=user, payment_type=3
         )
         self.fields["payment_type_in"].queryset = PaymentType.objects.filter(
             draft__user=user, payment_type=3
         )
+
+
+# Select Wallet form.
+class SelectWalletForm(Form):
+    """Form to select the saved travel user wallet(s)."""
+
+    def __init__(self, draft, *args, **kwargs):
+        # To display the wallets choices : only the one(s) of the travel user logged.
+        super().__init__(*args, **kwargs)
+        self.fields["select_wallet"].queryset = PaymentType.objects.filter(draft=draft)
+
+    select_wallet = ModelChoiceField(
+        label="Vos 'wallets' :", queryset=None, widget=Select, required=True
+    )
+
+
+# Edit Wallet form.
+class EditWalletForm(ModelForm):
+    """Form to edit the selected wallet the travel user wants to modify."""
+
+    class Meta:
+        """Details of the EditWalletForm form."""
+
+        model = PaymentType
+        exclude = ["draft"]
+
+    def __init__(self, instance, *args, **kwargs):
+        # To display the instance data as default values for the selected wallet.
+        super().__init__(*args, **kwargs)
+        self.fields["wallet_name"].initial = instance.wallet_name
+        self.fields["payment_type"].initial = instance.payment_type
+        self.fields["currency"].initial = instance.currency
+        self.fields["balance"].initial = instance.balance

@@ -3,19 +3,18 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Modification d'un budget prévisionnel</title>
+    <title>Modification d'un wallet</title>
 </head>
 
 <body>
-    <h1>Votre "{{ selected_draft }}" à modifier</h1>
+    <h1>Votre "{{ selected_wallet }}" à modifier</h1>
     <br />
     {% if submitted %}
-    <p>Votre budget prévisionnel a bien été modifié.</p>
+    <p>Votre wallet a bien été modifié.</p>
     {% else %}
     <form action="" method="post">
         {% csrf_token %}
-        {{ edit_draft_form.as_p }}
-        {{ edit_draft2_form.as_p }}
+        {{ edit_wallet_form.as_p }}
         <br />
         <input type="submit" value="Validez les modifications">
     </form>
@@ -29,7 +28,7 @@
     <a href="{% url 'register' %}">__Compte__</a>
     <a href="{% url 'wallet-creation' %}">__Création de wallet__</a>
     <a href="{% url 'expenses' %}">__Dépenses__</a>
-    <a href="{% url 'select-wallet' %}">__Modification d'un wallet__</a>
+    <a href="{% url 'select-wallet' %}">__Modification du solde initial d'un wallet__</a>
     <a href="{% url 'monitoring' %}">__Monitoring__</a>
     <a href="{% url 'wallet-withdrawal' %}">__Retrait ATM/DAB</a>
 </footer>
