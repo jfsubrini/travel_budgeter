@@ -30,6 +30,11 @@ urlpatterns = [
         views.delete_simulations,
         name="monitoring-delete-simulations",
     ),
+    path(
+        "wallet/list-expenses/photo/<int:pk>/",
+        views.ExpensePhoto.as_view(),
+        name="expense-photo",
+    ),
 ]
 
 if settings.DEBUG:

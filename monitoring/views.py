@@ -6,6 +6,7 @@ from datetime import date, timedelta
 
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
+from django.views.generic.detail import DetailView
 
 from draft.models import Draft
 from expenses.models import Expense, CATEGORY
@@ -332,6 +333,15 @@ def delete_simulations(request):
     }
 
     return render(request, "delete_simulations.html", context)
+
+
+####### EXPENSE PHOTO PAGE #######
+class ExpensePhoto(DetailView):
+    """ Generic View for the expense photo page."""
+
+    context_object_name = "expense_photo"
+    model = Expense
+    template_name = "expense_photo.html"
 
 
 ##############################################################################
