@@ -44,7 +44,9 @@ class SelectDraftForm(Form):
         super().__init__(*args, **kwargs)
         self.fields["select_draft"].queryset = Draft.objects.filter(user=user)
 
-    select_draft = ModelChoiceField(queryset=None, widget=Select, required=True)
+    select_draft = ModelChoiceField(
+        label="Vos budgets prévisionnels :", queryset=None, widget=Select, required=True
+    )
 
 
 # Edit Draft forms.

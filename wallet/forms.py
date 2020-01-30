@@ -78,7 +78,9 @@ class SelectWalletForm(Form):
         super().__init__(*args, **kwargs)
         self.fields["select_wallet"].queryset = PaymentType.objects.filter(draft=draft)
 
-    select_wallet = ModelChoiceField(queryset=None, widget=Select, required=True)
+    select_wallet = ModelChoiceField(
+        label="Vos 'wallets' :", queryset=None, widget=Select, required=True
+    )
 
 
 # Edit Wallet form.
