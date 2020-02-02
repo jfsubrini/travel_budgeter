@@ -107,7 +107,8 @@ DATABASES = {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "travelget",
         "USER": "postgres",
-        "PASSWORD": get_env_variable("DB_PASSWORD"),
+        # "PASSWORD": get_env_variable("DB_PASSWORD"),
+        "PASSWORD": "",
         "HOST": "localhost",
         "PORT": "5433",
     }
