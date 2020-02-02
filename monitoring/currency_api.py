@@ -4,7 +4,7 @@
 
 import requests
 
-from .config import CURRCONV_API_KEY
+# from .config import CURRCONV_API_KEY
 
 
 class CurrencyConverter:
@@ -25,7 +25,8 @@ class CurrencyConverter:
             "q": currencies,
             "compact": "ultra",
             "date": self.date,
-            "apiKey": CURRCONV_API_KEY,
+            # "apiKey": CURRCONV_API_KEY,
+            "apiKey": "",
         }
         response = requests.get(
             "https://free.currconv.com/api/v7/convert?", params=payload
