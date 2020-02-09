@@ -10,7 +10,7 @@
     <h2>Soldes des différents "wallets" du {{ last_draft }}</h2>
     {% for wallet, balance in wallet_dict.items %}
     <div>
-        {{ wallet }} a un solde après dépenses de : {{ balance|stringformat:".2f" }}
+        {{ wallet }} a un solde après dépenses de : {{ balance|floatformat:2 }}
     </div>
     {% endfor %}
     <br />
@@ -18,7 +18,7 @@
     <h3>Avec simulations</h3>
     {% for wallet, balance in wallet_sim_dict.items %}
     <div>
-        {{ wallet }} a un solde après dépenses de : {{ balance|stringformat:".2f" }}
+        {{ wallet }} a un solde après dépenses de : {{ balance|floatformat:2 }}
     </div>
     {% endfor %}
     {% endif  %}

@@ -19,7 +19,7 @@
     <h2>Budget consommé par catégories sans simulation : </h2>
     {% for category, amount in expenses_categories_dict.items %}
     <div>
-        Budget consommé pour la catégorie "{{ category }}" : {{ amount|stringformat:".2f" }}
+        Budget consommé pour la catégorie "{{ category }}" : {{ amount|floatformat:2 }}
     </div>
     {% endfor %}
     <br />
@@ -27,7 +27,7 @@
     {% for category, percent in category_ratio_dict.items %}
     {% if percent %}
     <div>
-        Pourcentage de consommation pour la catégorie "{{ category }}" : {{ percent|stringformat:".2f" }} %
+        Pourcentage de consommation pour la catégorie "{{ category }}" : {{ percent|floatformat:2 }} %
         {% else %}
         Pourcentage de consommation pour la catégorie "{{ category }}" : Pas de budget prévisionnel pour cette
         catégorie.
@@ -35,9 +35,9 @@
     </div>
     {% endfor %}
     <br />
-    <h3>Budget prévisionnel global : {{ draft_global|stringformat:".2f" }}</h3>
-    <h3>Budget consommé global : {{ expenses_global|stringformat:".2f" }}</h3>
-    <h3>Pourcentage de consommation globale du budget prévisionnel : {{ global_ratio|stringformat:".2f" }} %</h3>
+    <h3>Budget prévisionnel global : {{ draft_global|floatformat:2 }}</h3>
+    <h3>Budget consommé global : {{ expenses_global|floatformat:2 }}</h3>
+    <h3>Pourcentage de consommation globale du budget prévisionnel : {{ global_ratio|floatformat:2 }} %</h3>
     <br />
 
     <!--When there are simulations-->
@@ -45,7 +45,7 @@
     <h2>Budget consommé par catégories, avec simulations : </h2>
     {% for category, amount in expenses_cat_sim_dict.items %}
     <div>
-        Budget consommé pour la catégorie "{{ category }}" : {{ amount|stringformat:".2f" }}
+        Budget consommé pour la catégorie "{{ category }}" : {{ amount|floatformat:2 }}
     </div>
     {% endfor %}
     <br />
@@ -53,7 +53,7 @@
     {% for category, percent in category_sim_ratio_dict.items %}
     {% if percent %}
     <div>
-        Pourcentage de consommation pour la catégorie "{{ category }}" : {{ percent|stringformat:".2f" }} %
+        Pourcentage de consommation pour la catégorie "{{ category }}" : {{ percent|floatformat:2 }} %
         {% else %}
         Pourcentage de consommation pour la catégorie "{{ category }}" : Pas de budget prévisionnel pour cette
         catégorie.
@@ -61,10 +61,10 @@
     </div>
     {% endfor %}
     <br />
-    <h3>Budget prévisionnel global : {{ draft_global|stringformat:".2f" }}</h3>
-    <h3>Budget consommé global (avec simulations) : {{ expenses_global_sim|stringformat:".2f" }}</h3>
+    <h3>Budget prévisionnel global : {{ draft_global|floatformat:2 }}</h3>
+    <h3>Budget consommé global (avec simulations) : {{ expenses_global_sim|floatformat:2 }}</h3>
     <h3>Pourcentage de consommation globale du budget prévisionnel (avec simulations) :
-        {{ global_sim_ratio|stringformat:".2f" }} %</h3>
+        {{ global_sim_ratio|floatformat:2 }} %</h3>
     {% endif %}
 </body>
 <br />
