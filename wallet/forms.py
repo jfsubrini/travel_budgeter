@@ -34,16 +34,16 @@ class WalletWithdrawalForm(ModelForm):
         fields = "__all__"
         widgets = {"date": DateInputNicer()}
 
-    def __init__(self, user, *args, **kwargs):
+    def __init__(self, last_draft, *args, **kwargs):
         # To filter the wallet choices : for 'Carte bancaire débitée', only credit card(s)
         # of the travel user logged and the one(s) created for the current draft.
         # For 'Porte-monnaie crédité', idem but only wallet(s).
         super().__init__(*args, **kwargs)
         self.fields["payment_type_out"].queryset = PaymentType.objects.filter(
-            draft__user=user, payment_type__lte=2
+            draft=last_draft, payment_type__lte=2
         )
         self.fields["payment_type_in"].queryset = PaymentType.objects.filter(
-            draft__user=user, payment_type=3
+            draft=last_draft, payment_type=3
         )
 
 
@@ -57,15 +57,15 @@ class WalletChangeForm(ModelForm):
         fields = "__all__"
         widgets = {"date": DateInputNicer()}
 
-    def __init__(self, user, *args, **kwargs):
+    def __init__(self, last_draft, *args, **kwargs):
         # To filter the wallet choices : only wallet(s) of the travel user logged
         # and the one(s) created for the current draft.
         super().__init__(*args, **kwargs)
         self.fields["payment_type_out"].queryset = PaymentType.objects.filter(
-            draft__user=user, payment_type=3
+            draft=last_draft, payment_type=3
         )
         self.fields["payment_type_in"].queryset = PaymentType.objects.filter(
-            draft__user=user, payment_type=3
+            draft=last_draft, payment_type=3
         )
 
 
