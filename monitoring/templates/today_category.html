@@ -56,7 +56,7 @@
     {% endfor %}
     <br />
     <h3>Budget prévisionnel global par jour (hors transports internationaux et dépenses avant le départ):
-        {{ draft_global_day }}</h3>
+        {{ draft_global_day|stringformat:".2f" }}</h3>
     <h3>Budget consommé global aujourd'hui : {{ expenses_today_global_sim|stringformat:".2f" }}</h3>
     <h3>Pourcentage de consommation globale du budget prévisionnel journalier :
         {{ global_day_sim_ratio|stringformat:".2f" }} %</h3>
