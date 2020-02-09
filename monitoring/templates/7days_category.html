@@ -56,7 +56,7 @@
     {% endfor %}
     <br />
     <h3>Budget prévisionnel global pour 7 jours (hors transports internationaux et dépenses avant le départ):
-        {{ draft_global_7days }}</h3>
+        {{ draft_global_7days|stringformat:".2f" }}</h3>
     <h3>Budget consommé global ces 7 derniers jours : {{ expenses_7days_global_sim|stringformat:".2f" }}</h3>
     <h3>Pourcentage de consommation globale du budget prévisionnel ces 7 derniers jours :
         {{ global_7days_sim_ratio|stringformat:".2f" }} %</h3>
