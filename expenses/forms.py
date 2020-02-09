@@ -25,10 +25,10 @@ class ExpenseForm(ModelForm):
         exclude = ["draft"]
         widgets = {"date": DateInputNicer()}
 
-    def __init__(self, user, *args, **kwargs):
+    def __init__(self, last_draft, *args, **kwargs):
         # To filter the wallet choices : only the one(s) of the travel user logged
         # and the one(s) created for the current draft.
         super().__init__(*args, **kwargs)
         self.fields["payment_type"].queryset = PaymentType.objects.filter(
-            draft__user=user
+            draft=last_draft
         )

@@ -15,10 +15,11 @@ def expenses(request):
     View to the expense page.
     """
     # Analysis and treatment of the expense form that has been sent.
+    last_draft = Draft.objects.filter(user=request.user).last()
     # When the form has been posted.
     if request.method == "POST":
         # Checking if the form has been validated.
-        expense_form = ExpenseForm(request.user, request.POST, request.FILES)
+        expense_form = ExpenseForm(last_draft, request.POST, request.FILES)
         if expense_form.is_valid():
             # Saving the data from the expense form to the database.
             # First, create, but don't save the new Expense instance.
@@ -35,10 +36,9 @@ def expenses(request):
 
     # To display the empty expense form.
     else:
-        expense_form = ExpenseForm(request.user)
+        expense_form = ExpenseForm(last_draft)
 
     # What to render to the template.
-    last_draft = Draft.objects.filter(user=request.user).last()
     context = {"expense_form": expense_form, "last_draft": last_draft}
 
     return render(request, "expenses.html", context)
